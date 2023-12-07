@@ -156,6 +156,21 @@
                           <form>
                             <div class="row mb-3">
                               <label
+                                for="id-proveedor"
+                                class="col-sm-4 col-form-label text-start"
+                                >ID</label
+                              >
+                              <div class="col-sm-8">
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="id-proveedor"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row mb-3">
+                              <label
                                 for="razon-social"
                                 class="col-sm-4 col-form-label text-start"
                                 >Razon social</label
@@ -352,32 +367,53 @@
                 <table id="datatablesSimple">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>Razon social</th>
                       <th>Rubro</th>
                       <th>CUIT</th>
                       <th>Email</th>
                       <th>Direccion</th>
                       <th>Telefono</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
+                      <th>ID</th>
                       <th>Razon social</th>
                       <th>Rubro</th>
                       <th>CUIT</th>
                       <th>Email</th>
                       <th>Direccion</th>
                       <th>Telefono</th>
+                      <th>Acciones</th>
                     </tr>
                   </tfoot>
                   <tbody>
                     <tr>
+                      <td>1</td>
                       <td>Tiger Nixon</td>
                       <td>System Architect</td>
                       <td>Edinburgh</td>
                       <td>61</td>
                       <td>2011/04/25</td>
                       <td>$320,800</td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn btn-danger btn-borrar-proveedor"
+                          value="1"
+                        >
+                          Borrar
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-editar-proveedor"
+                          value="1"
+                        >
+                          Editar
+                        </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

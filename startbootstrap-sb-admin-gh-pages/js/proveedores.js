@@ -1,10 +1,9 @@
 miLocalStorage = window.localStorage;
 
-const agregarProveedor = document.getElementById("btn-agregar-proveedor");
-
 /*-----------FUNCIONES-----------*/
 
-function capturarDatos() {
+function capturarproveedor() {
+  let idProveedorInput = document.getElementById("id-proveedor").value;
   let razonSocialInput = document.getElementById("razon-social").value;
   let telefonoInput = document.getElementById("input-tel").value;
   let webInput = document.getElementById("input-web").value;
@@ -18,6 +17,7 @@ function capturarDatos() {
   let rubroInput = document.getElementById("select-rubro").value;
 
   let proveedor = {
+    id: idProveedorInput,
     razonSocial: razonSocialInput,
     telefono: telefonoInput,
     web: webInput,
@@ -31,16 +31,31 @@ function capturarDatos() {
     rubro: rubroInput,
   };
 
-  let prov = JSON.parse(miLocalStorage.getItem("proveedores")) || [];
-  prov.push(proveedor);
-  miLocalStorage.setItem("proveedores", JSON.stringify(prov));
+  agregarproveedor(proveedor);
+}
+
+function agregarproveedor(proveedor) {
+  let provs = JSON.parse(miLocalStorage.getItem("proveedores")) || [];
+  provs.push(proveedor);
+  miLocalStorage.setItem("proveedores", JSON.stringify(provs));
+}
+
+function eliminarproveedor(idProveedor) {
+  let provs = JSON.parse(miLocalStorage.getItem("proveedores")) || [];
+
+  for (let i = 0; i < provs.length; i++) {
+    if (provs[i].id == idProveedor) {
+      //   console.log(provs[i]);
+      provs.splice(i, 1);
+      break;
+    }
+  }
+  miLocalStorage.setItem("proveedores", JSON.stringify(provs));
 }
 
 /*----------------------*/
 
 /*------LISTENERS------*/
-
-agregarProveedor.addEventListener("click", () => {});
 
 // capturo el boton luego de que se cree en el evento shown.bs.modal
 document
@@ -48,7 +63,7 @@ document
   .addEventListener("shown.bs.modal", function () {
     document
       .getElementById("guardar-proveedor")
-      .addEventListener("click", capturarDatos);
+      .addEventListener("click", capturarproveedor);
   });
 
 /*----------------------*/
