@@ -1,5 +1,7 @@
 miLocalStorage = window.localStorage;
 
+let borrarProveedores = document.getElementsByClassName("btn-borrar-proveedor");
+
 /*-----------FUNCIONES-----------*/
 
 function capturarproveedor() {
@@ -40,7 +42,7 @@ function agregarproveedor(proveedor) {
   miLocalStorage.setItem("proveedores", JSON.stringify(provs));
 }
 
-function eliminarproveedor(idProveedor) {
+function eliminarProveedor(idProveedor) {
   let provs = JSON.parse(miLocalStorage.getItem("proveedores")) || [];
 
   for (let i = 0; i < provs.length; i++) {
@@ -51,6 +53,74 @@ function eliminarproveedor(idProveedor) {
     }
   }
   miLocalStorage.setItem("proveedores", JSON.stringify(provs));
+  cargarListaProveedores();
+}
+
+function cargarListaProveedores() {
+  let provs = JSON.parse(miLocalStorage.getItem("proveedores")) || [];
+  let proveedoresContainer = document.getElementById("lista-proveedores-tbody");
+
+  if (proveedoresContainer) {
+    console.log("hla");
+    while (proveedoresContainer.firstChild) {
+      console.log("hla");
+      proveedoresContainer.removeChild(proveedoresContainer.firstChild);
+    }
+
+    provs.forEach((proveedor) => {
+      let id = proveedor.id;
+      let razonSocial = proveedor.razonSocial;
+      let rubro = proveedor.rubro;
+      let cuit = proveedor.cuit;
+      let email = proveedor.email;
+      let direccion = proveedor.direccion;
+      let telefono = proveedor.telefono;
+
+      let nuevaFila = crearFilaProveedor(
+        id,
+        razonSocial,
+        rubro,
+        cuit,
+        email,
+        direccion,
+        telefono
+      );
+      proveedoresContainer.appendChild(nuevaFila);
+    });
+  }
+}
+
+function crearFilaProveedor(
+  id,
+  razonSocial,
+  rubro,
+  cuit,
+  email,
+  direccion,
+  telefono
+) {
+  let fila = document.createElement("tr");
+
+  // Crear las celdas de la fila
+  let celdas = [
+    id,
+    razonSocial,
+    rubro,
+    cuit,
+    email,
+    direccion,
+    telefono,
+    `<button type="button" class="btn btn-danger btn-borrar-proveedor" value="${id}">Borrar</button>
+       <button type="button" class="btn btn-primary btn-editar-proveedor" value="${id}">Editar</button>`,
+  ];
+  // Agregar las celdas a la fila
+  celdas.forEach(function (valor) {
+    let celda = document.createElement("td");
+    celda.innerHTML = valor;
+    fila.appendChild(celda);
+  });
+
+  return fila;
 }
 
 /*----------------------*/
@@ -66,4 +136,18 @@ document
       .addEventListener("click", capturarproveedor);
   });
 
+// for (let btn of borrarProveedores) {
+//   btn.addEventListener("click", (btn) => {
+//     eliminarProveedor(btn.value);
+//     cargarListaProveedores();
+//   });
+// }
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("btn-borrar-proveedor")) {
+    eliminarProveedor(event.target.value);
+  }
+});
+
+cargarListaProveedores();
 /*----------------------*/

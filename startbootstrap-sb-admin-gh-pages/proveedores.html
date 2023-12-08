@@ -389,33 +389,7 @@
                       <th>Acciones</th>
                     </tr>
                   </tfoot>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Tiger Nixon</td>
-                      <td>System Architect</td>
-                      <td>Edinburgh</td>
-                      <td>61</td>
-                      <td>2011/04/25</td>
-                      <td>$320,800</td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn btn-danger btn-borrar-proveedor"
-                          value="1"
-                        >
-                          Borrar
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary btn-editar-proveedor"
-                          value="1"
-                        >
-                          Editar
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody id="lista-proveedores-tbody"></tbody>
                 </table>
               </div>
             </div>
@@ -446,13 +420,15 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
       crossorigin="anonymous"
     ></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <!-- <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script> -->
     <script
       src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
       crossorigin="anonymous"
     ></script>
     <script src="js/datatables-simple-demo.js"></script>
-    <script src="js/proveedores.js"></script>
+    <script src="js/proveedores.js">
+      window.onload = cargarListaProveedores;
+    </script>
   </body>
 </html>
