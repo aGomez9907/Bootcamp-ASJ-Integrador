@@ -1,3 +1,7 @@
+//PROBLEMAS
+//la primera vez que la funcion cargarListaProveedores se ejecuta carga la lista correctamente pero luego no, puesto que cuando se crea la tabla se borra el id del tbody y no me
+//doy cuenta por qué, estoy quemado xd
+
 miLocalStorage = window.localStorage;
 
 let borrarProveedores = document.getElementsByClassName("btn-borrar-proveedor");
@@ -58,13 +62,12 @@ function eliminarProveedor(idProveedor) {
 
 function cargarListaProveedores() {
   let provs = JSON.parse(miLocalStorage.getItem("proveedores")) || [];
-  let proveedoresContainer = document.getElementById("lista-proveedores-tbody");
+  let proveedoresContainer = document.getElementsByTagName("tbody");
 
-  if (proveedoresContainer) {
-    console.log("hla");
-    while (proveedoresContainer.firstChild) {
+  if (proveedoresContainer[0]) {
+    while (proveedoresContainer[0].firstChild) {
       console.log("hla");
-      proveedoresContainer.removeChild(proveedoresContainer.firstChild);
+      proveedoresContainer[0].removeChild(proveedoresContainer[0].firstChild);
     }
 
     provs.forEach((proveedor) => {
@@ -85,7 +88,7 @@ function cargarListaProveedores() {
         direccion,
         telefono
       );
-      proveedoresContainer.appendChild(nuevaFila);
+      proveedoresContainer[0].appendChild(nuevaFila);
     });
   }
 }
@@ -101,7 +104,6 @@ function crearFilaProveedor(
 ) {
   let fila = document.createElement("tr");
 
-  // Crear las celdas de la fila
   let celdas = [
     id,
     razonSocial,
@@ -113,7 +115,7 @@ function crearFilaProveedor(
     `<button type="button" class="btn btn-danger btn-borrar-proveedor" value="${id}">Borrar</button>
        <button type="button" class="btn btn-primary btn-editar-proveedor" value="${id}">Editar</button>`,
   ];
-  // Agregar las celdas a la fila
+
   celdas.forEach(function (valor) {
     let celda = document.createElement("td");
     celda.innerHTML = valor;
