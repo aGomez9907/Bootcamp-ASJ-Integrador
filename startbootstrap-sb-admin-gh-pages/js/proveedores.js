@@ -1,6 +1,4 @@
 //PROBLEMAS
-//la primera vez que la funcion cargarListaProveedores se ejecuta carga la lista correctamente pero luego no, puesto que cuando se crea la tabla se borra el id del tbody y no me
-//doy cuenta por qué, estoy quemado xd
 
 miLocalStorage = window.localStorage;
 
