@@ -42,187 +42,208 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form>
-                  <div class="row mb-3">
-                    <label
-                      for="id-proveedor"
-                      class="col-sm-4 col-form-label text-start"
-                      >ID</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="id-proveedor"
-                      />
-                    </div>
+                <div class="row mb-3">
+                  <label
+                    for="id-proveedor"
+                    class="col-sm-4 col-form-label text-start"
+                    >ID</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="id-proveedor"
+                      [(ngModel)]="idInput"
+                    />
                   </div>
+                </div>
 
-                  <div class="row mb-3">
-                    <label
-                      for="razon-social"
-                      class="col-sm-4 col-form-label text-start"
-                      >Razon social</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="razon-social"
-                      />
-                    </div>
+                <div class="row mb-3">
+                  <label
+                    for="razon-social"
+                    class="col-sm-4 col-form-label text-start"
+                    >Razon social</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="razon-social"
+                      [(ngModel)]="razonSocialInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-tel"
-                      class="col-sm-4 col-form-label text-start"
-                      >Telefono</label
-                    >
-                    <div class="col-sm-8">
-                      <input type="tel" class="form-control" id="input-tel" />
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-tel"
+                    class="col-sm-4 col-form-label text-start"
+                    >Telefono</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="input-tel"
+                      [(ngModel)]="telefonoInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-web"
-                      class="col-sm-4 col-form-label text-start"
-                      >Sitio web</label
-                    >
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="input-web" />
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-web"
+                    class="col-sm-4 col-form-label text-start"
+                    >Sitio web</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input-web"
+                      [(ngModel)]="webInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-direccion"
-                      class="col-sm-4 col-form-label text-start"
-                      >Direccion</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="input-direccion"
-                      />
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-direccion"
+                    class="col-sm-4 col-form-label text-start"
+                    >Direccion</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input-direccion"
+                      [(ngModel)]="direccionInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-cp"
-                      class="col-sm-4 col-form-label text-start"
-                      >Codigo Postal</label
-                    >
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="input-cp" />
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-cp"
+                    class="col-sm-4 col-form-label text-start"
+                    >Codigo Postal</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input-cp"
+                      [(ngModel)]="cpInput"
+                    />
                   </div>
+                </div>
 
-                  <div class="row mb-3">
-                    <label
-                      for="input-provincia"
-                      class="col-sm-4 col-form-label text-start"
-                      >Provincia</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="input-provincia"
-                      />
-                    </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-provincia"
+                    class="col-sm-4 col-form-label text-start"
+                    >Provincia</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input-provincia"
+                      [(ngModel)]="provinciaInput"
+                    />
                   </div>
+                </div>
 
-                  <div class="row mb-3">
-                    <label
-                      for="input-pais"
-                      class="col-sm-4 col-form-label text-start"
-                      >Pais</label
-                    >
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="input-pais" />
-                    </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-pais"
+                    class="col-sm-4 col-form-label text-start"
+                    >Pais</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input-pais"
+                      [(ngModel)]="paisInput"
+                    />
                   </div>
+                </div>
 
-                  <div class="row mb-3">
-                    <label
-                      for="input-email"
-                      class="col-sm-4 col-form-label text-start"
-                      >Email</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="input-email"
-                      />
-                    </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-email"
+                    class="col-sm-4 col-form-label text-start"
+                    >Email</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="input-email"
+                      [(ngModel)]="emailInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-cuit"
-                      class="col-sm-4 col-form-label text-start"
-                      >CUIT</label
-                    >
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="input-cuit" />
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="input-cuit"
+                    class="col-sm-4 col-form-label text-start"
+                    >CUIT</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="input-cuit"
+                      [(ngModel)]="cuitInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="select-iva"
-                      class="col-sm-4 col-form-label text-start"
-                      >IVA</label
-                    >
-                    <div class="col-sm-8">
-                      <select
-                        class="form-select form-select-sm"
-                        aria-label="Small select"
-                        id="select-iva"
-                      >
-                        <option selected="">IVA</option>
-                        <option value="1">Responsable Inscripto</option>
-                        <option value="2">Excento</option>
-                        <option value="3">Monotributista</option>
-                      </select>
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="select-iva"
+                    class="col-sm-4 col-form-label text-start"
+                    >IVA</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="select-iva"
+                      [(ngModel)]="ivaInput"
+                    />
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="select-rubro"
-                      class="col-sm-4 col-form-label text-start"
-                      >Rubro</label
-                    >
-                    <div class="col-sm-8">
-                      <select
-                        class="form-select form-select-sm"
-                        aria-label="Small select"
-                        id="select-rubro"
-                      >
-                        <option selected="">Rubro</option>
-                        <option value="1">Alimentos</option>
-                        <option value="2">Automotores</option>
-                        <option value="3">Equipos</option>
-                      </select>
-                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="select-rubro"
+                    class="col-sm-4 col-form-label text-start"
+                    >Rubro</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="select-rubro"
+                      [(ngModel)]="rubroInput"
+                    />
                   </div>
+                </div>
 
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      type="submit"
-                      class="btn btn-primary"
-                      id="guardar-proveedor"
-                    >
-                      Guardar
-                    </button>
-                  </div>
-                </form>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="guardar-proveedor"
+                    (click)="addSupplier()"
+                  >
+                    Guardar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -237,8 +258,13 @@
           <th>Rubro</th>
           <th>CUIT</th>
           <th>Email</th>
+          <th>Website</th>
           <th>Direccion</th>
+          <th>CP</th>
+          <th>Provincia</th>
+          <th>Pais</th>
           <th>Telefono</th>
+          <th>IVA</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -249,71 +275,289 @@
           <th>Rubro</th>
           <th>CUIT</th>
           <th>Email</th>
+          <th>Website</th>
           <th>Direccion</th>
+          <th>CP</th>
+          <th>Provincia</th>
+          <th>Pais</th>
           <th>Telefono</th>
+          <th>IVA</th>
           <th>Acciones</th>
         </tr>
       </tfoot>
       <tbody>
-        <tr>
-          <td>ID</td>
-          <td>Razon social</td>
-          <td>Rubro</td>
-          <td>CUIT</td>
-          <td>Email</td>
-          <td>Direccion</td>
-          <td>Telefono</td>
-          <td>Acciones</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>Razon social</td>
-          <td>Rubro</td>
-          <td>CUIT</td>
-          <td>Email</td>
-          <td>Direccion</td>
-          <td>Telefono</td>
-          <td>Acciones</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>Razon social</td>
-          <td>Rubro</td>
-          <td>CUIT</td>
-          <td>Email</td>
-          <td>Direccion</td>
-          <td>Telefono</td>
-          <td>Acciones</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>Razon social</td>
-          <td>Rubro</td>
-          <td>CUIT</td>
-          <td>Email</td>
-          <td>Direccion</td>
-          <td>Telefono</td>
-          <td>Acciones</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>Razon social</td>
-          <td>Rubro</td>
-          <td>CUIT</td>
-          <td>Email</td>
-          <td>Direccion</td>
-          <td>Telefono</td>
-          <td>Acciones</td>
-        </tr>
-        <tr>
-          <td>ID</td>
-          <td>Razon social</td>
-          <td>Rubro</td>
-          <td>CUIT</td>
-          <td>Email</td>
-          <td>Direccion</td>
-          <td>Telefono</td>
-          <td>Acciones</td>
+        <tr *ngFor="let s of suppliers">
+          <td>{{ s.id }}</td>
+          <td>{{ s.razonSocial }}</td>
+          <td>{{ s.rubro }}</td>
+          <td>{{ s.cuit }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.website }}</td>
+          <td>{{ s.direccion }}</td>
+          <td>{{ s.cp }}</td>
+          <td>{{ s.provincia }}</td>
+          <td>{{ s.pais }}</td>
+          <td>{{ s.telefono }}</td>
+          <td>{{ s.iva }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              value="{{ s.id }}"
+              (click)="deleteSupplier(s.id)"
+            >
+              Borrar
+            </button>
+
+            <div class="col-6 text-end">
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editarProveedorModal"
+                id="btn-agregar-proveedor"
+                (click)="loadUpdate(s)"
+              >
+                Editar
+              </button>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="editarProveedorModal"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="editarProveedorModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1
+                        class="modal-title fs-5"
+                        id="editarProveedorModalLabel"
+                      >
+                        Editar proveedor
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row mb-3">
+                        <label
+                          for="id-proveedor"
+                          class="col-sm-4 col-form-label text-start"
+                          >ID</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="id-proveedor"
+                            disabled=""
+                            [(ngModel)]="idInput"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="razon-social"
+                          class="col-sm-4 col-form-label text-start"
+                          >Razon social</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="razon-social"
+                            [(ngModel)]="razonSocialInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="input-tel"
+                          class="col-sm-4 col-form-label text-start"
+                          >Telefono</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="input-tel"
+                            [(ngModel)]="telefonoInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="input-web"
+                          class="col-sm-4 col-form-label text-start"
+                          >Sitio web</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="input-web"
+                            [(ngModel)]="webInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="input-direccion"
+                          class="col-sm-4 col-form-label text-start"
+                          >Direccion</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="input-direccion"
+                            [(ngModel)]="direccionInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="input-cp"
+                          class="col-sm-4 col-form-label text-start"
+                          >Codigo Postal</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="input-cp"
+                            [(ngModel)]="cpInput"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="input-provincia"
+                          class="col-sm-4 col-form-label text-start"
+                          >Provincia</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="input-provincia"
+                            [(ngModel)]="provinciaInput"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="input-pais"
+                          class="col-sm-4 col-form-label text-start"
+                          >Pais</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="input-pais"
+                            [(ngModel)]="paisInput"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label
+                          for="input-email"
+                          class="col-sm-4 col-form-label text-start"
+                          >Email</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="input-email"
+                            [(ngModel)]="emailInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="input-cuit"
+                          class="col-sm-4 col-form-label text-start"
+                          >CUIT</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="input-cuit"
+                            [(ngModel)]="cuitInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="select-iva"
+                          class="col-sm-4 col-form-label text-start"
+                          >IVA</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="select-iva"
+                            [(ngModel)]="ivaInput"
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label
+                          for="select-rubro"
+                          class="col-sm-4 col-form-label text-start"
+                          >Rubro</label
+                        >
+                        <div class="col-sm-8">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="select-rubro"
+                            [(ngModel)]="rubroInput"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Cancelar
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          id="guardar-proveedor"
+                          data-bs-dismiss="modal"
+                          (click)="updateSupplier()"
+                        >
+                          Guardar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -1,1 +1,185 @@
-<p>products works!</p>
+<main>
+  <div class="container-fluid px-4">
+    <h1 class="mt-4">PRODUCTOS</h1>
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item active">Productos</li>
+    </ol>
+
+    <div class="card mb-4">
+      <div class="card-header row">
+        <div class="col-6">
+          <i class="fas fa-table me-1"></i> Listado de Productos
+        </div>
+        <div class="col-6 text-end">
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#agregarProductoModal"
+            id="btn-agregar-producto"
+          >
+            +
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="agregarProductoModal"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="agregarProductoModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="agregarProductoModalLabel">
+                    Agregar producto
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row mb-3">
+                      <label
+                        for="select-proveedor"
+                        class="col-sm-4 col-form-label text-start"
+                        >Proveedor</label
+                      >
+                      <div class="col-sm-8">
+                        <select
+                          class="form-select form-select-sm"
+                          aria-label="Small select"
+                          id="select-proveedor"
+                        >
+                          <option selected="">Proveedor</option>
+                          <option value="1">Proveedor 1</option>
+                          <option value="2">Proveedor 2</option>
+                          <option value="3">Proveedor 3</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label
+                        for="sku"
+                        class="col-sm-4 col-form-label text-start"
+                        >Codigo/SKU</label
+                      >
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="sku" />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label
+                        for="input-categoria"
+                        class="col-sm-4 col-form-label text-start"
+                        >Categoría</label
+                      >
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="input-categoria"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label
+                        for="input-nombre-producto"
+                        class="col-sm-4 col-form-label text-start"
+                        >Nombre</label
+                      >
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="input-nombre-producto"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label
+                        for="input-descripcion"
+                        class="col-sm-4 col-form-label text-start"
+                        >Descripcion</label
+                      >
+                      <div class="col-sm-8">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="input-descripcion"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label
+                        for="input-precio"
+                        class="col-sm-4 col-form-label text-start"
+                        >Precio</label
+                      >
+                      <div class="col-sm-8">
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="input-precio"
+                        />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Cancelar
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="guardar-producto"
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 
+      <div class="card-body">
+        <table id="datatablesSimple">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>SKU</th>
+              <th>Categoria</th>
+              <th>Proveedor</th>
+              <th>Descripcion</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Nombre</th>
+              <th>SKU</th>
+              <th>Categoria</th>
+              <th>Proveedor</th>
+              <th>Descripcion</th>
+              <th>Precio</th>
+            </tr>
+          </tfoot>
+          <tbody></tbody>
+        </table>
+      </div> -->
+    </div>
+  </div>
+</main>
