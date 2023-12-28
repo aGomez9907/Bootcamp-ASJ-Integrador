@@ -6,15 +6,14 @@ import { POProduct, PurchasOrder } from '../../../models/purchase-order';
 import { Supplier } from '../../../models/supplier';
 import { Product } from '../../../models/product';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router} from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-purchase-order',
   templateUrl: './new-purchase-order.component.html',
-  styleUrl: './new-purchase-order.component.css'
+  styleUrl: './new-purchase-order.component.css',
 })
-export class NewPurchaseOrderComponent implements OnInit{
+export class NewPurchaseOrderComponent implements OnInit {
   purchaseOrders: PurchasOrder[] = [];
   suppliers: Supplier[] = [];
   products: Product[] = [];
@@ -22,17 +21,16 @@ export class NewPurchaseOrderComponent implements OnInit{
   poProducts: POProduct[] = [];
 
   updateID: string = '';
-  purchaseOrderAux: PurchasOrder={
-    
+  purchaseOrderAux: PurchasOrder = {
     number: -1,
     emission: '',
     delivery: '',
     info: '',
-    supplierID: 0 ,
+    supplierID: 0,
     products: [],
     total: 0,
     isDeleted: false,
-  }
+  };
 
   poProductAux: POProduct = {
     SKU: '',
@@ -53,16 +51,15 @@ export class NewPurchaseOrderComponent implements OnInit{
     this.getPOs();
     this.getSuppliers();
     this.getProducts();
-    this.route.params.subscribe(params => {
-     this.updateID=params['id'];
-    })
-    this.loadUpdate();
+
+    this.updateID = this.route.snapshot.params['id'];
+
 
   }
 
   isSupplierSelected: boolean = false;
 
-  idInput: number|undefined = 0;
+  idInput: number | undefined = 0;
   orderNumberInput: number = 0;
   emissionInput: string = new Date().toLocaleDateString('es-AR');
   deliveryInput: string = '';
@@ -87,9 +84,7 @@ export class NewPurchaseOrderComponent implements OnInit{
     this.productsInput = this.poProductAux;
     this.quantityInput = 0;
     //se que esto está mal pero ya no se me ocurre otra forma de solucionarlo
-    window.location.reload()
-
-    console.log(this.poProducts);
+    window.location.reload();
   }
 
   activePOs() {
@@ -117,9 +112,8 @@ export class NewPurchaseOrderComponent implements OnInit{
       amount: this.quantityInput,
       price: p[0].precio * this.quantityInput,
     };
-    
-    this.poProducts.push(poToAdd)
-    console.log(this.poProducts);
+
+    this.poProducts.push(poToAdd);
   }
 
   getTotal() {
@@ -130,17 +124,7 @@ export class NewPurchaseOrderComponent implements OnInit{
     this.totalInput = total;
   }
 
-  loadUpdate() {
-    this.poService.getPO(this.updateID).subscribe(res =>{
-      this.poProducts = res.products;
-      this.idInput = res.id;
-      this.orderNumberInput = res.number;
-      this.emissionInput = res.emission;
-      this.deliveryInput = res.delivery;
-      this.infoInput = res.info;
-      this.supplierId = res.supplierID;
-    })
-  }
+
 
   getSuppliers() {
     this.suppliersService.getSuppliers().subscribe((res) => {
@@ -163,11 +147,11 @@ export class NewPurchaseOrderComponent implements OnInit{
   }
 
   addPO(form: NgForm) {
-    this.purchaseOrderAux.number = this.orderNumberInput
-    this.purchaseOrderAux.delivery = this.deliveryInput
-    this.purchaseOrderAux.emission = this.emissionInput
-    this.purchaseOrderAux.info = this.infoInput
-    this.purchaseOrderAux.supplierID = this.supplierId
+    this.purchaseOrderAux.number = this.orderNumberInput;
+    this.purchaseOrderAux.delivery = this.deliveryInput;
+    this.purchaseOrderAux.emission = this.emissionInput;
+    this.purchaseOrderAux.info = this.infoInput;
+    this.purchaseOrderAux.supplierID = this.supplierId;
     this.purchaseOrderAux.total = this.totalInput;
     this.purchaseOrderAux.products = this.poProducts;
 
@@ -177,8 +161,8 @@ export class NewPurchaseOrderComponent implements OnInit{
       this.poService.addPO(this.purchaseOrderAux).subscribe((res) => {
         console.log(res);
         this.getPOs();
-        
-        this.router.navigate(['/purchase-orders'])
+
+        this.router.navigate(['/purchase-orders']);
       });
     }
   }

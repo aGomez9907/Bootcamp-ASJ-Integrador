@@ -174,27 +174,7 @@
       "emission": "12/12/12",
       "delivery": "13/12/12",
       "info": "some info",
-      "supplier": {
-        "id": 5,
-        "codProv": "asdf12345",
-        "razonSocial": "aaa",
-        "rubro": "automotor",
-        "website": "www.hola.com",
-        "telefono": 12341234123,
-        "email": "agomez@asjservicios.com",
-        "direccion": "calle falsa 123",
-        "cp": "123412341234",
-        "localidad": "temperley",
-        "provincia": "Misiones",
-        "pais": "Argentina",
-        "iva": "Exento",
-        "cuit": "12-12377678-1",
-        "nombreContacto": "alejo",
-        "apellidoContacto": "gomez",
-        "telefonoContacto": "12341234",
-        "emailContacto": "hola@ejemplo.com",
-        "rolContacto": "aaa"
-      },
+      "supplierID": 5,
       "products": {
         "SKU": "lp1234",
         "name": "PlayStation 2",
@@ -210,27 +190,7 @@
       "emission": "1/1/01",
       "delivery": "13/12/12",
       "info": "some info",
-      "supplier": {
-        "id": 5,
-        "codProv": "asdf12345",
-        "razonSocial": "aaa",
-        "rubro": "automotor",
-        "website": "www.hola.com",
-        "telefono": 12341234123,
-        "email": "agomez@asjservicios.com",
-        "direccion": "calle falsa 123",
-        "cp": "123412341234",
-        "localidad": "temperley",
-        "provincia": "Misiones",
-        "pais": "Argentina",
-        "iva": "Exento",
-        "cuit": "12-12377678-1",
-        "nombreContacto": "alejo",
-        "apellidoContacto": "gomez",
-        "telefonoContacto": "12341234",
-        "emailContacto": "hola@ejemplo.com",
-        "rolContacto": "aaa"
-      },
+      "supplierID": 5,
       "products": {
         "SKU": "lp1234",
         "name": "PlayStation 2",
@@ -241,7 +201,7 @@
       "isDeleted": false
     },
     {
-      "id": -1,
+      "id": 10,
       "number": 1234,
       "emission": "28/12/2023",
       "delivery": "2023-12-30",
@@ -300,5 +260,6 @@
       "isDeleted": false,
       "id": 4
     }
+
   ]
 }

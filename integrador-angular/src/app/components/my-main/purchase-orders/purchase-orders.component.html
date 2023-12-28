@@ -235,21 +235,9 @@
                 type="button"
                 class="btn btn-outline-success btn-sm"
                 value="{{ po.id }}"
-                [routerLink]="['/products', po.id]"
+                [routerLink]="['/purchase-orders', po.id]"
               >
                 Detalles
-              </button>
-
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#editarPrductoModal"
-                id="btn-agregar-proveedor"
-                [routerLink]="['/purchase-orders/update', po.id]"
-                
-              >
-                Editar
               </button>
 
               <button

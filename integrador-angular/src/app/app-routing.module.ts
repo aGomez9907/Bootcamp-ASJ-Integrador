@@ -6,6 +6,7 @@ import { PurchaseOrdersComponent } from './components/my-main/purchase-orders/pu
 import { SupplierDetailComponent } from './components/my-main/supplier-detail/supplier-detail.component';
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
 import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
+import { PurchaseOrderDetailComponent } from './components/my-main/purchase-order-detail/purchase-order-detail.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,7 @@ const routes: Routes = [
     children: [
       { path: '', component: PurchaseOrdersComponent },
       { path: 'new', component: NewPurchaseOrderComponent },
-      { path: 'update/:id', component: NewPurchaseOrderComponent },
+      { path: ':id', component: PurchaseOrderDetailComponent },
     ],
   },
   { path: 'suppliers/:codProv', component: SupplierDetailComponent },
