@@ -239,6 +239,66 @@
       },
       "total": 6172835.617,
       "isDeleted": false
+    },
+    {
+      "id": -1,
+      "number": 1234,
+      "emission": "28/12/2023",
+      "delivery": "2023-12-30",
+      "info": "blablabla",
+      "supplierID": "2",
+      "products": [
+        {
+          "SKU": "1234123444",
+          "name": "hamburguesa 2",
+          "amount": 12,
+          "price": 14808
+        },
+        {
+          "SKU": "pr1235",
+          "name": "hamburguesa",
+          "amount": 12,
+          "price": 1481.472
+        }
+      ],
+      "total": 195473.664,
+      "isDeleted": false
+    },
+    {
+      "number": 1234,
+      "emission": "28/12/2023",
+      "delivery": "2023-12-29",
+      "info": "safasdf",
+      "supplierID": "2",
+      "products": [
+        {
+          "SKU": "pr1235",
+          "name": "hamburguesa",
+          "amount": 123,
+          "price": 15185.088
+        }
+      ],
+      "total": 1867765.824,
+      "isDeleted": false,
+      "id": 3
+    },
+    {
+      "number": 1444,
+      "emission": "28/12/2023",
+      "delivery": "2023-12-29",
+      "info": "pepepeppe",
+      "supplierID": "3",
+      "products": [
+        {
+          "SKU": "pr456",
+          "name": "Ferraro LaFerraro",
+          "amount": 1,
+          "price": 123456789101112.12
+        }
+      ],
+      "total": 123456789101112.12,
+      "isDeleted": false,
+      "id": 4
     }
   ]
 }

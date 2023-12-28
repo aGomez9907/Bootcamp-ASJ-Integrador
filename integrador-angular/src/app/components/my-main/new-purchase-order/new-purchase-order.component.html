@@ -1,1 +1,183 @@
-<p>new-purchase-order works!</p>
+
+<form #poForm="ngForm" (ngSubmit)="addPO(poForm)">
+    <div class="row px-1">
+      <div class="col-4">
+        <h3 class="text-center">Add products</h3>
+        <div for="supplier" class="text-start">Supplier</div>
+        <select
+          class="form-select"
+          name="supplier"
+          id="select-supplier"
+          [(ngModel)]="supplierId"
+          [disabled]="isSupplierSelected"
+        >
+          <option *ngFor="let s of suppliers" [value]="s.id">
+            {{ s.razonSocial }}
+          </option>
+        </select>
+        <section>
+          <div>
+            <div for="product-select" class="text-start">
+              Product
+            </div>
+            <select
+              class="form-select"
+              id="product-select"
+              name="product"
+              [(ngModel)]="productId"
+            >
+              <option
+                *ngFor="let p of filterProducts(supplierId)"
+                [value]="p.id"
+              >
+                {{ p.nombre }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <label for="quantity-input" class="float-start"
+              >Quantity</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="quantity-input"
+              name="number"
+              [(ngModel)]="quantityInput"
+            />
+          </div>
+
+          <div class="row m-2">
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              (click)="
+                loadProduct(productId);
+                isSupplierSelected = true;
+                getTotal()
+              "
+            >
+              Add product
+            </button>
+          </div>
+        </section>
+      </div>
+      <div class="col-8">
+        <h3 class="text-center">Purchase order</h3>
+        <div class="row mb-3">
+          <label
+            for="order-number"
+            class="col-sm-4 col-form-label text-start"
+            >Order N°</label
+          >
+          <div class="col-sm-8">
+            <input
+              type="number"
+              class="form-control"
+              id="order-number"
+              name="number"
+              required=""
+              [(ngModel)]="orderNumberInput"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label
+            for="emission-date"
+            class="col-sm-4 col-form-label text-start"
+            >Emission date</label
+          >
+          <div class="col-sm-8">
+            <input
+              type="text"
+              class="form-control"
+              id="emission-date"
+              disabled
+              name="emission"
+              [(ngModel)]="emissionInput"
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label
+            for="delivery-date"
+            class="col-sm-4 col-form-label text-start"
+            >Delivery date</label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              id="delivery-date"
+              name="delivery"
+              [(ngModel)]="deliveryInput"
+            />
+          </div>
+          
+        </div>
+        <div class="row mb-3">
+            <label
+              for="info-input"
+              class="col-sm-4 col-form-label text-start"
+              >Additional Info</label
+            >
+            <div class="col-sm-8">
+              <textarea
+                type="text"
+                class="form-control"
+                id="info-input"
+                name="info"
+                [(ngModel)]="infoInput"
+              >
+            </textarea>
+            </div>
+            
+          </div>
+      </div>
+      <table
+        class="table table-hover card-body"
+        *ngIf="poProducts.length != 0"
+      >
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit price</th>
+            <th>Total price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let po of poProducts">
+            <td>{{ po.name }}</td>
+            <td>{{ po.amount }}</td>
+            <td>{{ po.price }}</td>
+            <td>{{ po.price * po.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row mb-3">
+        <label
+          for="total"
+          class="col-sm-4 col-form-label disabled text-start"
+          >Total</label
+        >
+        <div class="col-sm-8">
+          <input
+            type="number"
+            class="form-control"
+            id="total"
+            name="total"
+            [(ngModel)]="totalInput"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-success mt-2"
+          data-bs-dismiss="modal"
+        >
+          Create order
+        </button>
+        <button type="reset" class="btn btn-outline-danger " (click)="resetFields()">Clear products</button>
+      </div>
+    </div>
+  </form>

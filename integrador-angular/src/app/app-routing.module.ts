@@ -5,14 +5,22 @@ import { ProductsComponent } from './components/my-main/products/products.compon
 import { PurchaseOrdersComponent } from './components/my-main/purchase-orders/purchase-orders.component';
 import { SupplierDetailComponent } from './components/my-main/supplier-detail/supplier-detail.component';
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
+import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
 
 
 const routes: Routes = [
   { path: 'suppliers', component: SuppliersComponent },
   { path: 'products', component: ProductsComponent },
-  { path: 'purchase-orders', component: PurchaseOrdersComponent },
-  {path: "suppliers/:codProv", component: SupplierDetailComponent},
-  {path: "products/:SKU", component: ProductDetailComponent}
+  {
+    path: 'purchase-orders',
+    children: [
+      { path: '', component: PurchaseOrdersComponent },
+      { path: 'new', component: NewPurchaseOrderComponent },
+      { path: 'update/:id', component: NewPurchaseOrderComponent },
+    ],
+  },
+  { path: 'suppliers/:codProv', component: SupplierDetailComponent },
+  { path: 'products/:SKU', component: ProductDetailComponent },
 ];
 
 @NgModule({

@@ -14,15 +14,14 @@
         <button
           type="button"
           class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#agregarProductoModal"
+          routerLink="/purchase-orders/new"
           id="btn-agregar-proveedor"
           
         >
-          +
+          Add new purchase order
         </button>
         <!-- Modal -->
-        <div
+        <!-- <div
           class="modal fade"
           id="agregarProductoModal"
           data-bs-backdrop="static"
@@ -211,7 +210,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <table class="table table-hover card-body">
@@ -247,7 +246,8 @@
                 data-bs-toggle="modal"
                 data-bs-target="#editarPrductoModal"
                 id="btn-agregar-proveedor"
-                (click)="loadUpdate(po)"
+                [routerLink]="['/purchase-orders/update', po.id]"
+                
               >
                 Editar
               </button>

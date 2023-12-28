@@ -1,13 +1,19 @@
-import { Supplier } from "./supplier";
-import { POProduct } from "./POProduct"; 
+
 export interface PurchasOrder{
-    id: number,
+    id?: number | undefined,
     number: number,
     emission: string,
     delivery: string,
     info: string,
-    supplier: Supplier,
+    supplierID: number,
     products: POProduct[],
     total: number,
     isDeleted: boolean,
+}
+
+export interface POProduct{
+    SKU : string,
+    name?: string,
+    amount: number
+    price: number,
 }
