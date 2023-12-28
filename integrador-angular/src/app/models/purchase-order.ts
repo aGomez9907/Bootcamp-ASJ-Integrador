@@ -9,4 +9,5 @@ export interface PurchasOrder{
     supplier: Supplier,
     products: POProduct[],
     total: number,
+    isDeleted: boolean,
 }

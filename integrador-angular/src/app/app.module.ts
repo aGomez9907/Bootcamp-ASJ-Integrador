@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SupplierDetailComponent } from './components/my-main/supplier-detail/supplier-detail.component';
 import { Iva } from '../enum/iva-condition';
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
+import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ProductDetailComponent } from './components/my-main/product-detail/prod
     PurchaseOrdersComponent,
     SupplierDetailComponent,
     ProductDetailComponent,
+    NewPurchaseOrderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule,HttpClientModule],
   providers: [],

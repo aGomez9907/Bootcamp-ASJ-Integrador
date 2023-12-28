@@ -103,27 +103,6 @@
       "telefonoContacto": "12341234",
       "emailContacto": "hola@ejemplo.com",
       "rolContacto": "aaa"
-    },
-    {
-      "id": 6,
-      "codProv": "vb1112",
-      "razonSocial": "ivaa",
-      "rubro": "Alimentos",
-      "website": "www.hola.com",
-      "telefono": 131342341234,
-      "email": "agomez@asjservicios.com",
-      "direccion": "calle falsa 123",
-      "cp": "1234",
-      "localidad": "temperley",
-      "provincia": "Tarapaca",
-      "pais": "Chile",
-      "iva": "No Responsable",
-      "cuit": "12-12377678-1",
-      "nombreContacto": "pepito",
-      "apellidoContacto": "gomez",
-      "telefonoContacto": "1234567789",
-      "emailContacto": "hola@ejemplo.com",
-      "rolContacto": "ASAA234"
     }
   ],
   "productos": [
@@ -176,6 +155,16 @@
       "precio": 123412341234123410,
       "proveedor": "aaa",
       "img": "a"
+    },
+    {
+      "SKU": "1234123444",
+      "categoria": "Alimentos y bebidas",
+      "nombre": "hamburguesa 2",
+      "descripcion": "doble con papas",
+      "precio": 1234,
+      "proveedor": "Maconal",
+      "img": "https://media.istockphoto.com/id/1398630614/es/foto/hamburguesa-con-queso-de-tocino-en-un-bollo-tostado.jpg?s=612x612&w=0&k=20&c=KLPvSrqnisFDDyWr-R8LiT9UHEeNgSmriFQm4yqVGM4=",
+      "id": 6
     }
   ],
   "ordenes": [
@@ -186,33 +175,70 @@
       "delivery": "13/12/12",
       "info": "some info",
       "supplier": {
-            "id": 5,
-            "codProv": "asdf12345",
-            "razonSocial": "aaa",
-            "rubro": "automotor",
-            "website": "www.hola.com",
-            "telefono": 12341234123,
-            "email": "agomez@asjservicios.com",
-            "direccion": "calle falsa 123",
-            "cp": "123412341234",
-            "localidad": "temperley",
-            "provincia": "Misiones",
-            "pais": "Argentina",
-            "iva": "Exento",
-            "cuit": "12-12377678-1",
-            "nombreContacto": "alejo",
-            "apellidoContacto": "gomez",
-            "telefonoContacto": "12341234",
-            "emailContacto": "hola@ejemplo.com",
-            "rolContacto": "aaa"
-            },
-      "products":  {   
-            "SKU": "lp1234",
-            "name": "PlayStation 2",
-            "amount": 5,
-            "price": 1234567.1234,
-            "total": 6172835.617
-            }
+        "id": 5,
+        "codProv": "asdf12345",
+        "razonSocial": "aaa",
+        "rubro": "automotor",
+        "website": "www.hola.com",
+        "telefono": 12341234123,
+        "email": "agomez@asjservicios.com",
+        "direccion": "calle falsa 123",
+        "cp": "123412341234",
+        "localidad": "temperley",
+        "provincia": "Misiones",
+        "pais": "Argentina",
+        "iva": "Exento",
+        "cuit": "12-12377678-1",
+        "nombreContacto": "alejo",
+        "apellidoContacto": "gomez",
+        "telefonoContacto": "12341234",
+        "emailContacto": "hola@ejemplo.com",
+        "rolContacto": "aaa"
+      },
+      "products": {
+        "SKU": "lp1234",
+        "name": "PlayStation 2",
+        "amount": 5,
+        "price": 1234567.1234
+      },
+      "total": 6172835.617,
+      "isDeleted": false
+    },
+    {
+      "id": 2,
+      "number": 1234,
+      "emission": "1/1/01",
+      "delivery": "13/12/12",
+      "info": "some info",
+      "supplier": {
+        "id": 5,
+        "codProv": "asdf12345",
+        "razonSocial": "aaa",
+        "rubro": "automotor",
+        "website": "www.hola.com",
+        "telefono": 12341234123,
+        "email": "agomez@asjservicios.com",
+        "direccion": "calle falsa 123",
+        "cp": "123412341234",
+        "localidad": "temperley",
+        "provincia": "Misiones",
+        "pais": "Argentina",
+        "iva": "Exento",
+        "cuit": "12-12377678-1",
+        "nombreContacto": "alejo",
+        "apellidoContacto": "gomez",
+        "telefonoContacto": "12341234",
+        "emailContacto": "hola@ejemplo.com",
+        "rolContacto": "aaa"
+      },
+      "products": {
+        "SKU": "lp1234",
+        "name": "PlayStation 2",
+        "amount": 5,
+        "price": 1234567.1234
+      },
+      "total": 6172835.617,
+      "isDeleted": false
     }
   ]
 }
