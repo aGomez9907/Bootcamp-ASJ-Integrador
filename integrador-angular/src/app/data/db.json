@@ -14,7 +14,8 @@
       "provincia": "Buenos Aires",
       "pais": "Argentina",
       "iva": "Responsable Inscripto",
-      "nombreContacto": "alejo",
+      "nombreContacto": "a",
+      "cuit": "12-12455678-1",
       "apellidoContacto": "gomez",
       "telefonoContacto": "1234567789",
       "emailContacto": "hola@ejemplo.com",
@@ -204,7 +205,7 @@
       "id": 10,
       "number": 1234,
       "emission": "28/12/2023",
-      "delivery": "2023-12-30",
+      "delivery": "2023/12/30",
       "info": "blablabla",
       "supplierID": "2",
       "products": [
@@ -227,7 +228,7 @@
     {
       "number": 1234,
       "emission": "28/12/2023",
-      "delivery": "2023-12-29",
+      "delivery": "2023/12/29",
       "info": "safasdf",
       "supplierID": "2",
       "products": [
@@ -245,7 +246,7 @@
     {
       "number": 1444,
       "emission": "28/12/2023",
-      "delivery": "2023-12-29",
+      "delivery": "2023/12/29",
       "info": "pepepeppe",
       "supplierID": "3",
       "products": [
@@ -260,6 +261,5 @@
       "isDeleted": false,
       "id": 4
     }
-
   ]
 }

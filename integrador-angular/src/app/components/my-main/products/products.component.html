@@ -33,7 +33,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="agregarProductoModalLabel">
-                  Agregar producto
+                  Create product
                 </h1>
                 <button
                   type="button"
@@ -51,7 +51,7 @@
                     <label
                       for="id-proveedor"
                       class="col-sm-4 col-form-label text-start"
-                      >Codigo SKU</label
+                      >SKU</label
                     >
                     <div class="col-sm-8">
                       <input
@@ -143,7 +143,7 @@
                     <label
                       for="input-proveedor"
                       class="col-sm-4 col-form-label text-start"
-                      >Proveedor</label
+                      >Supplier</label
                     >
                     <div class="col-sm-8">
                       <select
@@ -179,7 +179,7 @@
                       class="btn btn-secondary"
                       data-bs-dismiss="modal"
                     >
-                      Cancelar
+                      Cancel
                     </button>
                     <button
                       type="submit"
@@ -188,7 +188,7 @@
                       data-bs-dismiss="modal"
                       [disabled]="!productsForm.valid"
                     >
-                      Guardar
+                      Save
                     </button>
                   </div>
                 </form>
@@ -202,12 +202,12 @@
       <thead>
         <tr>
           <th></th>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Categoría</th>
-          <th>Proveedor</th>
-          <th>Precio</th>
-          <th>Acciones</th>
+          <th>SKU</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Supplier</th>
+          <th>Price</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -220,7 +220,7 @@
                 (error)="imageNotFound($event)"
               />
           </td>
-          <td>{{ p.id }}</td>
+          <td>{{ p.SKU }}</td>
           <td>{{ p.nombre }}</td>
           <td>{{ p.categoria }}</td>
           <td>{{ p.proveedor }}</td>
@@ -233,7 +233,7 @@
                 value="{{ p.SKU }}"
                 [routerLink]="['/products', p.SKU]"
               >
-                Detalles
+                Details
               </button>
 
               <button
@@ -244,7 +244,7 @@
                 id="btn-agregar-proveedor"
                 (click)="loadUpdate(p)"
               >
-                Editar
+                Edit
               </button>
 
               <button
@@ -253,7 +253,7 @@
                 value="{{ p.id }}"
                 (click)="deleteProduct(p.id)"
               >
-                Borrar
+                Delete
               </button>
             </div>
             <div
@@ -269,7 +269,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editarPrductoModal">
-                      Editar producto
+                      Edit product
                     </h1>
                     <button
                       type="button"
@@ -295,7 +295,7 @@
                         <label
                           for="id-proveedor"
                           class="col-sm-4 col-form-label text-start"
-                          >Codigo SKU</label
+                          >SKU</label
                         >
                         <div class="col-sm-8">
                           <input
@@ -428,7 +428,7 @@
                           data-bs-dismiss="modal"
                           (click)="resetFields()"
                         >
-                          Cancelar
+                          Cancel
                         </button>
                         <button
                           type="submit"
@@ -437,7 +437,7 @@
                           data-bs-dismiss="modal"
                           [disabled]="!productsForm.valid"
                         >
-                          Guardar
+                          Save
                         </button>
                       </div>
                     </form>
