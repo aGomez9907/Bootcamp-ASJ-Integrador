@@ -1,0 +1,120 @@
+<div class="m-2 d-flex flex-column ">
+    <button class="btn btn-close align-self-end mb-3" routerLink="/suppliers"></button>
+<div class="row mb-3">
+    <label for="id-proveedor" class="col-sm-4 col-form-label text-start">Codigo de proveedor</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="id-proveedor" name="codProv"disabled [(ngModel)]="codProvInput"  />
+    </div>
+  </div>
+  <hr>
+  <div class="row  align-self-center ">Datos del proveedor</div>
+  <hr>
+  <div class="row mb-3">
+    <label for="razon-social" class="col-sm-4 col-form-label text-start">Razon social</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="razon-social" name="razonSocial" disabled [(ngModel)]="razonSocialInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="select-rubro" class="col-sm-4 col-form-label text-start">Rubro</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="select-rubro" name="rubroInput" disabled [(ngModel)]="rubroInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-web" class="col-sm-4 col-form-label text-start">Sitio web</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="input-web" name="webInput" disabled  [(ngModel)]="webInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-tel" class="col-sm-4 col-form-label text-start">Telefono</label>
+    <div class="col-sm-8">
+      <input type="number" class="form-control" id="input-tel" name="telefono"  disabled required="" [(ngModel)]="telefonoInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-email" class="col-sm-4 col-form-label text-start">Email</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control" id="input-email" name="emailInput"  disabled [(ngModel)]="emailInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-direccion" class="col-sm-4 col-form-label text-start">Direccion</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="input-direccion" required="" disabled  name="direccionInput" [(ngModel)]="direccionInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-cp" class="col-sm-4 col-form-label text-start">Codigo Postal</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="input-cp" name="cpInput" disabled  [(ngModel)]="cpInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="input-localidad" class="col-sm-4 col-form-label text-start">Localidad</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="input-localidad" name="localidadInput" disabled  [(ngModel)]="localidadInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="province" class="col-sm-4 col-form-label text-start">Provincia</label>
+    <div class="col-sm-8">
+        <input type="text" class="form-control"  disabled  [(ngModel)]="provinciaInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="country" class="col-sm-4 col-form-label text-start">Pais</label>
+    <div class="col-sm-8">
+        <input type="text" class="form-control"  disabled  [(ngModel)]="paisInput" />
+    </div>
+  </div>
+  <hr>
+  <div class="row  align-self-center ">Datos fiscales</div>
+  <hr>
+  <div class="row mb-3">
+    <label for="input-cuit" class="col-sm-4 col-form-label text-start">CUIT</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="input-cuit" name="cuitInput" disabled  [(ngModel)]="cuitInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="select-iva" class="col-sm-4 col-form-label text-start">IVA</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="select-iva" name="ivaInput"  disabled [(ngModel)]="ivaInput" />
+    </div>
+  </div>
+  <hr>
+  <div class="row  align-self-center ">Datos de contacto</div>
+  <hr>
+  <div class="row mb-3">
+    <label for="nombre-contacto" class="col-sm-4 col-form-label text-start">Nombre de contacto</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="nombre-contacto" name="nombreContactoInput"  disabled [(ngModel)]="nombreContactoInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="apellido-contacto" class="col-sm-4 col-form-label text-start">Apellido de contacto</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="apellido-contacto" name="apellidContactoInput"  disabled [(ngModel)]="apellidContactoInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="telefono-contacto" class="col-sm-4 col-form-label text-start">Telefono de contacto</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="telefono-contacto" name="telefonoContactoInput" disabled  [(ngModel)]="telefonoContactoInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="email-contacto" class="col-sm-4 col-form-label text-start">Email de contacto</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control" id="email-contacto" name="emailContactoInput" disabled  [(ngModel)]="emailContactoInput" />
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="rol-contacto" class="col-sm-4 col-form-label text-start">Rol de contacto</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="rol-contacto" name="rolContactoInput" disabled  [(ngModel)]="rolContactoInput" />
+    </div>
+  </div>
+</div>

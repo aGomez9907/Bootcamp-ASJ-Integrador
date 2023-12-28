@@ -1,14 +1,21 @@
 export interface Supplier {
-  id: number;
+  id: number,
+  codProv: string;
   razonSocial: string;
   rubro: string;
-  cuit: string;
-  email: string;
   website: string;
+  telefono: number;
+  email: string;
   direccion: string;
   cp: string;
+  localidad: string;
   provincia: string;
   pais: string;
-  telefono: number;
+  cuit: string;
   iva: string;
+  nombreContacto: string;
+  apellidoContacto: string
+  telefonoContacto: number;
+  emailContacto: string;
+  rolContacto: string;
 }
