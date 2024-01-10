@@ -183,20 +183,8 @@ INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, i
 
 
 
-INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date, delivery_date, descriprion, created_at, updated_at) VALUES
-(1, 1, 1001, '2024-01-10', '2024-01-20', 'Orden de compra #1001', GETDATE(), NULL),
-(2, 2, 1002, '2024-01-11', '2024-01-21', 'Orden de compra #1002', GETDATE(), NULL),
-(3, 3, 1003, '2024-01-12', '2024-01-22', 'Orden de compra #1003', GETDATE(), NULL),
-(4, 1, 1004, '2024-01-13', '2024-01-23', 'Orden de compra #1004', GETDATE(), NULL),
-(5, 1, 1005, '2024-01-14', '2024-01-24', 'Orden de compra #1005', GETDATE(), NULL);
 
 
-INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
-(1, 1, 10, 699.99, GETDATE(), NULL),
-(2, 2, 50, 1.99, GETDATE(), NULL),
-(3, 3, 20, 15.99, GETDATE(), NULL),
-(4, 4, 5, 119.99, GETDATE(), NULL),
-(5, 5, 2, 549.99, GETDATE(), NULL);
 
 
 
@@ -243,5 +231,4 @@ INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date
 
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (6, 1, 50, 699.99, '2024-01-09', NULL);
-
 
