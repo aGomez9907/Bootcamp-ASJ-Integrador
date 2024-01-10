@@ -12,7 +12,7 @@ INSERT INTO COUNTRIES (name) VALUES
 ('México'),
 ('España');
 
--- Insertar datos en la tabla PROVINCES
+
 INSERT INTO PROVINCES (country_id, name) VALUES
 (1, 'Buenos Aires'),
 (1, 'Córdoba'),
@@ -22,7 +22,7 @@ INSERT INTO PROVINCES (country_id, name) VALUES
 (3, 'São Paulo'),
 (4, 'Ciudad de México');
 
--- Insertar datos en la tabla CITIES
+
 INSERT INTO CITIES (province_id, name) VALUES
 (1, 'La Plata'),
 (1, 'Lomas de Zamora'),
@@ -36,7 +36,7 @@ INSERT INTO CITIES (province_id, name) VALUES
 (6, 'São Paulo Centro'),
 (7, 'Polanco');
 
--- Insertar datos en la tabla ADDRESSES
+
 INSERT INTO ADDRESSES (city_id, street, number, postcode, created_at, updated_at) VALUES
 (1, '25', 123, 'B1900', GETDATE(), NULL),
 (1, '30', 987, 'B1900', GETDATE(), NULL),
@@ -64,7 +64,7 @@ INSERT INTO CONTACT_INFO (first_name, last_name, phone, email, contact_role, cre
 
 
 
--- Insertar datos en la tabla TAX_CONDITIONS
+
 INSERT INTO TAX_CONDITIONS (name) VALUES
 ('IVA Responsable Inscripto'),
 ('IVA Responsable no Inscripto'),
@@ -82,7 +82,7 @@ INSERT INTO TAX_CONDITIONS (name) VALUES
 ('Pequeño Contribuyente Eventual Social');
 
 
--- Insertar datos en la tabla SUPPLIER_CATEGORIES
+
 INSERT INTO SUPPLIER_CATEGORIES (name, created_at, updated_at) VALUES
 ('Electrónica', GETDATE(), NULL),
 ('Alimentación', GETDATE(), NULL),
@@ -100,7 +100,7 @@ INSERT INTO SUPPLIER_CATEGORIES (name, created_at, updated_at) VALUES
 ('Ropa Deportiva', GETDATE(), NULL),
 ('Electrónica de Consumo', GETDATE(), NULL);
 
--- Insertar datos en la tabla PRODUCT_CATEGORIES
+
 INSERT INTO PRODUCT_CATEGORIES (name, created_at, updated_at) VALUES
 ('Electrodomésticos', GETDATE(), NULL),
 ('Alimentos', GETDATE(), NULL),
@@ -119,7 +119,7 @@ INSERT INTO PRODUCT_CATEGORIES (name, created_at, updated_at) VALUES
 ('Hogar y Cocina', GETDATE(), NULL);
 
 
--- Insertar datos en la tabla SUPPLIERS
+
 INSERT INTO SUPPLIERS (address_id, category_id, tax_condition_id, contact_info_id, cod_prov, legal_name, web_site, phone, email, cuit, created_at, updated_at) VALUES
 (1, 1, 2, 1, 'PROV001', 'Electrónica SRL', 'http://www.electronica.com', '+54 11 3456789', 'info@electronica.com', '30-12345678-1', GETDATE(), NULL),
 (2, 2, 3, 2, 'PROV002', 'Alimentos SA', 'http://www.alimentos.com', '+54 11 87654321', 'info@alimentos.com', '30-12348786-1', GETDATE(), NULL),
@@ -131,59 +131,58 @@ INSERT INTO SUPPLIERS (address_id, category_id, tax_condition_id, contact_info_i
 (8, 8, 4, 8, 'PROV008', 'Deportes Extremos', 'http://www.deportes.com', '+54 341 76098654', 'info@deportes.com', '30-60192879-1', GETDATE(), NULL),
 (9, 9, 1, 9, 'PROV009', 'Cosmeticos Baratos', 'http://www.cosmeticos.com', '+54 342 7609854', 'info@cosmeticos.com', '30-61827790-1', GETDATE(), NULL),
 (10, 10, 2, 10, 'PROV010', 'Electrodomesticos Blancos', 'http://www.electro.com', '+54 2338 76156654', 'info@electrodomesticos.com', '30-60147329-1', GETDATE(), NULL);
--- Insertar datos en la tabla PRODUCTS
--- Insertar productos para el proveedor 1
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (1, 1, 'SKU001', 'Smart TV', 'Pantalla LED 55"', 799.99, 'http://www.example.com/tv.jpg', GETDATE(), NULL),
 (6, 1, 'SKU002', 'Auriculares Inalámbricos', 'Con cancelación de ruido', 129.99, 'http://www.example.com/auriculares.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 2
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (2, 2, 'SKU003', 'Arroz', 'Arroz blanco 1kg', 2.49, NULL, GETDATE(), NULL),
 (2, 2, 'SKU004', 'Aceite de Oliva', 'Extra virgen, 500ml', 8.99, 'http://www.example.com/aceite.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 3
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (3, 3, 'SKU005', 'Camiseta', 'Camiseta de algodón', 19.99, 'http://www.example.com/camiseta.jpg', GETDATE(), NULL),
 (3, 3, 'SKU006', 'Jeans', 'Jeans ajustados, talla M', 39.99, 'http://www.example.com/jeans.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 4
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (13, 4, 'SKU007', 'Taladro', 'Taladro inalámbrico 18V', 129.99, 'http://www.example.com/taladro.jpg', GETDATE(), NULL),
 (13, 4, 'SKU008', 'Sierra Circular', 'Sierra de mano eléctrica', 89.99, 'http://www.example.com/sierra.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 5
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (5, 5, 'SKU009', 'Sofá', 'Sofá de cuero', 599.99, 'http://www.example.com/sofa.jpg', GETDATE(), NULL),
 (5, 5, 'SKU010', 'Mesa de Centro', 'Mesa de madera maciza', 299.99, 'http://www.example.com/mesa.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 6
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (12, 6, 'SKU011', 'Juguetes Educativos', 'Set de construcción', 29.99, 'http://www.example.com/juguetes.jpg', GETDATE(), NULL),
 (12, 6, 'SKU012', 'Muñeca', 'Muñeca de tela suave', 14.99, 'http://www.example.com/muneca.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 7
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (7, 7, 'SKU013', 'Cuadernos', 'Pack de 3 cuadernos', 8.99, 'http://www.example.com/cuadernos.jpg', GETDATE(), NULL),
 (11, 7, 'SKU014', 'Papel de Regalo', 'Pack de 5 rollos', 5.99, 'http://www.example.com/papel.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 8
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (10, 8, 'SKU015', 'Balón de Fútbol', 'Tamaño oficial', 19.99, 'http://www.example.com/balon.jpg', GETDATE(), NULL),
 (10, 8, 'SKU016', 'Raqueta de Tenis', 'Raqueta profesional', 79.99, 'http://www.example.com/raqueta.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 9
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (14, 9, 'SKU017', 'Set de Maquillaje', 'Set completo de maquillaje', 49.99, 'http://www.example.com/maquillaje.jpg', GETDATE(), NULL),
 (14, 9, 'SKU018', 'Perfume Floral', 'Fragancia femenina', 29.99, 'http://www.example.com/perfume.jpg', GETDATE(), NULL);
 
--- Insertar productos para el proveedor 10
+
 INSERT INTO PRODUCTS (category_id, supplier_id, SKU, name, description, price, img_url, created_at, updated_at) VALUES
 (15, 10, 'SKU019', 'Licuadora', 'Licuadora de alta potencia', 89.99, 'http://www.example.com/licuadora.jpg', GETDATE(), NULL),
 (15, 10, 'SKU020', 'Aspiradora', 'Aspiradora sin bolsa', 149.99, 'http://www.example.com/aspiradora.jpg', GETDATE(), NULL);
 
 
--- Insertar datos en la tabla PURCHASE_ORDERS
+
 INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date, delivery_date, descriprion, created_at, updated_at) VALUES
 (1, 1, 1001, '2024-01-10', '2024-01-20', 'Orden de compra #1001', GETDATE(), NULL),
 (2, 2, 1002, '2024-01-11', '2024-01-21', 'Orden de compra #1002', GETDATE(), NULL),
@@ -191,7 +190,7 @@ INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date
 (4, 1, 1004, '2024-01-13', '2024-01-23', 'Orden de compra #1004', GETDATE(), NULL),
 (5, 1, 1005, '2024-01-14', '2024-01-24', 'Orden de compra #1005', GETDATE(), NULL);
 
--- Insertar datos en la tabla PURCHASE_DETAIL
+
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (1, 1, 10, 699.99, GETDATE(), NULL),
 (2, 2, 50, 1.99, GETDATE(), NULL),
@@ -202,7 +201,6 @@ INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price
 
 
 
--- Insertar datos en la tabla PURCHASE_ORDERS
 INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date, delivery_date, descriprion, created_at, updated_at) VALUES
 (1, 1, 1001, '2024-01-10', '2024-01-20', 'Orden de compra #1001', GETDATE(), NULL),
 (2, 1, 1002, '2023-01-11', '2023-01-21', 'Orden de compra #1002', '2023-01-11', NULL),
@@ -211,34 +209,34 @@ INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date
 (5, 3, 1005, '2023-08-14', '2023-08-24', 'Orden de compra #1005', '2023-01-11', NULL);
 
 
--- Insertar datos en la tabla PURCHASE_DETAIL para la Orden de Compra #1001
+
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (1, 1, 10, 699.99, '2024-01-10', NULL),
 (1, 2, 5, 1.99, '2024-01-10', NULL);
 
--- Insertar datos en la tabla PURCHASE_DETAIL para la Orden de Compra #1002
+
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (2, 3, 15, 15.99, '2023-01-11', NULL),
 (2, 4, 3, 119.99,'2023-01-11', NULL);
 
--- Insertar datos en la tabla PURCHASE_DETAIL para la Orden de Compra #1003
+
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (3, 5, 2, 549.99, '2023-02-12', NULL),
 (3, 6, 10, 29.99, '2023-02-12', NULL);
 
--- Insertar datos en la tabla PURCHASE_DETAIL para la Orden de Compra #1004
+
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (4, 7, 5, 8.99, '2023-06-13', NULL),
 (4, 8, 2, 79.99,'2023-06-13', NULL);
 
--- Insertar datos en la tabla PURCHASE_DETAIL para la Orden de Compra #1005
+
 INSERT INTO PURCHASE_DETAIL (purchase_order_id, product_id, quantity, unit_price, created_at, updated_at) VALUES
 (5, 9, 3, 49.99, '2023-08-14', NULL),
 (5, 10, 1, 89.99, '2023-08-14', NULL);
 
 
 
-
+--agrego una mas al proveedor 1 para la query 6 
 
 INSERT INTO PURCHASE_ORDERS (supplier_id, status_id, order_number, emission_date, delivery_date, descriprion, created_at, updated_at) VALUES
 (1, 1, 1007, '2024-01-09', '2024-01-19', 'Orden de compra #1007', GETDATE(), NULL);

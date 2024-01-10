@@ -141,5 +141,6 @@ CREATE TABLE purchase_detail
      FOREIGN KEY (product_id) REFERENCES products (id)
   ); 
 
+  -- me habia olvidado el logo 
 
   alter table suppliers add url_logo varchar(255) NULL
