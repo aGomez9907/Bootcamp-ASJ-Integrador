@@ -2,128 +2,91 @@
   "proveedores": [
     {
       "id": 1,
-      "codProv": "gc41",
-      "razonSocial": "Pony",
-      "rubro": "Electrónica",
+      "code": "gc41",
+      "legalName": "Pony",
+      "category": "Electrónica",
       "website": "www.hola.com",
-      "telefono": 123456789,
+      "phone": 123456789,
       "email": "hola@ejemplo.com",
-      "direccion": "calle falsa 123",
-      "cp": "1234",
-      "localidad": "temperley",
-      "provincia": "Buenos Aires",
-      "pais": "Argentina",
-      "iva": "Responsable Inscripto",
-      "nombreContacto": "a",
-      "cuit": "12-12455678-1",
-      "apellidoContacto": "gomez",
-      "telefonoContacto": "1234567789",
-      "emailContacto": "hola@ejemplo.com",
-      "rolContacto": "encargado"
+      "cuit": "12-124589338-1",
+      "address": {
+        "postCode": "1234",
+        "street": "calle falsa",
+        "number": 123,
+        "city": "temperley",
+        "province": "Buenos Aires",
+        "country": "Argentina"
+      },
+      "iva": "IVA Responsable Inscripto",
+      "contact": {
+        "firstName": "a",
+        "lastName": "g",
+        "phone": "1234567789",
+        "email": "hola@ejemplo.com",
+        "role": "encargado"
+      }
     },
     {
       "id": 2,
-      "codProv": "vb11",
-      "razonSocial": "Maconal",
-      "rubro": "Alimentos",
+      "code": "vb11",
+      "legalName": "Maconal",
+      "category": "Alimentos",
       "website": "www.hola.com",
-      "telefono": 123456789,
+      "phone": "123456789",
       "email": "hola@ejemplo.com",
-      "direccion": "calle falsa 12",
-      "cp": "1234",
-      "localidad": "temperley",
-      "provincia": "Buenos Aires",
-      "pais": "Argentina",
-      "iva": "Responsable Inscripto",
-      "cuit": "12-12455678-1",
-      "nombreContacto": "pepe",
-      "apellidoContacto": "gomez",
-      "telefonoContacto": "1234567789",
-      "emailContacto": "hola@ejemplo.com",
-      "rolContacto": "encarasdfasdf"
+      "cuit": "30-12455678-1",
+      "address": {
+        "postCode": "1234",
+        "street": "calle falsa",
+        "number": 12,
+        "city": "Lomas De Zamora",
+        "province": "Buenos Aires",
+        "country": "Argentina"
+      },
+      "iva": "IVA Responsable Inscripto",
+      "contact": {
+        "firstName": "apepe",
+        "lastName": "gomez",
+        "phone": "1234567789",
+        "email": "hola@ejemplo.com",
+        "role": "encarasdfasdf"
+      }
     },
     {
       "id": 3,
-      "codProv": "rk123",
-      "razonSocial": "Ferraro",
-      "rubro": "automotor",
+      "code": "rk123",
+      "legalName": "Ferraro",
+      "category": "Automotor",
       "website": "www.hola.com",
-      "telefono": 123456789,
+      "phone": "123456789",
       "email": "hola@ejemplo.com",
-      "direccion": "calle falsa 13",
-      "cp": "1234",
-      "localidad": "temperley",
-      "provincia": "Buenos Aires",
-      "pais": "Argentina",
-      "iva": "Monotributo",
-      "cuit": "12-12377678-1",
-      "nombreContacto": "jose",
-      "apellidoContacto": "gomez",
-      "telefonoContacto": "1234567089",
-      "emailContacto": "hola@ejemplo.com",
-      "rolContacto": "encargado"
-    },
-    {
-      "id": 4,
-      "codProv": "asdf1234",
-      "razonSocial": "Guchi",
-      "rubro": "12341234",
-      "website": "123412341234",
-      "telefono": 123412341234,
-      "email": "12341234123",
-      "direccion": "4123412341234",
-      "cp": "123412341234",
-      "localidad": "13241234",
-      "provincia": "Concepcion",
-      "pais": "Chile",
-      "iva": "Monotributo",
-      "cuit": "12-12377998-1",
-      "nombreContacto": "12341234",
-      "apellidoContacto": "12341234123",
-      "telefonoContacto": "12341234123",
-      "emailContacto": "4123412341234",
-      "rolContacto": "ASAA234"
-    },
-    {
-      "id": 5,
-      "codProv": "asdf12345",
-      "razonSocial": "aaa",
-      "rubro": "automotor",
-      "website": "www.hola.com",
-      "telefono": 12341234123,
-      "email": "agomez@asjservicios.com",
-      "direccion": "calle falsa 123",
-      "cp": "123412341234",
-      "localidad": "temperley",
-      "provincia": "Misiones",
-      "pais": "Argentina",
-      "iva": "Exento",
-      "cuit": "12-12377678-1",
-      "nombreContacto": "alejo",
-      "apellidoContacto": "gomez",
-      "telefonoContacto": "12341234",
-      "emailContacto": "hola@ejemplo.com",
-      "rolContacto": "aaa"
+      "cuit": "30-124220678-1",
+      "address": {
+        "postCode": "1234",
+        "street": "calle fake",
+        "number": 14,
+        "city": "Banfield",
+        "province": "Buenos Aires",
+        "country": "Argentina"
+      },
+      "iva": "Responsable Monotributo",
+      "contact": {
+        "firstName": "jose",
+        "lastName": "ramirez",
+        "phone": "1234447789",
+        "email": "hola@ejemplo.com",
+        "role": "encarado"
+      }
     }
   ],
   "productos": [
-    {
-      "id": 1,
-      "SKU": "pr1235",
-      "categoria": "Alimentos y bebidas",
-      "nombre": "hamburguesa",
-      "descripcion": "triple con papas",
-      "precio": "123.456",
-      "proveedor": "Maconal",
-      "img": "https://media.istockphoto.com/id/1398630614/es/foto/hamburguesa-con-queso-de-tocino-en-un-bollo-tostado.jpg?s=612x612&w=0&k=20&c=KLPvSrqnisFDDyWr-R8LiT9UHEeNgSmriFQm4yqVGM4="
-    },
     {
       "id": 2,
       "SKU": "pr456",
       "categoria": "Automotriz",
       "nombre": "Ferraro LaFerraro",
       "descripcion": "automóvil superdeportivo híbrido eléctrico",
-      "precio": "123456789101112.1234",
+      "precio": 12341112,
       "proveedor": "Ferraro",
       "img": "https://cdn.ferrari.com/cms/network/media/img/resize/5ddb97392cdb32285a799dfa-laferrari-2013-share?width=1080"
     },
@@ -138,42 +101,32 @@
       "img": "https://http2.mlstatic.com/D_NQ_NP_923283-MLA40388393976_012020-O.webp"
     },
     {
-      "id": 4,
-      "SKU": "pr1234",
-      "categoria": "Ropa y moda",
-      "nombre": "Remera",
-      "descripcion": "lorem ipsum",
-      "precio": 123,
-      "proveedor": "Guchi",
-      "img": "data:image/jpeg;base64,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"
-    },
-    {
-      "id": 5,
-      "SKU": "aaaaaaaaa",
-      "categoria": "Joyería y accesorios",
-      "nombre": "aaaaaaa",
-      "descripcion": "aaaaaaa",
-      "precio": 123412341234123410,
-      "proveedor": "aaa",
-      "img": "a"
-    },
-    {
-      "SKU": "1234123444",
+      "id": 7,
+      "SKU": "kb4455",
       "categoria": "Alimentos y bebidas",
-      "nombre": "hamburguesa 2",
-      "descripcion": "doble con papas",
+      "nombre": "krusty burger",
+      "descripcion": "rica hamburguesa",
       "precio": 1234,
       "proveedor": "Maconal",
-      "img": "https://media.istockphoto.com/id/1398630614/es/foto/hamburguesa-con-queso-de-tocino-en-un-bollo-tostado.jpg?s=612x612&w=0&k=20&c=KLPvSrqnisFDDyWr-R8LiT9UHEeNgSmriFQm4yqVGM4=",
-      "id": 6
+      "img": "https://i0.wp.com/todoimpresiones.shop/wp-content/uploads/2022/05/17.png"
+    },
+    {
+      "id": 8,
+      "SKU": "kkk123",
+      "categoria": "Alimentos y bebidas",
+      "nombre": "hamburguesa",
+      "descripcion": "triple con cheddar",
+      "precio": 1111,
+      "proveedor": "Maconal",
+      "img": "https://media.istockphoto.com/id/1398630614/es/foto/hamburguesa-con-queso-de-tocino-en-un-bollo-tostado.jpg?s=612x612&w=0&k=20&c=KLPvSrqnisFDDyWr-R8LiT9UHEeNgSmriFQm4yqVGM4="
     }
   ],
   "ordenes": [
     {
       "id": 1,
       "number": 123,
-      "emission": "12/12/12",
-      "delivery": "13/12/12",
+      "emission": "12/12/2012",
+      "delivery": "13/12/2012",
       "info": "some info",
       "supplierID": 5,
       "products": {
@@ -187,9 +140,9 @@
     },
     {
       "id": 2,
-      "number": 1234,
-      "emission": "1/1/01",
-      "delivery": "13/12/12",
+      "number": 124,
+      "emission": "01/01/2001",
+      "delivery": "13/12/2012",
       "info": "some info",
       "supplierID": 5,
       "products": {
@@ -203,9 +156,9 @@
     },
     {
       "id": 10,
-      "number": 1234,
+      "number": 125,
       "emission": "28/12/2023",
-      "delivery": "2023/12/30",
+      "delivery": "30/12/2023",
       "info": "blablabla",
       "supplierID": "2",
       "products": [
@@ -226,9 +179,9 @@
       "isDeleted": false
     },
     {
-      "number": 1234,
+      "number": 126,
       "emission": "28/12/2023",
-      "delivery": "2023/12/29",
+      "delivery": "29/12/2023",
       "info": "safasdf",
       "supplierID": "2",
       "products": [
@@ -246,7 +199,7 @@
     {
       "number": 1444,
       "emission": "28/12/2023",
-      "delivery": "2023/12/29",
+      "delivery": "29/12/2023",
       "info": "pepepeppe",
       "supplierID": "3",
       "products": [
@@ -260,6 +213,48 @@
       "total": 123456789101112.12,
       "isDeleted": false,
       "id": 4
+    },
+    {
+      "number": 127,
+      "emission": "28/12/2023",
+      "delivery": "31/12/2023",
+      "info": "pedido de 100 krustyburgers y 30 hambruguesas triples",
+      "supplierID": "2",
+      "products": [
+        {
+          "SKU": "kb4455",
+          "name": "krusty burger",
+          "amount": 100,
+          "price": 123400
+        },
+        {
+          "SKU": "pr1235",
+          "name": "hamburguesa",
+          "amount": 30,
+          "price": 3703.6800000000003
+        }
+      ],
+      "total": 12451110.4,
+      "isDeleted": false,
+      "id": 11
+    },
+    {
+      "number": 9999,
+      "emission": "29/12/2023",
+      "delivery": "2024-01-09",
+      "info": "aaa",
+      "supplierID": "2",
+      "products": [
+        {
+          "SKU": "kkk123",
+          "name": "hamburguesa",
+          "amount": 1,
+          "price": 1111
+        }
+      ],
+      "total": 1111,
+      "isDeleted": false,
+      "id": 12
     }
   ]
 }

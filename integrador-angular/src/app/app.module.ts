@@ -17,6 +17,8 @@ import { Iva } from '../enum/iva-condition';
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
 import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
 import { PurchaseOrderDetailComponent } from './components/my-main/purchase-order-detail/purchase-order-detail.component';
+import { NewSupplierComponent } from './components/my-main/new-supplier/new-supplier.component';
+
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { PurchaseOrderDetailComponent } from './components/my-main/purchase-orde
     ProductDetailComponent,
     NewPurchaseOrderComponent,
     PurchaseOrderDetailComponent,
+    NewSupplierComponent,
+
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule,HttpClientModule],
   providers: [],

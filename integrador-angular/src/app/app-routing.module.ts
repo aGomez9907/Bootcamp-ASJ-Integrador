@@ -7,11 +7,15 @@ import { SupplierDetailComponent } from './components/my-main/supplier-detail/su
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
 import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
 import { PurchaseOrderDetailComponent } from './components/my-main/purchase-order-detail/purchase-order-detail.component';
+import { NewSupplierComponent } from './components/my-main/new-supplier/new-supplier.component';
 
 
 const routes: Routes = [
+  { path: "", redirectTo:'/suppliers', pathMatch: 'full' },
   { path: 'suppliers', component: SuppliersComponent },
   { path: 'products', component: ProductsComponent },
+  { path: 'suppliers/new', component: NewSupplierComponent },
+  { path: 'suppliers/update/:id', component: NewSupplierComponent },
   {
     path: 'purchase-orders',
     children: [

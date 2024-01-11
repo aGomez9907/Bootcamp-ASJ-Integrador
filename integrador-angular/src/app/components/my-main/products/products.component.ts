@@ -77,7 +77,7 @@ imageNotFound(event: Event){
 
 getSupplierList(){
   this.suppliersService.getSuppliers().subscribe(res => {
-    this.suppliers = res.map(prov => prov.razonSocial);
+    this.suppliers = res.map(prov => prov.legalName);
     
   });
 
@@ -105,7 +105,7 @@ getSupplierList(){
 
 
   deleteProduct(id: number) {
-    let confirmacion = confirm('¿Desea eliminar el proveedor #' + id + '?');
+    let confirmacion = confirm('¿Desea eliminar el producto #' + id + '?');
     if (confirmacion) {
       this.productService.deleteProduct(id).subscribe(res=>{
         console.log(res);

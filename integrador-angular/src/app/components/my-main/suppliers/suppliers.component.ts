@@ -91,28 +91,28 @@ export class SuppliersComponent implements OnInit {
 
 
 
-  loadUpdate(s: Supplier) {
-    this.idInput = s.id;
-    this.codProvInput  = s.codProv;
-    this.razonSocialInput  = s.razonSocial;
-    this.rubroInput  = s.rubro;
-    this.webInput  = s.website;
-    this.telefonoInput  = s.telefono;
-    this.emailInput  = s.email;
-    this.direccionInput  = s.direccion;
-    this.cpInput  = s.cp;
-    this.localidadInput = s.localidad;
-    this.provinciaInput  = s.provincia;
-    this.paisInput  = s.pais;
-    this.cuitInput  = s.cuit;
-    this.ivaInput  = s.iva;
-    this.nombreContactoInput  = s.nombreContacto;
-    this.apellidContactoInput  = s.apellidoContacto;
-    this.telefonoContactoInput  = s.telefonoContacto;
-    this.emailContactoInput  = s.emailContacto;
-    this.rolContactoInput  = s.rolContacto;
-    console.log("id:"+this.idInput)
-  }
+  // loadUpdate(s: Supplier) {
+  //   this.idInput = s.id;
+  //   this.codProvInput  = s.codProv;
+  //   this.razonSocialInput  = s.razonSocial;
+  //   this.rubroInput  = s.rubro;
+  //   this.webInput  = s.website;
+  //   this.telefonoInput  = s.telefono;
+  //   this.emailInput  = s.email;
+  //   this.direccionInput  = s.direccion;
+  //   this.cpInput  = s.cp;
+  //   this.localidadInput = s.localidad;
+  //   this.provinciaInput  = s.provincia;
+  //   this.paisInput  = s.pais;
+  //   this.cuitInput  = s.cuit;
+  //   this.ivaInput  = s.iva;
+  //   this.nombreContactoInput  = s.nombreContacto;
+  //   this.apellidContactoInput  = s.apellidoContacto;
+  //   this.telefonoContactoInput  = s.telefonoContacto;
+  //   this.emailContactoInput  = s.emailContacto;
+  //   this.rolContactoInput  = s.rolContacto;
+  //   console.log("id:"+this.idInput)
+  // }
 
   resetFields() {
     this.idInput = 0;
@@ -170,7 +170,7 @@ export class SuppliersComponent implements OnInit {
 
 
 
-  deleteSupplier(id: number) {
+  deleteSupplier(id: any) {
     let confirmacion = confirm('¿Desea eliminar el proveedor #' + id + '?');
     if (confirmacion) {
       this.suppliersService.deleteSupplier(id).subscribe(res=>{

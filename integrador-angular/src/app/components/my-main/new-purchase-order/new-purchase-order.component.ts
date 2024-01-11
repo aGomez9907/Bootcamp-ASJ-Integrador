@@ -101,7 +101,7 @@ export class NewPurchaseOrderComponent implements OnInit {
   filterProducts(id: number) {
     let prov = this.suppliers.filter((sup) => sup.id == id);
     //console.log("filtered products",this.products.filter(p => p.proveedor == sup.razonSocial))
-    return this.products.filter((p) => p.proveedor == prov[0].razonSocial);
+    return this.products.filter((p) => p.proveedor == prov[0].legalName);
   }
 
   loadProduct(id: number) {

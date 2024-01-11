@@ -1,0 +1,354 @@
+<section class="row">
+  <div class="row">
+    <div class="col">
+      <a class="text-decoration-none" routerLink="/supliers">← Back to list</a>
+    </div>
+  </div>
+  <div class="text-center my-4">
+    <h1 *ngIf="!isUpdating">Add new supplier</h1>
+    <h1 *ngIf="isUpdating">Update supplier</h1>
+  </div>
+  <hr />
+  <form #suppliersForm="ngForm" (ngSubmit)="saveSupplier()">
+    <div class="row mb-3">
+      <label for="id-proveedor" class="col-sm-4 col-form-label text-start"
+        >Supplier code <span class="fw-light">*</span></label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="id-proveedor"
+          required=""
+          minlength="4"
+          name="code"
+          #code="ngModel"
+          [(ngModel)]="currentSupplier.code"
+        />
+        <!-- <div *ngIf="name.errors?.['minlength']" class="col-auto">
+        <span class="form-text text-danger"
+          >Must have at least 4 characters.</span
+        >
+      </div> -->
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="razon-social" class="col-sm-4 col-form-label text-start"
+        >Supplier name <span class="fw-light">*</span></label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="razon-social"
+          name="legalName"
+          #legalName="ngModel"
+          required=""
+          [(ngModel)]="currentSupplier.legalName"
+        />
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <label for="select-category" class="col-sm-4 col-form-label text-start"
+        >Category</label
+      >
+      <div class="row">
+        <div class="col-11">
+          <select
+            class="form-select"
+            id="select-category"
+            name="category"
+            #category="ngModel"
+            [(ngModel)]="currentSupplier.category"
+          >
+            <option *ngFor="let c of categories">
+              {{ c.value }}
+            </option>
+          </select>
+        </div>
+        <div class="col-1">
+            <button
+                  class="btn btn-outline-secondary btn-sm "
+                  type="button"
+                  (click)="createNewCategory()"
+                >
+                  <i class="rounded-circle ">+</i>
+                </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="input-web" class="col-sm-4 col-form-label text-start"
+        >Website</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="input-web"
+          name="website"
+          #website="ngModel"
+          [(ngModel)]="currentSupplier.website"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="input-tel" class="col-sm-4 col-form-label text-start"
+        >Phone</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="number"
+          class="form-control"
+          id="input-tel"
+          name="phone"
+          #phone="ngModel"
+          [(ngModel)]="currentSupplier.phone"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="input-email" class="col-sm-4 col-form-label text-start"
+        >Email</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="email"
+          class="form-control"
+          id="input-email"
+          name="email"
+          #email="ngModel"
+          [(ngModel)]="currentSupplier.email"
+        />
+      </div>
+    </div>
+    <h4>Address</h4>
+    <div class="row mb-3">
+      <label for="input-calle" class="col-sm-4 col-form-label text-start"
+        >Street</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="input-calle"
+          required=""
+          name="street"
+          #street="ngModel"
+          [(ngModel)]="currentSupplier.address.street"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="input-numero" class="col-sm-4 col-form-label text-start"
+        >Number</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="input-calle"
+          required=""
+          name="number"
+          #number="ngModel"
+          [(ngModel)]="currentSupplier.address.number"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="input-cp" class="col-sm-4 col-form-label text-start"
+        >Post Code</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="input-cp"
+          name="postCode"
+          #postCode="ngModel"
+          [(ngModel)]="currentSupplier.address.postCode"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="country" class="col-sm-4 col-form-label text-start"
+        >Country</label
+      >
+      <div class="col-sm-8">
+        <select
+          class="form-select"
+          id="country"
+          name="country"
+          #country="ngModel"
+          [(ngModel)]="currentSupplier.address.country"
+        >
+          <option *ngFor="let country of countries">
+            {{ country }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="province" class="col-sm-4 col-form-label text-start"
+        >Province</label
+      >
+      <div class="col-sm-8">
+        <select
+          class="form-select"
+          name="provincia"
+          id="province"
+          #province="ngModel"
+          [(ngModel)]="currentSupplier.address.province"
+        >
+          <option
+            *ngFor="let province of provinces[currentSupplier.address.country]"
+          >
+            {{ province }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="input-localidad" class="col-sm-4 col-form-label text-start"
+        >City</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="input-localidad"
+          name="city"
+          #city="ngModel"
+          [(ngModel)]="currentSupplier.address.city"
+        />
+      </div>
+    </div>
+    <h4>Tax information</h4>
+    <div class="row mb-3">
+      <label for="input-cuit" class="col-sm-4 col-form-label text-start"
+        >CUIT</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="input-cuit"
+          name="cuit"
+          #cuit="ngModel"
+          [(ngModel)]="currentSupplier.cuit"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="select-iva" class="col-sm-4 col-form-label text-start"
+        >IVA</label
+      >
+      <div class="col-sm-8">
+        <select
+          class="form-select"
+          id="select-iva"
+          name="iva"
+          #iva="ngModel"
+          [(ngModel)]="currentSupplier.iva"
+        >
+          <option value="Otro" disabled>Choose an option</option>
+          <option value="IVA Responsable Inscripto">
+            IVA Responsable Inscripto
+          </option>
+          <option value="IVA Sujeto Exento">IVA Sujeto Exento</option>
+          <option value="Responsable Monotributo">
+            Responsable Monotributo
+          </option>
+          <option value="Proveedor del Exterior">Proveedor del Exterior</option>
+        </select>
+      </div>
+    </div>
+    <h4>Contact information</h4>
+    <div class="row mb-3">
+      <label for="nombre-contacto" class="col-sm-4 col-form-label text-start"
+        >Contact first name</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="nombre-contacto"
+          name="contactFirstName"
+          #contactFirstName="ngModel"
+          [(ngModel)]="currentSupplier.contact.firstName"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="apellido-contacto" class="col-sm-4 col-form-label text-start"
+        >Contact last name</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="apellido-contacto"
+          name="contactLasttName"
+          #contactLasttName="ngModel"
+          [(ngModel)]="currentSupplier.contact.lastName"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="telefono-contacto" class="col-sm-4 col-form-label text-start"
+        >Contact phone</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="telefono-contacto"
+          name="contactPhone"
+          #contactPhone="ngModel"
+          [(ngModel)]="currentSupplier.contact.phone"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="email-contacto" class="col-sm-4 col-form-label text-start"
+        >Contact email</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="email"
+          class="form-control"
+          id="email-contacto"
+          name="contactEmail"
+          #contactEmail="ngModel"
+          [(ngModel)]="currentSupplier.contact.email"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="rol-contacto" class="col-sm-4 col-form-label text-start"
+        >Contact role</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          id="rol-contacto"
+          name="contactRole"
+          #contactRole="ngModel"
+          [(ngModel)]="currentSupplier.contact.role"
+        />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary">Cancelar</button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="guardar-proveedor"
+        [disabled]="!suppliersForm.valid"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</section>

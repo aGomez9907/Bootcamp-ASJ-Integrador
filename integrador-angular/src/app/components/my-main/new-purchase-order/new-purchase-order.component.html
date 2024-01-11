@@ -11,7 +11,7 @@
         [disabled]="isSupplierSelected"
       >
         <option *ngFor="let s of suppliers" [value]="s.id">
-          {{ s.razonSocial }}
+          {{ s.legalName }}
         </option>
       </select>
       <section>
