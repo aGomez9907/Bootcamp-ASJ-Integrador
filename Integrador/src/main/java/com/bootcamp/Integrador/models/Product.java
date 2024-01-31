@@ -5,9 +5,13 @@ import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -33,14 +37,14 @@ public class Product {
 
 	private String description;
 
-	@NotBlank(message = "price cannot be blank")
+	//@NotBlank(message = "price cannot be blank")
 	@NotNull(message = "price cannot be null")
 	private double price;
 
 	@Column(name = "img_url")
 	private String imgUrl;
 	
-	@NotBlank(message = "isDeleted cannot be blank")
+//	@NotBlank(message = "isDeleted cannot be blank")
 	@NotNull(message = "isDeleted cannot be null")
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
@@ -53,15 +57,23 @@ public class Product {
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
 	
-	@Column(name = "product_category_id")
-	private ProductCategory categoryId;
 	
 	
-	@Column(name = "supplier_id")
-	private Supplier supplier_id;
+	//FK
+	//@NotBlank(message = "categoryId cannot be blank")
+	@NotNull(message = "categoryId cannot be null")
+	//@JoinColumn(name = "category_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	private ProductCategory category;
+	
+	//@NotBlank(message = "supplierId cannot be blank")
+	@NotNull(message = "supplierId cannot be null")
+	//@JoinColumn(name = "supplier_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Supplier supplier;
 
 	public Product(Integer id, String name, String sku, String description, double price, String imgUrl,
-			ProductCategory categoryId, Supplier supplier_id) {
+			ProductCategory categoryId, Supplier supplierId) {
 
 		this.id = id;
 		this.name = name;
@@ -69,23 +81,23 @@ public class Product {
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		this.categoryId = categoryId;
-		this.supplier_id = supplier_id;
+		this.category = categoryId;
+		this.supplier = supplierId;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
 		this.isDeleted = false;
 	}
 
 	public Product(String name, String sku, String description, double price, String imgUrl, ProductCategory categoryId,
-			Supplier supplier_id) {
+			Supplier supplierId) {
 
 		this.name = name;
 		this.sku = sku;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		this.categoryId = categoryId;
-		this.supplier_id = supplier_id;
+		this.category = categoryId;
+		this.supplier = supplierId;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
 		this.isDeleted = false;
@@ -168,19 +180,19 @@ public class Product {
 	}
 
 	public ProductCategory getCategoryId() {
-		return categoryId;
+		return category;
 	}
 
 	public void setCategoryId(ProductCategory categoryId) {
-		this.categoryId = categoryId;
+		this.category = categoryId;
 	}
 
-	public Supplier getSupplier_id() {
-		return supplier_id;
+	public Supplier getSupplierId() {
+		return supplier;
 	}
 
-	public void setSupplier_id(Supplier supplier_id) {
-		this.supplier_id = supplier_id;
+	public void setSupplierId(Supplier supplierId) {
+		this.supplier = supplierId;
 	}
 
 }

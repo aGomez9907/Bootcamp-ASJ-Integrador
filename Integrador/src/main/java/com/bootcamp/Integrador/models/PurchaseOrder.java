@@ -5,9 +5,12 @@ import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -22,22 +25,22 @@ public class PurchaseOrder {
 	@Column(unique = true, nullable = false)
 	private Integer id;
 	
-	@NotBlank(message = "OrderNumber cannot be blank")
+	//@NotBlank(message = "OrderNumber cannot be blank")
 	@NotNull(message = "OrderNumber cannot be null")
 	@Column(unique = true, nullable = false, name = "order_number")
 	private Integer orderNumber;
 	
-	@NotBlank(message = "deliveryDate cannot be blank")
+	//@NotBlank(message = "deliveryDate cannot be blank")
 	@NotNull(message = "deliveryDate cannot be null")
 	@Column(name = "delivery_date")
 	private Timestamp deliveryDate;
 	
-	@NotBlank(message = "emissionDate cannot be blank")
-	@NotNull(message = "emissionDate cannot be null")
+	//@NotBlank(message = "emissionDate cannot be blank")
+	//@NotNull(message = "emissionDate cannot be null")
 	@Column(name = "emission_date")
 	private Timestamp emissionDate;
 	
-	@NotBlank(message = "isDeleted cannot be blank")
+//	@NotBlank(message = "isDeleted cannot be blank")
 	@NotNull(message = "isDeleted cannot be null")
 	@Column(name = "is_deleted")
 	private boolean isDeleted; 
@@ -53,18 +56,25 @@ public class PurchaseOrder {
 	private Timestamp updatedAt;
 	
 	
+	//@NotBlank(message = "PurchaseOrderStatus cannot be blank")
+	@NotNull(message = "PurchaseOrderStatus cannot be null")
+	@ManyToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name = "purchase_order_status_id")
+	private PurchaseOrderStatus status;
 	
-	@Column(name = "status_id")
-	private PurchaseOrderStatus statusId;
 	
-	@Column(name = "supplier_id")
-	private Supplier supplierId;
+	//FK
+	//@NotBlank(message = "supplierId cannot be blank")
+	@NotNull(message = "supplierId cannot be null")
+	@ManyToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name = "supplier_id")
+	private Supplier supplier;
 
 	public PurchaseOrder(Integer id,
 			 Integer orderNumber,
 			 Timestamp deliveryDate,
 			 Timestamp emissionDate,
-			 boolean isDeleted,
+			 
 			String description, PurchaseOrderStatus statusId,
 			Supplier supplierId) {
 
@@ -72,18 +82,18 @@ public class PurchaseOrder {
 		this.orderNumber = orderNumber;
 		this.deliveryDate = deliveryDate;
 		this.emissionDate = emissionDate;
-		this.isDeleted = isDeleted;
+		this.isDeleted = false;
 		this.description = description;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
-		this.statusId = statusId;
-		this.supplierId = supplierId;
+		this.status = statusId;
+		this.supplier = supplierId;
 	}
 	public PurchaseOrder(
 			 Integer orderNumber,
 			 Timestamp deliveryDate,
 			 Timestamp emissionDate,
-			 boolean isDeleted,
+			
 			String description, PurchaseOrderStatus statusId,
 			Supplier supplierId) {
 
@@ -91,12 +101,12 @@ public class PurchaseOrder {
 		this.orderNumber = orderNumber;
 		this.deliveryDate = deliveryDate;
 		this.emissionDate = emissionDate;
-		this.isDeleted = isDeleted;
+		this.isDeleted = false;
 		this.description = description;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
-		this.statusId = statusId;
-		this.supplierId = supplierId;
+		this.status = statusId;
+		this.supplier = supplierId;
 	}
 	public PurchaseOrder() {
 
@@ -150,16 +160,16 @@ public class PurchaseOrder {
 		this.updatedAt = updatedAt;
 	}
 	public PurchaseOrderStatus getStatusId() {
-		return statusId;
+		return status;
 	}
 	public void setStatusId(PurchaseOrderStatus statusId) {
-		this.statusId = statusId;
+		this.status = statusId;
 	}
 	public Supplier getSupplierId() {
-		return supplierId;
+		return supplier;
 	}
 	public void setSupplierId(Supplier supplierId) {
-		this.supplierId = supplierId;
+		this.supplier = supplierId;
 	}
 	
 	

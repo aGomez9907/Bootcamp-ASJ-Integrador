@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { proveedores } from '../data/proveedores';
-import { Supplier } from '../models/supplier';
+import { Supplier, categoryId, Country, Province, TaxCondition } from '../models/supplier';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -17,19 +17,32 @@ export class SuppliersServiceService {
   }
 
 
-URL_API = 'http://localhost:3000'
+URL_API = 'http://localhost:8080'
   getSuppliers(): Observable<Supplier[]> {
     // return this.data;
-    return this.http.get<Supplier[]>(this.URL_API+'/proveedores');
+    return this.http.get<Supplier[]>(this.URL_API+'/suppliers');
   }
 
   getSupplier(codProv : string): Observable<Supplier> {
     // return this.data;
-    return this.http.get<Supplier>(this.URL_API+'/proveedores?codProv=' + codProv);
+    return this.http.get<Supplier>(this.URL_API+'/suppliers/' + codProv);
   }
 
+  getSupplierCategories(): Observable<categoryId[]>{
+    return this.http.get<categoryId[]>(this.URL_API+"/suppliercategories");
+  }
 
+  getCountries(): Observable<Country[]>{
+    return this.http.get<Country[]>(this.URL_API+"/countries");
+  }
 
+  getProvinces(): Observable<Province[]>{
+    return this.http.get<Province[]>(this.URL_API+"/provinces")
+  }
+
+  getTaxConditions(): Observable<TaxCondition[]>{
+    return this.http.get<TaxCondition[]>(this.URL_API+"/taxconditions")
+  }
   addSupplier(supplier: Supplier): Observable<Supplier> {
     // if (!this.data.find((sup: Supplier) => sup.id === supplier.id)) {
     //   this.data.push(supplier);
@@ -37,7 +50,8 @@ URL_API = 'http://localhost:3000'
     // } else {
     //   return false;
     // }
-    return this.http.post<Supplier>(this.URL_API+'/proveedores', supplier);
+    console.log(supplier)
+    return this.http.post<Supplier>(this.URL_API+'/suppliers', supplier);
   }
 
   deleteSupplier(id: number): Observable<Supplier> {

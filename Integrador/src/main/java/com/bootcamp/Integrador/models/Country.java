@@ -20,18 +20,33 @@ public class Country {
 	@NotBlank(message = "name cannot be blank")
 	@NotNull(message = "name cannot be null")
 	private String name;
+	//@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
 
 	public Country(int id, String name) {
 		this.id = id;
 		this.name = name;
+		this.isDeleted = false;
+	}
+
+	public Country(String name) {
+		this.name = name;
+		this.isDeleted = false;
 	}
 
 	public Country() {
 	}
 
-	public Country(String name) {
-		this.name = name;
+	public boolean isDeleted() {
+		return isDeleted;
 	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 
 	public Integer getId() {
 		return id;

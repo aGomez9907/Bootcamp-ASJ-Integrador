@@ -1,5 +1,7 @@
 package com.bootcamp.Integrador.services;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,11 +11,15 @@ import org.springframework.stereotype.Service;
 import com.bootcamp.Integrador.models.Address;
 import com.bootcamp.Integrador.repositories.AddressRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class AddressService {
 
 	@Autowired
 	AddressRepository addressRepository;
+//	@Autowired
+//	ProvinceService provinceService; 
 	
 	public List<Address> getAddresses(){
 		return addressRepository.findAll();
@@ -23,20 +29,30 @@ public class AddressService {
 		return addressRepository.findById(id);
 	}
 	
+	@Transactional
 	public Address createAddress(Address address) {
-		Address resultAddress = addressRepository.save(address);
-		return resultAddress;
+		try {
+			address.setCreatedAt(Timestamp.from(Instant.now()));
+			address.setUpdatedAt(Timestamp.from(Instant.now()));
+			address.setDeleted(false);
+			Address resultAddress = addressRepository.save(address);
+			return resultAddress;
+		}catch(Exception e) {
+			e.getMessage();
+			throw e;
+		}
+	
 	}
 	
 	public String updateAddress(Integer id, Address address) {
 		try {
 			Address addrs = addressRepository.findById(id).get();// obtengo la tarea original
 			if (addrs != null) {
-				addrs.setCityId(address.getCityId());
+				addrs.setCity(address.getCity());
 				addrs.setCreatedAt(address.getCreatedAt());
 				addrs.setNumber(address.getNumber());
 				addrs.setPostcode(address.getPostcode());
-				addrs.setUpdatedAt(address.getUpdatedAt());
+				addrs.setUpdatedAt(Timestamp.from(Instant.now()));
 				addressRepository.save(addrs);
 				return "Address with id: " + id + " updated successfully.";
 			}
@@ -48,16 +64,30 @@ public class AddressService {
 		
 	}
 	
-	
+
 	public Address deleteAddress(Integer id) {
 		try {
-			Address addressToReturn = addressRepository.findById(id).get();
-			addressRepository.deleteById(id);
-			return addressToReturn;
+			Address addrs = addressRepository.findById(id).get();
+			addrs.setDeleted(true);
+			addressRepository.save(addrs);
+			return addressRepository.findById(id).get();
 		} catch (Exception err) {
 			err.getMessage();
 		}
 		return null;
 	}
+	public Address recoverAddress(Integer id) {
+		try {
+			Address addrs = addressRepository.findById(id).get();
+			addrs.setDeleted(false);
+			addressRepository.save(addrs);
+			return addressRepository.findById(id).get();
+		} catch (Exception err) {
+			err.getMessage();
+		}
+		return null;
+	}
+	
+	
 	
 }

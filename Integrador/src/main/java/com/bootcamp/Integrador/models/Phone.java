@@ -1,6 +1,7 @@
 package com.bootcamp.Integrador.models;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ public class Phone {
 	private Integer id;
 	@NotBlank(message = "Country cannot be blank")
 	@NotNull(message = "Country cannot be null")
-	@Column(name = "first_name")
+	@Column(name = "country")
 	public String country;
 	@NotBlank(message = "PhoneNumber cannot be blank")
 	@NotNull(message = "PhoneNumber cannot be null")
@@ -35,26 +36,40 @@ public class Phone {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
+//	@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
 
-	public Phone(Integer id, String country, String phoneNumber, Timestamp createdAt, Timestamp updatedAt) {
+	public Phone(Integer id, String country, String phoneNumber) {
 
 		this.id = id;
 		this.country = country;
 		this.phoneNumber = phoneNumber;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this.createdAt = Timestamp.from(Instant.now());
+		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
-	public Phone(String country, String phoneNumber, Timestamp createdAt, Timestamp updatedAt) {
+	public Phone(String country, String phoneNumber) {
 
 		this.country = country;
 		this.phoneNumber = phoneNumber;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this.createdAt = Timestamp.from(Instant.now());
+		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
 	public Phone() {
 
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public Integer getId() {

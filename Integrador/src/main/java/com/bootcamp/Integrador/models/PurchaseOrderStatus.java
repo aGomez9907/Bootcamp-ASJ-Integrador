@@ -19,20 +19,35 @@ public class PurchaseOrderStatus {
 	@NotBlank(message = "status cannot be blank")
 	@NotNull(message = "status cannot be null")
 	private String status;
+//	@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
 
 	public PurchaseOrderStatus(Integer id, String status) {
 
 		this.id = id;
 		this.status = status;
+		this.isDeleted = false;
 	}
 
 	public PurchaseOrderStatus(String status) {
 
 		this.status = status;
+		this.isDeleted = false;
 	}
 
 	public PurchaseOrderStatus() {
 
+	}
+	
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public Integer getId() {

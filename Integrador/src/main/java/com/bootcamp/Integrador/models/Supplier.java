@@ -2,12 +2,18 @@ package com.bootcamp.Integrador.models;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -46,7 +52,7 @@ public class Supplier {
 	@Column(unique = true, nullable = false, name = "cuit")
 	private String cuit;
 
-	@NotBlank(message = "isDeleted cannot be blank")
+//	@NotBlank(message = "isDeleted cannot be blank")
 	@NotNull(message = "isDeleted cannot be null")
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
@@ -62,24 +68,45 @@ public class Supplier {
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
 
-	@Column(name = "phone_id")
-	private Phone phoneId;
+	
+	
+	//FK
+	//@NotBlank(message = "phoneId cannot be blank")
+	@NotNull(message = "phoneId cannot be null")
+	@OneToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name = "phone_id")
+	private Phone phone;
 
-	@Column(name = "address_id")
-	private Address addresdId;
+	//@NotBlank(message = "addressId cannot be blank")
+	@NotNull(message = "addressId cannot be null")
+	@OneToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name = "address_id")
+	private Address address;
 
-	@Column(name = "supplier_category_id")
-	private SupplierCategory categoryId;
+//	@NotBlank(message = "categoryId cannot be blank")
+	@NotNull(message = "categoryId cannot be null")
+	@ManyToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name = "supplier_category_id")
+	private SupplierCategory category;
 
-	@Column(name = "tax_condition_id")
-	private TaxCondition taxConditionId;
+//	@NotBlank(message = "taxConditionId cannot be blank")
+	@NotNull(message = "taxConditionId cannot be null")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name = "tax_condition_id")
+	private TaxCondition taxCondition;
 
-	@Column(name = "contact_info_id")
-	private ContactInfo contactInfoId;
+//	@NotBlank(message = "contactInfoId cannot be blank")
+	@NotNull(message = "contactInfoId cannot be null")
+	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name = "contact_info_id")
+	private ContactInfo contactInfo;
+	
+//	@OneToMany(fetch = FetchType.EAGER)
+//	private List<Product>  products;
 
 	public Supplier(Integer id, String legalName, String codProv, String email, String webSite, String cuit,
 			 String urlLogo, Phone phoneId,
-			Address addresdId, SupplierCategory categoryId, TaxCondition taxConditionId, ContactInfo contactInfoId) {
+			Address addressId, SupplierCategory categoryId, TaxCondition taxConditionId, ContactInfo contactInfoId) {
 
 		this.id = id;
 		this.legalName = legalName;
@@ -91,15 +118,15 @@ public class Supplier {
 		this.urlLogo = urlLogo;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
-		this.phoneId = phoneId;
-		this.addresdId = addresdId;
-		this.categoryId = categoryId;
-		this.taxConditionId = taxConditionId;
-		this.contactInfoId = contactInfoId;
+		this.phone = phoneId;
+		this.address = addressId;
+		this.category = categoryId;
+		this.taxCondition = taxConditionId;
+		this.contactInfo = contactInfoId;
 	}
 
 	public Supplier(String legalName, String codProv, String email, String webSite, String cuit,
-			String urlLogo, Phone phoneId, Address addresdId,
+			String urlLogo, Phone phoneId, Address addressId,
 			SupplierCategory categoryId, TaxCondition taxConditionId, ContactInfo contactInfoId) {
 
 		this.legalName = legalName;
@@ -111,11 +138,11 @@ public class Supplier {
 		this.urlLogo = urlLogo;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
-		this.phoneId = phoneId;
-		this.addresdId = addresdId;
-		this.categoryId = categoryId;
-		this.taxConditionId = taxConditionId;
-		this.contactInfoId = contactInfoId;
+		this.phone = phoneId;
+		this.address = addressId;
+		this.category = categoryId;
+		this.taxCondition = taxConditionId;
+		this.contactInfo = contactInfoId;
 	}
 
 	public Supplier() {
@@ -202,45 +229,45 @@ public class Supplier {
 	}
 
 	public Phone getPhoneId() {
-		return phoneId;
+		return phone;
 	}
 
 	public void setPhoneId(Phone phoneId) {
-		this.phoneId = phoneId;
+		this.phone = phoneId;
 	}
 
-	public Address getAddresdId() {
-		return addresdId;
+	public Address getAddressId() {
+		return address;
 	}
 
-	public void setAddresdId(Address addresdId) {
-		this.addresdId = addresdId;
+	public void setAddressId(Address addressId) {
+		this.address = addressId;
 	}
 
 	public SupplierCategory getCategoryId() {
-		return categoryId;
+		return category;
 	}
 
 	public void setCategoryId(SupplierCategory categoryId) {
-		this.categoryId = categoryId;
+		this.category = categoryId;
 	}
 
 	public TaxCondition getTaxConditionId() {
-		return taxConditionId;
+		return taxCondition;
 	}
 
 	public void setTaxConditionId(TaxCondition taxConditionId) {
-		this.taxConditionId = taxConditionId;
+		this.taxCondition = taxConditionId;
 	}
 
 	public ContactInfo getContactInfoId() {
-		return contactInfoId;
+		return contactInfo;
 	}
 
 	public void setContactInfoId(ContactInfo contactInfoId) {
-		this.contactInfoId = contactInfoId;
+		this.contactInfo = contactInfoId;
 	}
 
 	
-	
+
 }

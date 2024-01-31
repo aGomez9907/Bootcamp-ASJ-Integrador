@@ -32,21 +32,21 @@
       <tbody>
         <tr *ngFor="let s of suppliers">
           <td>{{ s.id }}</td>
-          <td>{{ s.code }}</td>
+          <td>{{ s.codProv }}</td>
           <td>{{ s.legalName }}</td>
           <td>
-            <div>{{ s.contact.email }}</div>
-            <div>{{ s.website }}</div>
-            <div>{{ s.contact.phone }}</div>
+            <div>{{ s.contactInfoId.email }}</div>
+            <div>{{ s.webSite }}</div>
+            <div>{{ s.contactInfoId.phoneId.country + s.contactInfoId.phoneId.phoneNumber }} </div>
           </td>
-          <td>{{ s.contact.firstName + " " + s.contact.lastName }}</td>
+          <td>{{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}</td>
           <td>
             <div class="d-flex flex-row">
               <button
                 type="button"
                 class="btn btn-outline-success btn-sm"
-                value="{{ s.code }}"
-                [routerLink]="['/suppliers', s.code]"
+                value="{{ s.codProv }}"
+                [routerLink]="['/suppliers', s.codProv]"
               >
                 Detalles
               </button>
@@ -63,7 +63,7 @@
               <button
                 type="button"
                 class="btn btn-outline-danger btn-sm"
-                value="{{ s.code }}"
+                value="{{ s.codProv }}"
                 (click)="deleteSupplier(s.id)"
               >
                 Borrar

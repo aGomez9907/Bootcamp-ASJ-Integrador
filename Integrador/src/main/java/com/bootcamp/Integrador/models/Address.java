@@ -1,12 +1,16 @@
 package com.bootcamp.Integrador.models;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -20,49 +24,81 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private Integer id;
-	
-	private City cityId;
 	@NotBlank(message = "street cannot be blank")
 	@NotNull(message = "street cannot be null")
 	private String street;
-	@NotBlank(message = "Number cannot be blank")
+	//@NotBlank(message = "Number cannot be blank")
 	@NotNull(message = "Number cannot be null")
 	private Integer number;
 	@NotBlank(message = "postcode cannot be blank")
 	@NotNull(message = "postcode cannot be null")
 	private String postcode;
+	//@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_at")
 	private Timestamp createdAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
+	
+	private String city;
 
-	public Address(Integer id, City cityId, String street, Integer number, String postcode, Timestamp createdAt,
-			Timestamp updatedAt) {
+	//@NotBlank(message = "provinceId cannot be blank")
+	@NotNull(message = "provinceId cannot be null")
+	//@JoinColumn(name = "city_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Province province;
 
+
+
+	public Address(Integer id, String city, String street, Integer number, String postcode, Province provinceId) {
+
+		this.province = provinceId;
 		this.id = id;
-		this.cityId = cityId;
+		this.city = city;
 		this.street = street;
 		this.number = number;
 		this.postcode = postcode;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this.createdAt = Timestamp.from(Instant.now());
+		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
-	public Address(City cityId, String street, Integer number, String postcode, Timestamp createdAt,
-			Timestamp updatedAt) {
-
-		this.cityId = cityId;
+	public Address(String city, String street, Integer number, String postcode, Province provinceId) {
+		
+		this.province = provinceId;
+		this.city = city;
 		this.street = street;
 		this.number = number;
 		this.postcode = postcode;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this.createdAt = Timestamp.from(Instant.now());
+		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
 	public Address() {
 
+	}
+
+	
+	
+	public Province getProvinceId() {
+		return province;
+	}
+
+	public void setProvinceId(Province provinceId) {
+		this.province = provinceId;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public Integer getId() {
@@ -73,12 +109,12 @@ public class Address {
 		this.id = id;
 	}
 
-	public City getCityId() {
-		return cityId;
+	public String getCity() {
+		return city;
 	}
 
-	public void setCityId(City cityId) {
-		this.cityId = cityId;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getStreet() {

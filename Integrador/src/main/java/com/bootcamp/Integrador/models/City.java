@@ -2,9 +2,12 @@ package com.bootcamp.Integrador.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,25 +23,47 @@ public class City {
 	@NotBlank(message = "name cannot be blank")
 	@NotNull(message = "name cannot be null")
 	private String name;
+//	@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
+	
+	
+	//FK
+	//@NotBlank(message = "provinceId cannot be blank")
+	@NotNull(message = "provinceId cannot be null")
+	//@JoinColumn(name = "id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Province province;
 
 	public City(Integer id, String name, Province provinceId) {
 
 		this.id = id;
 		this.name = name;
-		this.provinceId = provinceId;
+		this.province = provinceId;
+		this.isDeleted = false;
 	}
 
 	public City(String name, Province provinceId) {
 
 		this.name = name;
-		this.provinceId = provinceId;
+		this.province = provinceId;
+		this.isDeleted = false;
 	}
 
 	public City() {
 
 	}
 
-	private Province provinceId;
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -57,11 +82,11 @@ public class City {
 	}
 
 	public Province getProvinceId() {
-		return provinceId;
+		return province;
 	}
 
 	public void setProvinceId(Province provinceId) {
-		this.provinceId = provinceId;
+		this.province = provinceId;
 	}
 
 }

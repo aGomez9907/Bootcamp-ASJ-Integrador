@@ -1,47 +1,66 @@
+import { NumberSymbol } from '@angular/common';
+
 export interface Supplier {
-  id?: number,
-  code?: string;
+  id?: number;
+  codProv?: string;
+  urlLogo?: string;
   legalName: string;
-  category: string;
-  website?: string;
-  phone: string ;
+  categoryId: categoryId;
+  webSite?: string;
+  phoneId: Phone;
   email: string;
   cuit: string;
   logo?: string;
   isDeleted?: boolean;
-  iva: IVAOptions;
-  address: Address
-  contact : Contact;
-  
+  taxConditionId: TaxCondition;
+  addressId: Address;
+  contactInfoId: contactInfoId;
 }
 
+export type categoryId = {
+  id: number;
+  name: string;
+};
 
+export type TaxCondition = {
+  id: number;
+  name?: string;
+  isDeleted?: boolean;
+};
 
-export type IVAOptions =
-  | 'IVA Responsable Inscripto'
-  | 'IVA Sujeto Exento'
-  | 'Responsable Monotributo'
-  | 'Proveedor del Exterior'
-  | 'Otro';
-
-export interface Contact {
+export interface contactInfoId {
   firstName: string;
-  lastName: string
-  phone: string;
+  lastName: string;
+  phoneId: Phone;
   email: string;
-  role: string;
+  contactRole: string;
+  isDeleted?: boolean;
 }
 
 export interface Address {
-  postCode: string;
+  postcode: string;
   street: string;
   number: number;
   city: string;
-  province: string;
-  country: string;
+  provinceId: Province;
+  isDeleted?: boolean;
 }
 
+export interface Phone {
+  country: string;
+  phoneNumber: string;
+}
 
-
-
-
+// export interface City{
+//   name: string;
+//   province: Province;
+// }
+export interface Province {
+  id: number;
+  name?: string;
+  countryId: Country;
+}
+export interface Country {
+  id: number;
+  name: string;
+}

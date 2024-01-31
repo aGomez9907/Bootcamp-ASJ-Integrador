@@ -5,9 +5,13 @@ import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -29,8 +33,12 @@ public class ContactInfo {
 	@NotNull(message = "Lastname cannot be null")
 	@Column(name = "last_name")
 	private String lastName;
+	
+//	@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
 
-	private Phone phoneId;
 	@NotBlank(message = "Email cannot be blank")
 	@NotNull(message = "Email cannot be null")
 	@Column(name = "email")
@@ -45,32 +53,50 @@ public class ContactInfo {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
+	
+	
+	//FK
+	//@NotBlank(message = "phoneId cannot be blank")
+	@NotNull(message = "phoneId cannot be null")
+	//@JoinColumn(name = "phone_id")
+	@OneToOne(fetch = FetchType.EAGER)
+	private Phone phone;
 
 	public ContactInfo(Integer id, String firstName, String lastName, Phone phoneId, String email, String contactRole) {
 
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.phoneId = phoneId;
+		this.phone = phoneId;
 		this.email = email;
 		this.contactRole = contactRole;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
 	public ContactInfo(String firstName, String lastName, Phone phoneId, String email, String contactRole) {
 
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.phoneId = phoneId;
+		this.phone = phoneId;
 		this.email = email;
 		this.contactRole = contactRole;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
 	public ContactInfo() {
 
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public Integer getId() {
@@ -98,11 +124,11 @@ public class ContactInfo {
 	}
 
 	public Phone getPhoneId() {
-		return phoneId;
+		return phone;
 	}
 
 	public void setPhoneId(Phone phoneId) {
-		this.phoneId = phoneId;
+		this.phone = phoneId;
 	}
 
 	public String getEmail() {

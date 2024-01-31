@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
-import { Supplier } from '../../../models/supplier';
+import { Supplier, Country, Province } from '../../../models/supplier';
 import { NgForm } from '@angular/forms';
 import { Iva } from '../../../../enum/iva-condition';
 
 
 
-interface Provinces {
-  [country: string]: string[];
-}
+// interface Provinces {
+//   [country: string]: string[];
+// }
 
 
-@Component({
+@Component({ 
   selector: 'app-suppliers',
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.css',
@@ -53,33 +53,35 @@ export class SuppliersComponent implements OnInit {
   ngOnInit(): void {
     this.getSuppliers();
     console.log(this.suppliers)
+    
   }
 
 
 
 
-  countries = ['Argentina', 'Chile', 'Brazil'];
+  // countries = ['Argentina', 'Chile', 'Brazil'];
 
-  provinces: Provinces = {
-    'Argentina': [
-      'Buenos Aires', 'Cordoba', 'Santa Fe', 'Mendoza', 'Tucuman',
-      'Entre Rios', 'Salta', 'Chaco', 'Corrientes', 'Santiago del Estero',
-      'Jujuy', 'La Pampa', 'Formosa', 'Misiones', 'San Juan', 'San Luis',
-      'Catamarca', 'La Rioja', 'Tierra del Fuego', 'Neuquen', 'Rio Negro', 'Chubut'
-    ],
-    'Chile': [
-      'Santiago', 'Valparaiso', 'Concepcion', 'Antofagasta', 'Araucania',
-      'Coquimbo', 'Magallanes', 'Los Lagos', 'Atacama', 'Tarapaca',
-      'Aysen', 'Los Rios', 'Maule', 'O\'Higgins'
-    ],
-    'Brazil': [
-      'Sao Paulo', 'Rio de Janeiro', 'Brasilia', 'Minas Gerais', 'Bahia',
-      'Rio Grande do Sul', 'Parana', 'Ceara', 'Pernambuco', 'Amazonas',
-      'Santa Catarina', 'Goias', 'Para', 'Maranhao', 'Espirito Santo',
-      'Paraiba', 'Rio Grande do Norte', 'Alagoas', 'Piaui', 'Acre', 'Tocantins',
-      'Rondonia', 'Sergipe'
-    ]
-  };
+
+  // provinces: Provinces = {
+  //   'Argentina': [
+  //     'Buenos Aires', 'Cordoba', 'Santa Fe', 'Mendoza', 'Tucuman',
+  //     'Entre Rios', 'Salta', 'Chaco', 'Corrientes', 'Santiago del Estero',
+  //     'Jujuy', 'La Pampa', 'Formosa', 'Misiones', 'San Juan', 'San Luis',
+  //     'Catamarca', 'La Rioja', 'Tierra del Fuego', 'Neuquen', 'Rio Negro', 'Chubut'
+  //   ],
+  //   'Chile': [
+  //     'Santiago', 'Valparaiso', 'Concepcion', 'Antofagasta', 'Araucania',
+  //     'Coquimbo', 'Magallanes', 'Los Lagos', 'Atacama', 'Tarapaca',
+  //     'Aysen', 'Los Rios', 'Maule', 'O\'Higgins'
+  //   ],
+  //   'Brazil': [
+  //     'Sao Paulo', 'Rio de Janeiro', 'Brasilia', 'Minas Gerais', 'Bahia',
+  //     'Rio Grande do Sul', 'Parana', 'Ceara', 'Pernambuco', 'Amazonas',
+  //     'Santa Catarina', 'Goias', 'Para', 'Maranhao', 'Espirito Santo',
+  //     'Paraiba', 'Rio Grande do Norte', 'Alagoas', 'Piaui', 'Acre', 'Tocantins',
+  //     'Rondonia', 'Sergipe'
+  //   ]
+  // };
 
 
 
@@ -158,6 +160,7 @@ export class SuppliersComponent implements OnInit {
     });
 
   }
+
 
   addSupplier(form: NgForm) {
     if(form.valid){

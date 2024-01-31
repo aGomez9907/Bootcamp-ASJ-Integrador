@@ -31,6 +31,10 @@ public class SupplierCategory {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at")
 	private Timestamp updatedAt;
+//	@NotBlank(message = "isDeleted cannot be blank")
+	@NotNull(message = "isDeleted cannot be null")
+	@Column(name = "is_deleted")
+	private boolean isDeleted;
 	
 	public SupplierCategory(Integer id, String name) {
 
@@ -38,6 +42,7 @@ public class SupplierCategory {
 		this.name = name;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
 	public SupplierCategory(String name) {
@@ -45,10 +50,20 @@ public class SupplierCategory {
 		this.name = name;
 		this.createdAt = Timestamp.from(Instant.now());
 		this.updatedAt = Timestamp.from(Instant.now());
+		this.isDeleted = false;
 	}
 
 	public SupplierCategory() {
 
+	}
+	
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public Integer getId() {
