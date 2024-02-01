@@ -64,7 +64,7 @@ URL_API = 'http://localhost:8080'
     // } else {
     //   console.log(`id ${id} not found`);
     // }
-    return this.http.delete<Supplier>(this.URL_API +"/proveedores/"+id )
+    return this.http.delete<Supplier>(this.URL_API +"/suppliers/"+id )
   }
 
   updateSupplier(supplier: Supplier): Observable<any> {
@@ -75,6 +75,6 @@ URL_API = 'http://localhost:8080'
   //   this.data.push(supplier);
   // }
   console.log(supplier);
-    return this.http.put(this.URL_API+"/proveedores/"+ supplier.id, supplier )
+    return this.http.put(this.URL_API+"/suppliers/"+ supplier.id, supplier )
 }
 }

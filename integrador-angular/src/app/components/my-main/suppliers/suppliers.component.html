@@ -18,10 +18,11 @@
         </button>
       </div>
     </div>
-    <table class="table table-hover card-body">
+    <table class="table-hover card-body">
       <thead>
         <tr>
-          <th>ID</th>
+          <th class="ps-2">ID</th>
+          <th>Logo</th>
           <th>CodProv</th>
           <th>Razon social</th>
           <th>Contacto</th>
@@ -29,9 +30,10 @@
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let s of suppliers">
-          <td>{{ s.id }}</td>
+      <tbody >
+        <tr  *ngFor="let s of suppliers" [id]='s.deleted? "bg-deleted" : ""'>
+          <td class="ps-2">{{ s.id }}</td>
+          <td><img src="{{ s.urlLogo }}" alt="" (error)="imageNotFound($event)"></td>
           <td>{{ s.codProv }}</td>
           <td>{{ s.legalName }}</td>
           <td>
@@ -46,9 +48,9 @@
                 type="button"
                 class="btn btn-outline-success btn-sm"
                 value="{{ s.codProv }}"
-                [routerLink]="['/suppliers', s.codProv]"
+                routerLink="details/{{ s.id }}"
               >
-                Detalles
+                Details
               </button>
 
               <button
@@ -57,17 +59,27 @@
                 id="btn-agregar-proveedor"
                 routerLink="update/{{ s.id }}"
               >
-                Editar
+                Edit
               </button>
 
               <button
+                *ngIf="!s.deleted"
                 type="button"
                 class="btn btn-outline-danger btn-sm"
                 value="{{ s.codProv }}"
                 (click)="deleteSupplier(s.id)"
               >
-                Borrar
+                Delete
               </button>
+              <button
+              *ngIf="s.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              value="{{ s.codProv }}"
+              (click)="deleteSupplier(s.id)"
+            >
+              Restore
+            </button>
             </div>
 
           </td>

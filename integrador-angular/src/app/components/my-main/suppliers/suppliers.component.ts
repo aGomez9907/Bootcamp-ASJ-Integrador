@@ -56,7 +56,7 @@ export class SuppliersComponent implements OnInit {
     
   }
 
-
+  URL_IMG= "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
 
 
   // countries = ['Argentina', 'Chile', 'Brazil'];
@@ -147,7 +147,9 @@ export class SuppliersComponent implements OnInit {
 
 
 
-
+  imageNotFound(event: Event){
+    (event.target as HTMLImageElement).src = this.URL_IMG;
+  }
 
 
 /*------------------CRUD--------------------*/

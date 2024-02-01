@@ -12,19 +12,19 @@ export class ProductServiceService {
   constructor(private http: HttpClient) { }
 
 
-  URL_API = 'http://localhost:3000'
+  URL_API = 'http://localhost:8080'
 
 
   getProducts(): Observable<Product[]> {
     // return this.data;
 
-    return this.http.get<Product[]>(this.URL_API+'/productos');
+    return this.http.get<Product[]>(this.URL_API+'/products');
 
   }
 
-  getProduct(SKU : string): Observable<Product> {
+  getProduct(id : number): Observable<Product> {
     // return this.data;
-    return this.http.get<Product>(this.URL_API+'/productos?SKU=' + SKU);
+    return this.http.get<Product>(this.URL_API+'/products/' + id);
   }
 
 
@@ -36,7 +36,7 @@ export class ProductServiceService {
     // } else {
     //   return false;
     // }
-    return this.http.post<Product>(this.URL_API+'/productos', product);
+    return this.http.post<Product>(this.URL_API+'/products', product);
   }
 
   deleteProduct(id: number): Observable<Product> {
@@ -49,7 +49,7 @@ export class ProductServiceService {
     // } else {
     //   console.log(`id ${id} not found`);
     // }
-    return this.http.delete<Product>(this.URL_API +"/productos/"+id )
+    return this.http.delete<Product>(this.URL_API +"/products/"+id )
   }
 
   updateProduct(product: Product): Observable<any> {
@@ -59,6 +59,6 @@ export class ProductServiceService {
   //   this.data.splice(updateIndex, 1);
   //   this.data.push(supplier);
   // }
-    return this.http.put(this.URL_API+"/productos/"+product.id, product)
+    return this.http.put(this.URL_API+"/products/"+product.id, product)
 }
 }

@@ -49,6 +49,7 @@ public class AddressService {
 			Address addrs = addressRepository.findById(id).get();// obtengo la tarea original
 			if (addrs != null) {
 				addrs.setCity(address.getCity());
+				addrs.setProvinceId(address.getProvinceId());
 				addrs.setCreatedAt(address.getCreatedAt());
 				addrs.setNumber(address.getNumber());
 				addrs.setPostcode(address.getPostcode());

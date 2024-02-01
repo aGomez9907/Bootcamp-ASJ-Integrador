@@ -2,7 +2,7 @@ import { NumberSymbol } from '@angular/common';
 
 export interface Supplier {
   id?: number;
-  codProv?: string;
+  codProv: string;
   urlLogo?: string;
   legalName: string;
   categoryId: categoryId;
@@ -11,7 +11,7 @@ export interface Supplier {
   email: string;
   cuit: string;
   logo?: string;
-  isDeleted?: boolean;
+  deleted?: boolean;
   taxConditionId: TaxCondition;
   addressId: Address;
   contactInfoId: contactInfoId;
@@ -25,7 +25,7 @@ export type categoryId = {
 export type TaxCondition = {
   id: number;
   name?: string;
-  isDeleted?: boolean;
+  deleted?: boolean;
 };
 
 export interface contactInfoId {
@@ -34,7 +34,7 @@ export interface contactInfoId {
   phoneId: Phone;
   email: string;
   contactRole: string;
-  isDeleted?: boolean;
+  deleted?: boolean;
 }
 
 export interface Address {
@@ -43,7 +43,7 @@ export interface Address {
   number: number;
   city: string;
   provinceId: Province;
-  isDeleted?: boolean;
+  deleted?: boolean;
 }
 
 export interface Phone {

@@ -20,7 +20,9 @@ public class ContactInfoService {
 
 	@Autowired
 	ContactInfoRepository contactInfoRepository;
-
+	@Autowired
+	PhoneService phoneService;
+	
 	public List<ContactInfo> getContactInfos() {
 		return contactInfoRepository.findAll();
 	}
@@ -51,6 +53,7 @@ public class ContactInfoService {
 				cinfo.setEmail(contactInfo.getEmail());
 				cinfo.setFirstName(contactInfo.getFirstName());
 				cinfo.setLastName(contactInfo.getLastName());
+				this.phoneService.updatePhone(contactInfo.getPhoneId().getId(), contactInfo.getPhoneId());
 				cinfo.setPhoneId(contactInfo.getPhoneId());
 				cinfo.setUpdatedAt(Timestamp.from(Instant.now()));
 				contactInfoRepository.save(cinfo);

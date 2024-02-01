@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
 import {
   TaxCondition,
@@ -18,7 +18,6 @@ import { CuitFormatDirective } from '../../../directives/cuit-format.directive';
 //   [province: string]: string[];
 // }
 
-
 @Component({
   selector: 'app-new-supplier',
   templateUrl: './new-supplier.component.html',
@@ -27,15 +26,25 @@ import { CuitFormatDirective } from '../../../directives/cuit-format.directive';
 export class NewSupplierComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private supplierService: SuppliersServiceService
+    private supplierService: SuppliersServiceService,
+    private router: Router
   ) {}
 
+  isUpdating: boolean = false;
+  isDetails: boolean = false;
+
+  initialCodProv: String = '';
+  initialCuit: String = '';
+
+  existsCodProv: boolean = false;
+  existsCuit: boolean = false;
   validForm: boolean = true;
   showbadCountryCode1: boolean = false;
-  showbadCountryCode2:boolean = false;
+  showbadCountryCode2: boolean = false;
   //ivas = ['IVA Responsable Inscripto','IVA Sujeto Exento','Responsable Monotributo','Proveedor del Exterior','Otro'];
   ivas: Array<TaxCondition> = new Array();
 
+  suppliers: Array<Supplier> = new Array();
   countries: Array<Country> = new Array();
   provinces: Array<Province> = new Array();
   provincesToShow: Array<Province> = new Array();
@@ -115,25 +124,26 @@ export class NewSupplierComponent implements OnInit {
     },
   };
 
-  isUpdating: boolean = false;
-  cuitList: string[] = [];
   ngOnInit(): void {
     this.route.paramMap.subscribe((response) => {
       let id = response.get('id');
-      if (id != undefined) {
+      this.isUpdating = this.router.url.includes('update');
+      this.isDetails = this.router.url.includes('details');
+
+      if (id != undefined && this.isUpdating) {
         this.supplierService.getSupplier(id).subscribe((res) => {
           this.currentSupplier = res;
+          this.initialCodProv = this.currentSupplier.codProv;
+          this.initialCuit = this.currentSupplier.cuit;
         });
-        this.isUpdating = true;
-      } else {
-        this.supplierService.getSuppliers().subscribe((res) => {
-          for (let supplier of res) {
-            this.cuitList.push(supplier.cuit);
-          }
+      } else if (id != undefined && this.isDetails) {
+        this.supplierService.getSupplier(id).subscribe((res) => {
+          this.currentSupplier = res;
         });
       }
     });
 
+    this.getSuppliers();
     this.getCategories();
     this.getCountries();
     this.getProvinces();
@@ -141,12 +151,22 @@ export class NewSupplierComponent implements OnInit {
   }
 
   saveSupplier(): void {
-    if (this.isUpdating) {
-      this.supplierService.updateSupplier(this.currentSupplier).subscribe();
-    } else {
-      this.currentSupplier.isDeleted = false;
-      this.supplierService.addSupplier(this.currentSupplier).subscribe();
-    }
+    // this.validForm = this.validateForm();
+    // if (this.validForm) {
+      if (this.isUpdating) {
+        this.supplierService.updateSupplier(this.currentSupplier).subscribe();
+      } else {
+        //this.currentSupplier.deleted = false;
+        this.supplierService.addSupplier(this.currentSupplier).subscribe();
+      }
+    // }
+  }
+
+  getSuppliers() {
+    this.supplierService.getSuppliers().subscribe((res) => {
+      this.suppliers = res;
+      console.log(res);
+    });
   }
 
   getCountries() {
@@ -158,6 +178,9 @@ export class NewSupplierComponent implements OnInit {
   getProvinces() {
     this.supplierService.getProvinces().subscribe((res) => {
       this.provinces = res;
+      if (this.isUpdating || this.isDetails) {
+        this.onSelectCountry();
+      }
     });
   }
 
@@ -172,6 +195,7 @@ export class NewSupplierComponent implements OnInit {
       this.ivas = res;
     });
   }
+
   validate() {
     //aca irian todas las validaciones
   }
@@ -180,37 +204,88 @@ export class NewSupplierComponent implements OnInit {
     //con esto añadiria rubros
   }
 
-  onSelectCountry(event: any) {
-    let country = event.target.value;
+  onSelectCountry() {
+    let country: Country = this.currentSupplier.addressId.provinceId.countryId;
     //console.log(country)
-    console.log(this.currentSupplier);
-    console.log(this.provinces);
+    // console.log(this.currentSupplier);
+    // console.log(this.provinces);
     this.provincesToShow = this.provinces.filter(
-      (prov) => prov.countryId.id == country
+      (prov) => prov.countryId.id == country.id
     );
   }
 
+  validateForm(): boolean {
+    if (
+      !this.validateStringOf4Digits(this.currentSupplier.codProv) ||
+      !this.validateStringBetweeen3And50(this.currentSupplier.legalName) ||
+      !this.validatePhoneCountry(this.currentSupplier.phoneId.country)||
+      !this.validateEmail(this.currentSupplier.email)||
+      !this.validateUrl(this.currentSupplier.urlLogo)||
+      !this.validateCuit(this.currentSupplier.cuit)||
+      !this.validatePostCode(this.currentSupplier.addressId.postcode)
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
+  validateStringBetweeen3And50(strng: string): boolean {
+    const regex = /^[0-9 A-Z a-z]{3,50}$/;
+    return regex.test(strng);
+  }
 
+  validateStringOf4Digits(strng: string) {
+    const regex = /^(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{4,12}$/;
+    return regex.test(strng);
+  }
 
-  // validateCountryCode(code: string, showError: boolean) {
-  //   // Si el código no comienza con '+', lo agregamos automáticamente
-  //   if (!code.startsWith('+')) {
-  //     code = '+' + code;
-  //   }
+  validatePhoneCountry(strng: string) {
+    const regex = /^\+\d{1-4}+$/;
+    return regex.test(strng);
+  }
 
-  //   // Eliminar cualquier caracter no numérico después del código del país
-  //   code = code.replace(/\D/g, '');
+  validateEmail(strng: string): boolean {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(strng);
+  }
 
-  //   // Verificar si hay letras en el código de país
-  //   showError = /[a-zA-Z]/.test(code);
+  validateUrl(strng: string | undefined): boolean {
+    const regex = /^(ftp|http|https):\/\/[^ "]+$/;
+    if (typeof strng !== 'undefined'){
+      return regex.test(strng);
+    }else{
+      return true;
+    }
+  }
 
-  //   return { code, showError };
-  // }
+  validatePostCode(strng: string): boolean {
+    const regex = /^[0-9]{4,8}$/;
+    return regex.test(strng);
+  }
+  validateCuit(strng: string): boolean {
+    const regex = /^\d{2}-\d{8}-\d{1}$/;
+    return regex.test(strng);
+  }
 
+  supplierCodeExists(): void {
+    if (this.initialCodProv !== this.currentSupplier.codProv) {
+      this.existsCodProv = this.suppliers.some(
+        (sup: Supplier) => sup.codProv === this.currentSupplier.codProv
+      );
+    }
+  }
+
+  cuitExists(): void {
+    if (this.initialCuit !== this.currentSupplier.cuit) {
+      this.existsCuit = this.suppliers.some(
+        (sup: Supplier) => sup.cuit === this.currentSupplier.cuit
+      );
+    }
+  }
 
   validateCountryCode(field: number) {
-    let countryCode: string = "";
+    let countryCode: string = '';
     let showError: boolean;
 
     if (field === 1) {
@@ -219,18 +294,16 @@ export class NewSupplierComponent implements OnInit {
       countryCode = this.currentSupplier.contactInfoId.phoneId.country;
     }
 
-    // If the code doesn't start with '+', add it automatically
     if (!countryCode.startsWith('+')) {
       countryCode = '+' + countryCode;
     }
 
-    // Remove any non-numeric characters after the country code
     countryCode = countryCode.replace(/\D/g, '');
 
     // Check if there are letters in the country code
     showError = /[a-zA-Z]/.test(countryCode);
-    console.log(countryCode)
-    console.log(countryCode)
+    // console.log(countryCode)
+    // console.log(countryCode)
 
     if (field === 1) {
       this.currentSupplier.phoneId.country = countryCode;
@@ -240,19 +313,4 @@ export class NewSupplierComponent implements OnInit {
       this.showbadCountryCode2 = showError;
     }
   }
-
-  
-
-  // onPhoneCountryInput(event: any, campo: number) {
-  //   if (campo === 1) {
-  //     const { code, showError } = this.validateCountryCode(this.currentSupplier.phoneId.country, this.showbadCountryCode1);
-  //     this.currentSupplier.phoneId.country = code;
-  //     this.showbadCountryCode1 = showError;
-  //   } else if (campo === 2) {
-  //     const { code, showError } = this.validateCountryCode(this.currentSupplier.contactInfoId.phoneId.country, this.showbadCountryCode2);
-  //     this.currentSupplier.contactInfoId.phoneId.country = code;
-  //     this.showbadCountryCode2 = showError;
-  //   }
-  // }
-
 }

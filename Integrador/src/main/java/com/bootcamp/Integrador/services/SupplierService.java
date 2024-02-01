@@ -83,9 +83,12 @@ public class SupplierService {
 		try {
 			Supplier supp = supplierRepository.findById(id).get();// obtengo la tarea original
 			if (supp != null) {
+				this.addressService.updateAddress(supplier.getAddressId().getId(), supplier.getAddressId());
 				supp.setAddressId(supplier.getAddressId());
 				supp.setCategoryId(supplier.getCategoryId());
+				this.contactInfoService.updateContactInfo(supplier.getContactInfoId().getId(), supplier.getContactInfoId());
 				supp.setContactInfoId(supplier.getContactInfoId());
+				this.phoneService.updatePhone(supplier.getPhoneId().getId(),supplier.getPhoneId());
 				supp.setPhoneId(supplier.getPhoneId());
 				supp.setTaxConditionId(supplier.getTaxConditionId());
 				supp.setCodProv(supplier.getCodProv());

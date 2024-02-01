@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'products', component: ProductsComponent },
   { path: 'suppliers/new', component: NewSupplierComponent },
   { path: 'suppliers/update/:id', component: NewSupplierComponent },
+  { path: 'suppliers/details/:id', component: NewSupplierComponent },
   {
     path: 'purchase-orders',
     children: [
