@@ -24,7 +24,7 @@
             [(ngModel)]="productId"
           >
             <option *ngFor="let p of filterProducts(supplierId)" [value]="p.id">
-              {{ p.nombre }}
+              {{ p.name }}
             </option>
           </select>
         </div>

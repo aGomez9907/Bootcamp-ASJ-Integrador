@@ -29,6 +29,7 @@ export type TaxCondition = {
 };
 
 export interface contactInfoId {
+  id:number,
   firstName: string;
   lastName: string;
   phoneId: Phone;
@@ -38,6 +39,7 @@ export interface contactInfoId {
 }
 
 export interface Address {
+  id:number,
   postcode: string;
   street: string;
   number: number;
@@ -47,6 +49,7 @@ export interface Address {
 }
 
 export interface Phone {
+  id: number,
   country: string;
   phoneNumber: string;
 }

@@ -8,197 +8,19 @@
     <div class="card-header row px-2 mx-0">
       <div class="col-6"><i class="fas fa-table me-1"></i> Product list</div>
       <div class="col-6 text-end">
-        <!-- Button trigger modal -->
+
         <button
           type="button"
           class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#agregarProductoModal"
           id="btn-agregar-proveedor"
-          (click)="resetFields()"
+          routerLink="/products/new"
+        
         >
           Add new product
         </button>
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="agregarProductoModal"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="agregarProductoModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="agregarProductoModalLabel">
-                  Create product
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form
-                  #productsForm="ngForm"
-                  (ngSubmit)="addProduct(productsForm)"
-                >
-                  <div class="row mb-3">
-                    <label
-                      for="id-proveedor"
-                      class="col-sm-4 col-form-label text-start"
-                      >SKU</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="id-proveedor"
-                        name="SKU"
-                        required=""
-                        minlength="4"
-                        [(ngModel)]="SKUInput"
-                        #SKU="ngModel"
-                      />
-                      <div *ngIf="SKU.errors?.['minlength']" class="col-auto">
-                        <span class="form-text text-danger"
-                          >Debe tener al menos 4 caracteres alfanumericos.</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="razon-social"
-                      class="col-sm-4 col-form-label text-start"
-                      >Category</label
-                    >
-                    <div class="col-sm-8">
-                      <select
-                        class="form-select"
-                        id="select-iva"
-                        name="categoria"
-                        [(ngModel)]="categoriaInput"
-                      >
-                        <option *ngFor="let c of categories">
-                          {{ c.value }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-nombre"
-                      class="col-sm-4 col-form-label text-start"
-                      >Product name</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="input-nombre"
-                        name="nombre"
-                        [(ngModel)]="nombreInput"
-                      />
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-descripcion"
-                      class="col-sm-4 col-form-label text-start"
-                      >Description</label
-                    >
-                    <div class="col-sm-8">
-                      <textarea type="text"
-                      class="form-control"
-                      id="input-descripcion"
-                      name="descripcion"
-                      [(ngModel)]="descripcionInput">
-                        
-                      </textarea>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-precio"
-                      class="col-sm-4 col-form-label text-start"
-                      >Price</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="input-precio"
-                        name="precio"
-                        required=""
-                        [(ngModel)]="precioInput"
-                      />
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-proveedor"
-                      class="col-sm-4 col-form-label text-start"
-                      >Supplier</label
-                    >
-                    <div class="col-sm-8">
-                      <select
-                        class="form-select"
-                        name="proveedor"
-                        id="input-proveedor"
-                        [(ngModel)]="proveedorInput"
-                      >
-                        <option *ngFor="let s of suppliers">{{ s }}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="input-img"
-                      class="col-sm-4 col-form-label text-start"
-                      >Image</label
-                    >
-                    <div class="col-sm-8">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="input-img"
-                        name="img"
-                        placeholder="Enter image URL"
-                        [(ngModel)]="imgInput"
-                      />
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      class="btn btn-primary"
-                      id="guardar-proveedor"
-                      data-bs-dismiss="modal"
-                      [disabled]="!productsForm.valid"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-    <table class="table table-hover card-body">
+    <table class=" table-hover card-body">
       <thead>
         <tr>
           <th></th>
@@ -211,27 +33,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of products">
-          <td>
+        <tr *ngFor="let p of products" [id]="p.deleted ? 'bg-deleted' : ''" >
+          <td >
               <img
-                src="{{ p.img }}"
+                src="{{ p.imgUrl }}"
                 alt="product"
                 class="img-thumbnail img-table"
                 (error)="imageNotFound($event)"
+                
               />
           </td>
-          <td>{{ p.SKU }}</td>
-          <td>{{ p.nombre }}</td>
-          <td>{{ p.categoria }}</td>
-          <td>{{ p.proveedor }}</td>
-          <td>${{ p.precio }}</td>
+          <td>{{ p.sku }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.categoryId.name }}</td>
+          <td>{{ p.supplierId.legalName }}</td>
+          <td>${{ p.price }}</td>
           <td>
             <div class="d-flex flex-row">
               <button
                 type="button"
                 class="btn btn-outline-success btn-sm"
-                value="{{ p.SKU }}"
-                [routerLink]="['/products', p.SKU]"
+                value="{{ p.id }}"
+                [routerLink]="['/products/details/', p.id]"
               >
                 Details
               </button>
@@ -239,245 +62,37 @@
               <button
                 type="button"
                 class="btn btn-outline-primary btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#editarPrductoModal"
                 id="btn-agregar-proveedor"
-                (click)="loadUpdate(p)"
+                [routerLink]="['/products/update/', p.id]"
+              
               >
                 Edit
               </button>
 
               <button
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                value="{{ p.id }}"
-                (click)="deleteProduct(p.id)"
-              >
-                Delete
-              </button>
-            </div>
-            <div
-              class="modal fade"
-              id="editarPrductoModal"
-              data-bs-backdrop="static"
-              data-bs-keyboard="false"
-              tabindex="-1"
-              aria-labelledby="editarPrductoModalLabel"
-              aria-hidden="true"
+              *ngIf="!p.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              value="{{ p.id }}"
+              (click)="deleteProduct(p.id)"
             >
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editarPrductoModal">
-                      Edit product
-                    </h1>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form
-                      #productsForm="ngForm"
-                      (ngSubmit)="updateProduct(productsForm)"
-                    >
-                      <input
-                        type="text"
-                        class="form-control visually-hidden"
-                        id="id-proveedor"
-                        name="id"
-                        [(ngModel)]="idInput"
-                        #id="ngModel"
-                      />
-                      <div class="row mb-3">
-                        <label
-                          for="id-proveedor"
-                          class="col-sm-4 col-form-label text-start"
-                          >SKU</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="SKU-proveedor"
-                            name="SKU"
-                            required=""
-                            minlength="4"
-                            [(ngModel)]="SKUInput"
-                            #name="ngModel"
-                          />
-                          <div
-                            *ngIf="name.errors?.['minlength']"
-                            class="col-auto"
-                          >
-                            <span class="form-text text-danger"
-                              >Debe tener al menos 4 caracteres
-                              alfanumericos.</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="input-categoria"
-                          class="col-sm-4 col-form-label text-start"
-                          >Category</label
-                        >
-                        <div class="col-sm-8">
-                          <select
-                            class="form-select"
-                            id="input-categoria"
-                            name="categoria"
-                            [(ngModel)]="categoriaInput"
-                          >
-                            <option *ngFor="let c of categories">
-                              {{ c.value }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="select-rubro"
-                          class="col-sm-4 col-form-label text-start"
-                          >Product name</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="select-rubro"
-                            name="nombre"
-                            [(ngModel)]="nombreInput"
-                          />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="input-web"
-                          class="col-sm-4 col-form-label text-start"
-                          >Description</label
-                        >
-                        <div class="col-sm-8">
-                          <textarea type="text"
-                          class="form-control"
-                          id="input-descripcion"
-                          name="descripcion"
-                          [(ngModel)]="descripcionInput">
-                            
-                          </textarea>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="input-tel"
-                          class="col-sm-4 col-form-label text-start"
-                          >Price</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="input-tel"
-                            name="precio"
-                            required=""
-                            [(ngModel)]="precioInput"
-                          />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="input-email"
-                          class="col-sm-4 col-form-label text-start"
-                          >Supplier</label
-                        >
-                        <div class="col-sm-8">
-                          <select
-                            class="form-select"
-                            name="proveedor"
-                            id="proveedor-input"
-                            [(ngModel)]="proveedorInput"
-                          >
-                            <option *ngFor="let s of suppliers">{{ s }}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="input-img"
-                          class="col-sm-4 col-form-label text-start"
-                          >Image</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="input-img"
-                            name="img"
-                            placeholder="Enter image URL"
-                            [(ngModel)]="imgInput"
-                          />
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                          (click)="resetFields()"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          class="btn btn-primary"
-                          id="guardar-proveedor"
-                          data-bs-dismiss="modal"
-                          [disabled]="!productsForm.valid"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
+              Delete
+            </button>
+            <button
+              *ngIf="p.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              value="{{ p.id }}"
+              (click)="deleteProduct(p.id)"
+            >
+              Restore
+            </button>
             </div>
+            
           </td>
         </tr>
       </tbody>
     </table>
 
-    <!-- <div class="card-body">
-      <table id="datatablesSimple">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Razon social</th>
-            <th>Rubro</th>
-            <th>CUIT</th>
-            <th>Email</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <th>ID</th>
-            <th>Razon social</th>
-            <th>Rubro</th>
-            <th>CUIT</th>
-            <th>Email</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Acciones</th>
-          </tr>
-        </tfoot>
-        <tbody id="lista-proveedores-tbody"></tbody>
-      </table>
-    </div> -->
   </div>
 </div>

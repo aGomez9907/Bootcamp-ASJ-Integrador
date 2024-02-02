@@ -95,10 +95,12 @@ export class NewSupplierComponent implements OnInit {
       id: 0,
     },
     phoneId: {
+      id:0,
       country: '',
       phoneNumber: '',
     },
     addressId: {
+      id:0,
       street: '',
       number: 0,
       postcode: '',
@@ -113,9 +115,11 @@ export class NewSupplierComponent implements OnInit {
       },
     },
     contactInfoId: {
+      id:0,
       firstName: '',
       lastName: '',
       phoneId: {
+        id:0,
         country: '',
         phoneNumber: '',
       },
@@ -151,15 +155,15 @@ export class NewSupplierComponent implements OnInit {
   }
 
   saveSupplier(): void {
-    // this.validForm = this.validateForm();
-    // if (this.validForm) {
+    this.validForm = this.validateForm();
+    if (this.validForm) {
       if (this.isUpdating) {
         this.supplierService.updateSupplier(this.currentSupplier).subscribe();
       } else {
         //this.currentSupplier.deleted = false;
         this.supplierService.addSupplier(this.currentSupplier).subscribe();
       }
-    // }
+    }
   }
 
   getSuppliers() {

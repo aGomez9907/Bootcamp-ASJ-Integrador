@@ -25,8 +25,10 @@ const routes: Routes = [
       { path: ':id', component: PurchaseOrderDetailComponent },
     ],
   },
-  { path: 'suppliers/:codProv', component: SupplierDetailComponent },
-  { path: 'products/:SKU', component: ProductDetailComponent },
+  //{ path: 'suppliers/:codProv', component: SupplierDetailComponent },
+  { path: 'products/update/:id', component: ProductDetailComponent },
+  { path: 'products/details/:id', component: ProductDetailComponent },
+  { path: 'products/new', component: ProductDetailComponent }
 ];
 
 @NgModule({

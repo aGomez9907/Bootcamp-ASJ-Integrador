@@ -1,3 +1,5 @@
 .img-table{
-    max-width: 20%;
+    max-width: 20vh;
 }
+#bg-deleted {
+    background-color: #fcb7bc;}

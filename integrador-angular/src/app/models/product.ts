@@ -1,10 +1,19 @@
+import { Supplier } from "./supplier";
+
 export interface Product{
     id: number,
-    SKU: string,
-    categoria: string,
-    nombre: string,
-    descripcion: string,
-    precio: number,
-    proveedor: string,
-    img: string,
+    sku: string,
+    categoryId: category,
+    name: string,
+    description: string,
+    price: number,
+    supplierId: Supplier,
+    imgUrl: string,
+    deleted:boolean,
+}
+
+export interface category{
+    id: number,
+    name: string,
+    deleted: boolean
 }

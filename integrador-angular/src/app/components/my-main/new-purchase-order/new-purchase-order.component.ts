@@ -101,16 +101,16 @@ export class NewPurchaseOrderComponent implements OnInit {
   filterProducts(id: number) {
     let prov = this.suppliers.filter((sup) => sup.id == id);
     //console.log("filtered products",this.products.filter(p => p.proveedor == sup.razonSocial))
-    return this.products.filter((p) => p.proveedor == prov[0].legalName);
+    return this.products.filter((p) => p.supplierId.legalName == prov[0].legalName);
   }
 
   loadProduct(id: number) {
     let p = this.products.filter((p) => p.id == id);
     let poToAdd = {
-      SKU: p[0].SKU,
-      name: p[0].nombre,
+      SKU: p[0].sku,
+      name: p[0].name,
       amount: this.quantityInput,
-      price: p[0].precio * this.quantityInput,
+      price: p[0].price * this.quantityInput,
     };
 
     this.poProducts.push(poToAdd);

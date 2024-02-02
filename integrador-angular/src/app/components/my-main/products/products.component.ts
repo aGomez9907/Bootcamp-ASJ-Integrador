@@ -4,6 +4,7 @@ import { SuppliersServiceService } from '../../../services/suppliers-service.ser
 import { Product } from '../../../models/product';
 import { NgForm } from '@angular/forms';
 import { ProductCategory } from '../../../../enum/category-products';
+import { Supplier } from '../../../models/supplier';
 
 @Component({
   selector: 'app-products',
@@ -17,14 +18,69 @@ export class ProductsComponent implements OnInit{
   suppliers: string[] = new Array();
   URL_IMG= "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
 
-  idInput: number=0;
-  SKUInput: string = '';
-  categoriaInput: string = '';
-  nombreInput: string = '';
-  descripcionInput: string = '';
-  precioInput: number = NaN;
-  proveedorInput: string = '';
-  imgInput: string = '';
+
+
+  curretnProduct: Product = {
+    id:-1,
+    sku:'',
+    categoryId:{
+      id: -1,
+      name:'',
+      deleted: false
+    },
+    name: '',
+    description: '',
+    price: 0,
+    imgUrl: '',
+    supplierId:{
+      legalName: '',
+      codProv: '',
+      webSite: '',
+      email: '',
+      cuit: '',
+      urlLogo: '',
+      categoryId: {
+        id: 0,
+        name: '',
+      },
+      taxConditionId: {
+        id: 0,
+      },
+      phoneId: {
+        id:0,
+        country: '',
+        phoneNumber: '',
+      },
+      addressId: {
+        id:0,
+        street: '',
+        number: 0,
+        postcode: '',
+        city: '',
+        provinceId: {
+          id: 0,
+          name: '',
+          countryId: {
+            id: 0,
+            name: '',
+          },
+        },
+      },
+      contactInfoId: {
+        id:0,
+        firstName: '',
+        lastName: '',
+        phoneId: {
+          id:0,
+          country: '',
+          phoneNumber: '',
+        },
+        email: '',
+        contactRole: '',
+      },
+    },
+    deleted: false
+  }
   
 
 
@@ -43,28 +99,28 @@ constructor(public productService: ProductServiceService, public suppliersServic
 
 
 
-  loadUpdate(s: Product) {
-    this.idInput = s.id;
-    this.SKUInput  = s.SKU;
-    this.categoriaInput  = s.categoria;
-    this.nombreInput  = s.nombre;
-    this.descripcionInput  = s.descripcion;
-    this.precioInput  = s.precio;
-    this.proveedorInput  = s.proveedor;
-    this.imgInput  = s.img;
+  // loadUpdate(s: Product) {
+  //   this.idInput = s.id;
+  //   this.SKUInput  = s.sku;
+  //   this.categoriaInput  = s.categoria;
+  //   this.nombreInput  = s.name;
+  //   this.descripcionInput  = s.description;
+  //   this.precioInput  = s.price;
+  //   this.proveedorInput  = s.supplierId;
+  //   this.imgInput  = s.imgUrl;
    
-  }
+  // }
 
-  resetFields() {
-  this.idInput = 0;
-  this.SKUInput = '';
-  this.categoriaInput = '';
-  this.nombreInput = '';
-  this.descripcionInput = '';
-  this.precioInput = NaN;
-  this.proveedorInput = '';
-  this.imgInput = '';
-  }
+  // resetFields() {
+  // this.idInput = 0;
+  // this.SKUInput = '';
+  // this.categoriaInput = '';
+  // this.nombreInput = '';
+  // this.descripcionInput = '';
+  // this.precioInput = NaN;
+  // this.proveedorInput = '';
+  // this.imgInput = '';
+  // }
 
 
 imageNotFound(event: Event){
@@ -78,6 +134,7 @@ imageNotFound(event: Event){
 getSupplierList(){
   this.suppliersService.getSuppliers().subscribe(res => {
     this.suppliers = res.map(prov => prov.legalName);
+    
     
   });
 

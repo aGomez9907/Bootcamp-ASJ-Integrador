@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from '../models/product';
+import { Product, category } from '../models/product';
 import { Observable } from 'rxjs';
 
 
@@ -22,12 +22,14 @@ export class ProductServiceService {
 
   }
 
-  getProduct(id : number): Observable<Product> {
+  getProduct(id : string): Observable<Product> {
     // return this.data;
     return this.http.get<Product>(this.URL_API+'/products/' + id);
   }
 
-
+  getCategories(): Observable<category[]>{
+    return this.http.get<category[]>(this.URL_API+"/productcategories")
+  }
 
   addProduct(product: Product): Observable<Product> {
     // if (!this.data.find((sup: Supplier) => sup.id === supplier.id)) {

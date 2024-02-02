@@ -1,20 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductServiceService } from '../../../services/product-service.service';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
-import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../../models/product';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product, category } from '../../../models/product';
+import { Supplier } from '../../../models/supplier';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css'
+  styleUrl: './product-detail.component.css',
 })
 export class ProductDetailComponent implements OnInit {
-  URL_IMG= "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+  URL_IMG =
+    'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
 
+  isDetails: boolean = false;
+  isUpdating: boolean= false;
+  validForm: boolean = true
+  categories: Array<category> = new Array();
+  suppliers: Array<Supplier> = new Array();
 
   p: any;
-  idInput: number=0;
+  idInput: number = 0;
   SKUInput: string = '';
   categoriaInput: string = '';
   nombreInput: string = '';
@@ -22,39 +30,144 @@ export class ProductDetailComponent implements OnInit {
   precioInput: number = NaN;
   proveedorInput: string = '';
   imgInput: string = '';
-  constructor(public productService: ProductServiceService, private route: ActivatedRoute){this.productService;}
-  
-  
+
+  initialSKU: string = ''
+
+  curretnProduct: Product = {
+    id: 0,
+    sku: '',
+    categoryId: {
+      id: 0,
+      name: '',
+      deleted: false,
+    },
+    name: '',
+    description: '',
+    price: 0,
+    imgUrl: '',
+    supplierId: {
+      id:0,
+      legalName: '',
+      codProv: '',
+      webSite: '',
+      email: '',
+      cuit: '',
+      urlLogo: '',
+      categoryId: {
+        id: 0,
+        name: '',
+      },
+      taxConditionId: {
+        id: 0,
+      },
+      phoneId: {
+        id:0,
+        country: '',
+        phoneNumber: '',
+      },
+      addressId: {
+        id: 0,
+        street: '',
+        number: 0,
+        postcode: '',
+        city: '',
+        provinceId: {
+          id: 0,
+          name: '',
+          countryId: {
+            id: 0,
+            name: '',
+          },
+        },
+      },
+      contactInfoId: {
+        id:0,
+        firstName: '',
+        lastName: '',
+        phoneId: {
+          id:0,
+          country: '',
+          phoneNumber: '',
+        },
+        email: '',
+        contactRole: '',
+      },
+    },
+    deleted: false,
+  };
+
+  constructor(
+    private productService: ProductServiceService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private supplierService: SuppliersServiceService
+  ) {}
+
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.p = this.getProduct(params['id'])});
-      
+    this.route.paramMap.subscribe((response) => {
+      let id = response.get('id');
+      this.isUpdating = this.router.url.includes('update');
+      this.isDetails = this.router.url.includes('details');
+
+      if (id != undefined && this.isUpdating) {
+        this.productService.getProduct(id).subscribe((res) => {
+          this.curretnProduct = res;
+          this.initialSKU = this.curretnProduct.sku;
+         
+        });
+      } else if (id != undefined && this.isDetails) {
+        this.productService.getProduct(id).subscribe((res) => {
+          this.curretnProduct = res;
+        });
+      }
+    });
+
+    this.getCategories()
+    this.getSupplierList()
+
+  }
+
+  saveProduct(){
+    if (this.isUpdating) {
+      this.productService.updateProduct(this.curretnProduct).subscribe();
+    } else {
+      //this.currentSupplier.deleted = false;
+      this.productService.addProduct(this.curretnProduct).subscribe();
+    }
+  }
+
+
+  getProduct(param: string) {
+    this.productService.getProduct(param).subscribe((res) => {
+      // console.log(res)
+      // this.p = res;
+      // this.idInput = this.p[0].id;
+      // this.SKUInput = this.p[0].SKU
+      // this.categoriaInput = this.p[0].categoria;
+      // this.nombreInput = this.p[0].nombre;
+      // this.descripcionInput = this.p[0].descripcion;
+      // this.precioInput = this.p[0].precio;
+      // this.proveedorInput = this.p[0].proveedor
+      // this.imgInput = this.p[0].img;
+      this.curretnProduct = res;
+    });
+  }
+
+
+  getCategories(){
+    this.productService.getCategories().subscribe((res)=>{
+      this.categories=res;
+    })
   }
   
-  
-    getProduct(param : number){
-      this.productService.getProduct(param).subscribe(res =>{
-        console.log(res)
-        this.p = res;
-        this.idInput = this.p[0].id;
-        this.SKUInput = this.p[0].SKU
-        this.categoriaInput = this.p[0].categoria;
-        this.nombreInput = this.p[0].nombre;
-        this.descripcionInput = this.p[0].descripcion;
-        this.precioInput = this.p[0].precio;
-        this.proveedorInput = this.p[0].proveedor
-        this.imgInput = this.p[0].img;
+  getSupplierList() {
+    this.supplierService.getSuppliers().subscribe((res) => {
+      this.suppliers = res;
+    });
+  }
 
-      })
-      
-  
-    }
-    imageNotFound(event: Event){
-      (event.target as HTMLImageElement).src = this.URL_IMG;
-    }
-    
+
+  imageNotFound(event: Event) {
+    (event.target as HTMLImageElement).src = this.URL_IMG;
+  }
 }
-
-  
-
-

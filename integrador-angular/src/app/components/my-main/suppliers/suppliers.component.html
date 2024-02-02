@@ -21,8 +21,8 @@
     <table class="table-hover card-body">
       <thead>
         <tr>
-          <th class="ps-2">ID</th>
-          <th>Logo</th>
+          <th class="ps-2"></th>
+
           <th>CodProv</th>
           <th>Razon social</th>
           <th>Contacto</th>
@@ -30,18 +30,37 @@
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody >
-        <tr  *ngFor="let s of suppliers" [id]='s.deleted? "bg-deleted" : ""'>
-          <td class="ps-2">{{ s.id }}</td>
-          <td><img src="{{ s.urlLogo }}" alt="" (error)="imageNotFound($event)"></td>
+      <tbody>
+        <tr *ngFor="let s of suppliers" [id]="s.deleted ? 'bg-deleted' : ''">
+
+          <td>
+            <img class="img-table" src="{{ s.urlLogo }}" alt="" (error)="imageNotFound($event)" />
+          </td>
           <td>{{ s.codProv }}</td>
           <td>{{ s.legalName }}</td>
           <td>
-            <div>{{ s.contactInfoId.email }}</div>
+            <button
+              type="button"
+              class="btn btn-secondary tt"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="              
+              Email: {{ s.contactInfoId.email }}
+Website: {{ s.webSite }}
+Phone: {{
+                s.contactInfoId.phoneId.country +
+                  s.contactInfoId.phoneId.phoneNumber
+              }}"
+            >
+            <i class="bi bi-info-circle "></i>
+            </button>
+            <!-- <div>{{ s.contactInfoId.email }}</div>
             <div>{{ s.webSite }}</div>
-            <div>{{ s.contactInfoId.phoneId.country + s.contactInfoId.phoneId.phoneNumber }} </div>
+            <div>{{ s.contactInfoId.phoneId.country + s.contactInfoId.phoneId.phoneNumber }} </div> -->
           </td>
-          <td>{{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}</td>
+          <td>
+            {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
+          </td>
           <td>
             <div class="d-flex flex-row">
               <button
@@ -72,16 +91,15 @@
                 Delete
               </button>
               <button
-              *ngIf="s.deleted"
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              value="{{ s.codProv }}"
-              (click)="deleteSupplier(s.id)"
-            >
-              Restore
-            </button>
+                *ngIf="s.deleted"
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                value="{{ s.codProv }}"
+                (click)="deleteSupplier(s.id)"
+              >
+                Restore
+              </button>
             </div>
-
           </td>
         </tr>
       </tbody>

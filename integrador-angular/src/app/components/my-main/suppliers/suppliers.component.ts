@@ -53,6 +53,9 @@ export class SuppliersComponent implements OnInit {
   ngOnInit(): void {
     this.getSuppliers();
     console.log(this.suppliers)
+
+
+    
     
   }
 
@@ -216,5 +219,6 @@ export class SuppliersComponent implements OnInit {
     });
   }
 
+  
 
 }
