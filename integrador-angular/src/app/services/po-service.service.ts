@@ -10,12 +10,12 @@ export class POServiceService {
 
   constructor(private http: HttpClient) { }
 
-  URL_API = 'http://localhost:3000'
+  URL_API = 'http://localhost:8080'
 
 
   getPOs(): Observable<PurchasOrder[]> {
     
-    return this.http.get<PurchasOrder[]>(this.URL_API+'/ordenes');
+    return this.http.get<PurchasOrder[]>(this.URL_API+'/purchaseorders');
 
   }
 

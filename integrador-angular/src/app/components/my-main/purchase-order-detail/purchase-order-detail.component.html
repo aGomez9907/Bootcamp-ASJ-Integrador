@@ -1,6 +1,6 @@
 <div class="container ">
     <div class="row">
-        <div class="col-6" *ngIf="poProducts.length > 0; else loading">
+        <!-- <div class="col-6" *ngIf="poProducts.length > 0; else loading"> -->
             <table
             class="table table-hover card-body"
             
@@ -14,19 +14,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let po of poProducts">
+              <!-- <tr *ngFor="let po of poProducts">
                 <td>{{ po.name }}</td>
                 <td>{{ po.amount }}</td>
                 <td>{{ po.price }}</td>
                 <td>{{ po.price * po.amount }}</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
         <div class="col-6"></div>
     </div>
 
-</div>
+<!-- </div> -->
 
 <ng-template #loading>
     <p>Loading...</p>

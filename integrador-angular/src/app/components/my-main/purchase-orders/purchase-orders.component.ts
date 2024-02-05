@@ -6,7 +6,7 @@ import { Supplier } from '../../../models/supplier';
 import { Product } from '../../../models/product';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
 import { ProductServiceService } from '../../../services/product-service.service';
-import { POProduct } from '../../../models/POProduct';
+// import { POProduct } from '../../../models/purchase-order-detail';
 import { DatePipe, formatDate } from '@angular/common';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
@@ -20,7 +20,7 @@ export class PurchaseOrdersComponent implements OnInit {
   suppliers: Supplier[] = [];
   products: Product[] = [];
 
-  poProducts = new BehaviorSubject<POProduct[]>([]);
+  // poProducts = new BehaviorSubject<POProduct[]>([]);
 
   // supAux: Supplier = {
   //   id: -1,
@@ -61,9 +61,9 @@ export class PurchaseOrdersComponent implements OnInit {
     this.getPOs();
     this.getSuppliers();
     this.getProducts();
-    this.poProducts.asObservable().subscribe(a=>{
-      this.poProducts.next(a)
-    })
+    // this.poProducts.asObservable().subscribe(a=>{
+    //   this.poProducts.next(a)
+    // })
   }
 
   // isSupplierSelected: boolean = false;
@@ -98,7 +98,7 @@ export class PurchaseOrdersComponent implements OnInit {
   // }
 
   activePOs() {
-    let h = this.purchaseOrders.filter((po) => !po.isDeleted);
+    let h = this.purchaseOrders.filter((po) => !po.deleted);
     return h;
   }
 
@@ -156,6 +156,8 @@ export class PurchaseOrdersComponent implements OnInit {
   getPOs() {
     this.poService.getPOs().subscribe((res) => {
       this.purchaseOrders = res;
+      console.log(res);
+      
     });
   }
 
@@ -179,7 +181,7 @@ export class PurchaseOrdersComponent implements OnInit {
       // })
       this.purchaseOrders.filter((po) => {
         if (po.id == id) {
-          po.isDeleted = true;
+          po.deleted = true;
         }
       });
       this.activePOs();

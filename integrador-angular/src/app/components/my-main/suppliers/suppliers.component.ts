@@ -4,20 +4,18 @@ import { Supplier, Country, Province } from '../../../models/supplier';
 import { NgForm } from '@angular/forms';
 import { Iva } from '../../../../enum/iva-condition';
 
-
-
 // interface Provinces {
 //   [country: string]: string[];
 // }
 
-
-@Component({ 
+@Component({
   selector: 'app-suppliers',
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.css',
 })
 export class SuppliersComponent implements OnInit {
   suppliers: Array<Supplier> = new Array();
+  suppliersAux: Array<Supplier> = new Array();
   iva = Object.entries(Iva).map(([key, value]) => ({ key, value }));
 
   idInput: number = 0;
@@ -40,30 +38,19 @@ export class SuppliersComponent implements OnInit {
   emailContactoInput: string = '';
   rolContactoInput: string = '';
 
-
-
-
-
-
-
+  searchInput: string = '';
 
   constructor(public suppliersService: SuppliersServiceService) {
     this.suppliersService;
   }
   ngOnInit(): void {
     this.getSuppliers();
-    console.log(this.suppliers)
-
-
-    
-    
   }
 
-  URL_IMG= "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
-
+  URL_IMG =
+    'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
 
   // countries = ['Argentina', 'Chile', 'Brazil'];
-
 
   // provinces: Provinces = {
   //   'Argentina': [
@@ -85,16 +72,6 @@ export class SuppliersComponent implements OnInit {
   //     'Rondonia', 'Sergipe'
   //   ]
   // };
-
-
-
-
-
-
-
-
-
-
 
   // loadUpdate(s: Supplier) {
   //   this.idInput = s.id;
@@ -121,73 +98,61 @@ export class SuppliersComponent implements OnInit {
 
   resetFields() {
     this.idInput = 0;
-    this.codProvInput  = '';
-    this.razonSocialInput  = '';
-    this.rubroInput  = '';
-    this.webInput  = '';
-    this.telefonoInput  = NaN;
-    this.emailInput  = '';
-    this.direccionInput  = '';
-    this.cpInput  = '';
+    this.codProvInput = '';
+    this.razonSocialInput = '';
+    this.rubroInput = '';
+    this.webInput = '';
+    this.telefonoInput = NaN;
+    this.emailInput = '';
+    this.direccionInput = '';
+    this.cpInput = '';
     this.localidadInput = '';
-    this.provinciaInput  = '';
-    this.paisInput  = '';
-    this.cuitInput  = '';
-    this.ivaInput  = '';
-    this.nombreContactoInput  = '';
-    this.apellidContactoInput  = '';
-    this.telefonoContactoInput  = NaN;
-    this.emailContactoInput  = '';
-    this.rolContactoInput  = '';
+    this.provinciaInput = '';
+    this.paisInput = '';
+    this.cuitInput = '';
+    this.ivaInput = '';
+    this.nombreContactoInput = '';
+    this.apellidContactoInput = '';
+    this.telefonoContactoInput = NaN;
+    this.emailContactoInput = '';
+    this.rolContactoInput = '';
   }
 
-
-
-
-
-
-
-
-
-
-  imageNotFound(event: Event){
+  imageNotFound(event: Event) {
     (event.target as HTMLImageElement).src = this.URL_IMG;
   }
 
+  /*------------------CRUD--------------------*/
 
-/*------------------CRUD--------------------*/
-
-
-  getSuppliers(){
-    this.suppliersService.getSuppliers().subscribe(res => {
+  getSuppliers() {
+    this.suppliersService.getSuppliers().subscribe((res) => {
       this.suppliers = res;
-      console.log(res)
+      this.suppliersAux = this.suppliers;
+      console.log(res);
+      console.log(this.suppliers);
+      console.log(this.suppliersAux);
     });
-
   }
 
-
   addSupplier(form: NgForm) {
-    if(form.valid){
-      this.suppliersService.addSupplier(form.value).subscribe(res =>{
+    if (form.valid) {
+      this.suppliersService.addSupplier(form.value).subscribe((res) => {
         console.log(res);
         this.getSuppliers();
         this.resetFields();
-      })}
+      });
     }
-
-
+  }
 
   deleteSupplier(id: any) {
     let confirmacion = confirm('¿Desea eliminar el proveedor #' + id + '?');
     if (confirmacion) {
-      this.suppliersService.deleteSupplier(id).subscribe(res=>{
+      this.suppliersService.deleteSupplier(id).subscribe((res) => {
         console.log(res);
         this.getSuppliers();
-      })
+      });
     }
   }
-
 
   updateSupplier(form: NgForm) {
     // let s = {
@@ -210,15 +175,30 @@ export class SuppliersComponent implements OnInit {
     //   emailContacto: this.emailContactoInput,
     //   rolContacto: this.rolContactoInput,
     // };
-    console.log(form.value)
+    console.log(form.value);
 
-    this.suppliersService.updateSupplier(form.value).subscribe(res => {
+    this.suppliersService.updateSupplier(form.value).subscribe((res) => {
       console.log(res);
       this.resetFields();
       this.getSuppliers();
     });
   }
 
-  
+  search() {
+    if(this.searchInput === ''){
+      this.suppliersAux = this.suppliers
+    }else{
+      this.suppliersAux = this.suppliers.filter(sup => sup.legalName.toLowerCase().includes(this.searchInput.toLowerCase()) || sup.codProv.toLowerCase().includes(this.searchInput.toLowerCase()));
+    }
+    console.log(this.suppliersAux);
+    console.log(this.searchInput);
+  }
 
+  filterDeleted(){
+    this.suppliersAux = this.suppliers.filter(sup=> sup.deleted == true)
+  }
+
+  filterActive(){
+    this.suppliersAux = this.suppliers.filter(sup=> sup.deleted == false)
+  }
 }

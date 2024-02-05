@@ -4,108 +4,165 @@
     <li class="breadcrumb-item active">Suppliers</li>
   </ol>
 
-  <div class="card mb-4">
-    <div class="card-header row px-2 mx-0">
-      <div class="col-6"><i class="fas fa-table me-1"></i> Suppliers list</div>
-      <div class="col-6 text-end">
+  <div class="row">
+    <!-- <div class="input-group-sm col-6">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm"
+            ><i class="bi bi-search"></i
+          ></span>
+        </div>
+        <input
+          type="search"
+          class="input-group-text"
+          type="search"
+          placeholder="Search"
+          [(ngModel)]="searchInput"
+          (keyup)="search()"
+        />
+      </div>
+    </div> -->
+    <div class="col-6 d-flex">
+      <div ngbDropdown class="d-inline-block">
         <button
           type="button"
-          class="btn btn-primary"
-          id="btn-agregar-proveedor"
-          routerLink="new"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle
         >
-          Add new supplier
+          <i class="bi bi-funnel"></i>
         </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <ul>
+            <li ngbDropdownItem><a (click)="filterDeleted()">Deleted</a></li>
+            <li ngbDropdownItem><a (click)="filterActive()">Active</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm "
+            ><i class="bi bi-search"></i
+          ></span>
+        </div>
+        <input
+          type="search"
+          class="input-group-text text-end"
+          type="search"
+          placeholder="Search"
+          [(ngModel)]="searchInput"
+          (keyup)="search()"
+        />
       </div>
     </div>
-    <table class="table-hover card-body">
-      <thead>
-        <tr>
-          <th class="ps-2"></th>
+    <div class="col-6">
+      <button
+        type="button"
+        class="btn btn-primary float-end"
+        id="btn-agregar-proveedor"
+        routerLink="new"
+      >
+        Add new supplier
+      </button>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="ps-2"></th>
 
-          <th>CodProv</th>
-          <th>Razon social</th>
-          <th>Contacto</th>
-          <th>Nombre</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let s of suppliers" [id]="s.deleted ? 'bg-deleted' : ''">
-
-          <td>
-            <img class="img-table" src="{{ s.urlLogo }}" alt="" (error)="imageNotFound($event)" />
-          </td>
-          <td>{{ s.codProv }}</td>
-          <td>{{ s.legalName }}</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-secondary tt"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="              
+        <th>CodProv</th>
+        <th>Razon social</th>
+        <th>Contacto</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let s of suppliersAux"
+        [ngClass]="{ deletedAlejo: s.deleted }"
+      >
+        <td>
+          <img
+            class="img-table"
+            src="{{ s.urlLogo }}"
+            alt=""
+            (error)="imageNotFound($event)"
+          />
+        </td>
+        <td>{{ s.codProv }}</td>
+        <td>{{ s.legalName }}</td>
+        <td>
+          <span
+            data-toggle="tooltip"
+            data-placement="top"
+            title="              
               Email: {{ s.contactInfoId.email }}
 Website: {{ s.webSite }}
 Phone: {{
+              '+(' +
                 s.contactInfoId.phoneId.country +
-                  s.contactInfoId.phoneId.phoneNumber
-              }}"
-            >
-            <i class="bi bi-info-circle "></i>
-            </button>
-            <!-- <div>{{ s.contactInfoId.email }}</div>
+                ')' +
+                s.contactInfoId.phoneId.phoneNumber
+            }}"
+          >
+            {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
+            <i class="bi bi-info-circle"></i>
+          </span>
+          <!-- <div>{{ s.contactInfoId.email }}</div>
             <div>{{ s.webSite }}</div>
             <div>{{ s.contactInfoId.phoneId.country + s.contactInfoId.phoneId.phoneNumber }} </div> -->
-          </td>
-          <td>
-            {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
-          </td>
-          <td>
-            <div class="d-flex flex-row">
-              <button
-                type="button"
-                class="btn btn-outline-success btn-sm"
-                value="{{ s.codProv }}"
-                routerLink="details/{{ s.id }}"
-              >
-                Details
-              </button>
+        </td>
+        <td>
+          {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
+        </td>
+        <td>
+          <div class="d-flex flex-row">
+            <button
+              type="button"
+              class="btn btn-outline-success btn-sm"
+              value="{{ s.codProv }}"
+              routerLink="details/{{ s.id }}"
+            >
+              Details
+            </button>
 
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm"
-                id="btn-agregar-proveedor"
-                routerLink="update/{{ s.id }}"
-              >
-                Edit
-              </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              id="btn-agregar-proveedor"
+              routerLink="update/{{ s.id }}"
+            >
+              Edit
+            </button>
 
-              <button
-                *ngIf="!s.deleted"
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                value="{{ s.codProv }}"
-                (click)="deleteSupplier(s.id)"
-              >
-                Delete
-              </button>
-              <button
-                *ngIf="s.deleted"
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                value="{{ s.codProv }}"
-                (click)="deleteSupplier(s.id)"
-              >
-                Restore
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <button
+              *ngIf="!s.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              value="{{ s.codProv }}"
+              (click)="deleteSupplier(s.id)"
+            >
+              Delete
+            </button>
+            <button
+              *ngIf="s.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              value="{{ s.codProv }}"
+              (click)="deleteSupplier(s.id)"
+            >
+              Restore
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    <!-- <div class="card-body">
+  <!-- <div class="card-body">
       <table id="datatablesSimple">
         <thead>
           <tr>
@@ -134,5 +191,4 @@ Phone: {{
         <tbody id="lista-proveedores-tbody"></tbody>
       </table>
     </div> -->
-  </div>
 </div>

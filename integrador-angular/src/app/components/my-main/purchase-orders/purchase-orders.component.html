@@ -16,7 +16,6 @@
           class="btn btn-primary"
           routerLink="/purchase-orders/new"
           id="btn-agregar-proveedor"
-          
         >
           Add new purchase order
         </button>
@@ -219,16 +218,16 @@
           <th>Order N°</th>
           <th>Emission date</th>
           <th>Delivery date</th>
-          <th>Total</th>
+          <!-- <th>Total</th> -->
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let po of activePOs()">
-          <td>{{ po.number }}</td>
-          <td>{{ po.emission }}</td>
-          <td>{{ po.delivery }}</td>
-          <td>{{ po.total | currency }}</td>
+          <td>{{ po.orderNumber }}</td>
+          <td>{{ po.emissionDate | date }}</td>
+          <td>{{ po.deliveryDate | date }}</td>
+          <!-- <td>{{ po.total | currency }}</td> -->
           <td>
             <div class="d-flex flex-row">
               <button
