@@ -29,6 +29,10 @@ public class PurchaseOrderDetailService {
 	public Optional<PurchaseOrderDetail> getPurchaseOrderDetailById(Integer id) {
 		return purchaseOrderDetailRepository.findById(id);
 	}
+	
+	public List<PurchaseOrderDetail> getPurchaseOrderDetailsByOrderId(Integer id){
+		return purchaseOrderDetailRepository.findDetailByOrderId(id);
+	}
 
 	@Transactional
 	public PurchaseOrderDetail createPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PurchasOrder } from '../models/purchase-order';
 import { Observable } from 'rxjs';
+import { PurchaseOrderDetail } from '../models/purchase-order-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -19,26 +20,34 @@ export class POServiceService {
 
   }
 
+  getDetails(POid: string):Observable<PurchaseOrderDetail[]>{
+    return this.http.get<PurchaseOrderDetail[]>(this.URL_API+'/purchaseorderdetails/order/'+ POid)
+  }
+
   getPO(id : string): Observable<PurchasOrder> {
 
-    return this.http.get<PurchasOrder>(this.URL_API+'/ordenes?id=' + id);
+    return this.http.get<PurchasOrder>(this.URL_API+'/purchaseorders/' + id);
   }
 
 
 
   addPO(purchaseOrder: PurchasOrder): Observable<PurchasOrder> {
 
-    return this.http.post<PurchasOrder>(this.URL_API+'/ordenes', purchaseOrder);
+    return this.http.post<PurchasOrder>(this.URL_API+'/purchaseorders', purchaseOrder);
+  }
+
+  addDetail(detail: PurchaseOrderDetail): Observable<PurchaseOrderDetail>{
+    return this.http.post<PurchaseOrderDetail>(this.URL_API+"/purchaseorderdetails", detail)
   }
 
   deletePO(id: number): Observable<PurchasOrder> {
 
-    return this.http.delete<PurchasOrder>(this.URL_API +"/ordenes/"+id )
+    return this.http.delete<PurchasOrder>(this.URL_API +"/purchaseorders/"+id )
   }
 
   updatePO(purchaseOrder: PurchasOrder): Observable<any> {
 
-    return this.http.put(this.URL_API+"/ordenes/"+purchaseOrder.id, purchaseOrder)
+    return this.http.put(this.URL_API+"/purchaseorders/"+purchaseOrder.id, purchaseOrder)
 }
 
 

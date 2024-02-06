@@ -44,6 +44,12 @@ public class PurchaseOrderDetailController {
 	public ResponseEntity<Optional<PurchaseOrderDetail>> gePurchaseOrderDetailById(@PathVariable Integer id) {
 		return ResponseEntity.ok(purchaseOrderDetailService.getPurchaseOrderDetailById(id));
 	}
+	
+	@GetMapping("/order/{id}")
+	public ResponseEntity<List<PurchaseOrderDetail>> getPurchaseOrderDetailsByOrderId(@PathVariable Integer id) {
+		return ResponseEntity.ok(purchaseOrderDetailService.getPurchaseOrderDetailsByOrderId(id));
+	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updatePurchaseOrderDetail(@PathVariable int id, @RequestBody PurchaseOrderDetail purchaseOrderDetail) {
 		return ResponseEntity.ok(purchaseOrderDetailService.updatePurchaseOrderDetail(id, purchaseOrderDetail));

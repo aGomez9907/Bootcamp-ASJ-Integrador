@@ -43,6 +43,12 @@ public class ProductController {
 	public ResponseEntity<Optional<Product>> geProductById(@PathVariable Integer id) {
 		return ResponseEntity.ok(productService.getProductById(id));
 	}
+	
+	@GetMapping("/sup/{id}")
+	public ResponseEntity<List<Product>> getActiveProductsBySupplierId(@PathVariable Integer id) {
+		return ResponseEntity.ok(productService.getActiveProductsBySupplierId(id));
+	}
+	
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestBody Product product) {
 		return ResponseEntity.ok(productService.updateProduct(id, product));

@@ -28,6 +28,10 @@ public class ProductService {
 		return productRepository.findById(id);
 	}
 
+	public List<Product> getActiveProductsBySupplierId(Integer id) {
+		return productRepository.findActiveProductsBySupplierId(id);
+	}
+	
 	@Transactional
 	public Product createProduct(Product product) {
 		try {

@@ -22,7 +22,7 @@ const routes: Routes = [
     children: [
       { path: '', component: PurchaseOrdersComponent },
       { path: 'new', component: NewPurchaseOrderComponent },
-      { path: ':id', component: PurchaseOrderDetailComponent },
+      { path: ':id', component: NewPurchaseOrderComponent },
     ],
   },
   //{ path: 'suppliers/:codProv', component: SupplierDetailComponent },

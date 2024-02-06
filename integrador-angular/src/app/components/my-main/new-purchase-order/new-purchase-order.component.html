@@ -179,6 +179,7 @@
             name="number"
             [(ngModel)]="purchaseOrderAux.orderNumber"
             placeholder="Order number"
+            [disabled]="isDetails"
           />
         </div>
         <div
@@ -190,10 +191,12 @@
           <ngb-datepicker
             #d
             class=""
-            [(ngModel)]="purchaseOrderAux.emissionDate"
+            [(ngModel)]="emissionSelected"
             name="emission"
             #emission="ngModel"
             (ngModelChange)="print()"
+            [disabled]="isDetails"
+            #datepicker1="ngbDatepicker"
           ></ngb-datepicker>
         </div>
         <div
@@ -204,19 +207,25 @@
           </div>
           <ngb-datepicker
             #d
-            [(ngModel)]="purchaseOrderAux.deliveryDate"
+            [(ngModel)]="deliverySelected"
             name="delivery"
             #delivery="ngModel"
             (ngModelChange)="print()"
+            #datepicker2="ngbDatepicker"
+            [disabled]="isDetails"
           ></ngb-datepicker>
         </div>
         <div class="col-12 mt-2">
+          <label for="supplier-po">Supplier</label>
           <select
             class="form-control text-center"
             name="supplier"
             #supplier="ngModel"
-            id=""
+            id="supplier-po"
             [(ngModel)]="purchaseOrderAux.supplierId.id"
+            (change)="getProductsBySelectedSupplier()"
+            [disabled]="isFirstItemAdded"
+            [disabled]="isDetails"
           >
             <option disabled selected value="0">Select a supplier</option>
             <option *ngFor="let sup of suppliers" value="{{ sup.id }}">
@@ -224,10 +233,107 @@
             </option>
           </select>
         </div>
-        <h4 class="mt-3">Item</h4>
-        <hr>
+        <div [ngClass]="isDetails? 'visually-hidden':''">
+          <h4 class="mt-3">Item</h4>
+          <hr />
+          <div class="col-6">
+            <label for="selected-product">Product</label>
+            <select
+              class="form-control"
+              name="product"
+              #product="ngModel"
+              id=""
+              [(ngModel)]="currentOrderDetail.productId.id"
+            >
+              <option disabled selected value="0">Select a product</option>
+              <option value="{{ prod.id }}" *ngFor="let prod of products">
+                {{ prod.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label for="quantity">Quantity</label>
+            <input
+              class="form-control"
+              type="number"
+              name="quantity"
+              #quantity="ngModel"
+              placeholder="Quantity"
+              [(ngModel)]="currentOrderDetail.quantity"
+            />
+          </div>
+          <button
+            class="btn btn-outline-info mt-1"
+            type="button"
+            (click)="addItem()"
+          >
+            Add Item
+          </button>
+        </div>
+      </div>
+        </div>
+    <div class="col-6">
+      <table class="table table-hover table-striped">
+        <thead>
+          <th>SKU</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit price</th>
+          <th>Subtotal</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of details; let i = index">
+            <td>{{ item.productId.sku }}</td>
+            <td>{{ item.productId.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.productId.price }}</td>
+            <td>{{ item.productId.price * item.quantity }}</td>
+            <td>
+              <button class="btn btn-danger" (click)="removeItem(i)" [disabled]="isDetails">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ul class="list-unstyled">
+        <li>
+          <div class="row">
+            <div class="col-6 text-start"><span>Total before tax</span></div>
+            <div class="col-6 text-end">{{ calculateTotal() | currency }}</div>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <div class="col-6 text-start">
+              <span
+                >Tax
+                <span ngbTooltip="10%">
+                  <i class="bi bi-info-circle"></i> </span
+              ></span>
+            </div>
+            <div class="col-6 text-end">
+              {{ calculateTotal() * 0.1 | currency }}
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="row">
+            <div class="col-6 text-start"><span>Total price</span></div>
+            <div class="col-6 text-end">
+              {{ calculateTotal() * 0.1 + calculateTotal() | currency }}
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="row" [ngClass]="isDetails? 'visually-hidden':''">
+        <div class="col-6" >
+          <button type="submit" class="btn btn-success">Create Order</button>
+        </div>
+        <div class="col-6"><button class="btn btn-danger">Cancel</button></div>
       </div>
     </div>
-    <div class="col-6"></div>
   </div>
 </form>

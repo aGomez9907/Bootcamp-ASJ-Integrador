@@ -75,7 +75,7 @@
         <th>CodProv</th>
         <th>Razon social</th>
         <th>Contacto</th>
-        <th>Nombre</th>
+
         <th>Acciones</th>
       </tr>
     </thead>
@@ -95,28 +95,20 @@
         <td>{{ s.codProv }}</td>
         <td>{{ s.legalName }}</td>
         <td>
-          <span
-            data-toggle="tooltip"
-            data-placement="top"
-            title="              
-              Email: {{ s.contactInfoId.email }}
+          {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
+          <span  class="" ngbTooltip="              
+          Email: {{ s.contactInfoId.email }}
 Website: {{ s.webSite }}
 Phone: {{
-              '+(' +
-                s.contactInfoId.phoneId.country +
-                ')' +
-                s.contactInfoId.phoneId.phoneNumber
-            }}"
-          >
-            {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
-            <i class="bi bi-info-circle"></i>
-          </span>
+          '+(' +
+            s.contactInfoId.phoneId.country +
+            ')' +
+            s.contactInfoId.phoneId.phoneNumber
+        }}"><i class="bi bi-info-circle"></i></span>
+          
           <!-- <div>{{ s.contactInfoId.email }}</div>
             <div>{{ s.webSite }}</div>
             <div>{{ s.contactInfoId.phoneId.country + s.contactInfoId.phoneId.phoneNumber }} </div> -->
-        </td>
-        <td>
-          {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
         </td>
         <td>
           <div class="d-flex flex-row">

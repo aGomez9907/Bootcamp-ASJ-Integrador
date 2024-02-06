@@ -27,6 +27,10 @@ export class ProductServiceService {
     return this.http.get<Product>(this.URL_API+'/products/' + id);
   }
 
+  getActiveProductsBySupplierId(id: number):Observable<Product[]>{
+    return this.http.get<Product[]>(this.URL_API+'/products/sup/'+id)
+  }
+
   getCategories(): Observable<category[]>{
     return this.http.get<category[]>(this.URL_API+"/productcategories")
   }
