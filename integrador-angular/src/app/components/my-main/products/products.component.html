@@ -5,15 +5,16 @@
   </ol>
 
   <div class="row">
-    <div class="col-6 d-flex">
-      <div ngbDropdown class="d-inline-block">
+    <div class="col-md-6 d-flex">
+      <!-- Dropdown for filtering -->
+      <div ngbDropdown class="d-inline-block me-2">
         <button
           type="button"
           class="btn btn-outline-primary"
           id="dropdownBasic1"
           ngbDropdownToggle
         >
-          <i class="bi bi-funnel"></i>
+          <i class="bi bi-funnel"></i> Filter
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <ul>
@@ -22,51 +23,46 @@
             <li ngbDropdownItem><a (click)="filterActive()">Active</a></li>
             <li ngbDropdownItem><a (click)="filterDeleted()">Deleted</a></li>
             <br />
-            <span class="text-light-emphasis">ByCategory</span>
+            <span class="text-light-emphasis">By Category</span>
             <hr />
             <li ngbDropdownItem>
               <a (click)="filterByCategory(0)">All categories</a>
             </li>
             <li ngbDropdownItem *ngFor="let cat of categories">
-              <a (click)="filterByCategory(cat.id)">
-                {{ cat.name }}
-              </a>
+              <a (click)="filterByCategory(cat.id)">{{ cat.name }}</a>
             </li>
           </ul>
         </div>
       </div>
 
+      <!-- Search input -->
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-sm "
-            ><i class="bi bi-search"></i
-          ></span>
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
         </div>
         <input
           type="search"
-          class="input-group-text text-end"
-          type="search"
+          class="form-control"
           placeholder="Search"
           [(ngModel)]="searchInput"
           (keyup)="search()"
         />
       </div>
     </div>
-    <div class="col-6">
-      <button
-        type="button"
-        class="btn btn-primary float-end"
-        id="btn-agregar-proveedor"
-        routerLink="/products/new"
-      >
+
+    <!-- Add new product button -->
+    <div class="col-md-6 text-end">
+      <button type="button" class="btn btn-primary" routerLink="/products/new">
         Add new product
       </button>
     </div>
   </div>
-  <table class="table table-hover">
+
+  <!-- Product table -->
+  <table class="table table-hover mt-4">
     <thead>
       <tr>
-        <th></th>
+        <th>Image</th>
         <th>SKU</th>
         <th>Name</th>
         <th>Category</th>
@@ -76,11 +72,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of productsAux" [id]="p.deleted ? 'bg-deleted' : ''">
+      <tr *ngFor="let p of productsAux" [ngClass]="{ 'bg-deleted': p.deleted }">
         <td>
           <img
-            src="{{ p.imgUrl }}"
-            alt="product"
+            [src]="p.imgUrl"
+            alt="Product"
             class="img-thumbnail img-table"
             (error)="imageNotFound($event)"
           />
@@ -95,26 +91,21 @@
             <button
               type="button"
               class="btn btn-outline-success btn-sm"
-              value="{{ p.id }}"
               [routerLink]="['/products/details/', p.id]"
             >
               Details
             </button>
-
             <button
               type="button"
               class="btn btn-outline-primary btn-sm"
-              id="btn-agregar-proveedor"
               [routerLink]="['/products/update/', p.id]"
             >
               Edit
             </button>
-
             <button
               *ngIf="!p.deleted"
               type="button"
               class="btn btn-outline-danger btn-sm"
-              value="{{ p.id }}"
               (click)="deleteProduct(p.id)"
             >
               Delete
@@ -123,7 +114,6 @@
               *ngIf="p.deleted"
               type="button"
               class="btn btn-outline-danger btn-sm"
-              value="{{ p.id }}"
               (click)="deleteProduct(p.id)"
             >
               Restore

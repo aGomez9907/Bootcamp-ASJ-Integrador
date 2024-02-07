@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductServiceService } from '../../../services/product-service.service';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product, category } from '../../../models/product';
+import { Product, ProductCategory } from '../../../models/product';
 import { Supplier } from '../../../models/supplier';
 import { CurrencyPipe } from '@angular/common';
 
@@ -18,8 +18,12 @@ export class ProductDetailComponent implements OnInit {
   isDetails: boolean = false;
   isUpdating: boolean= false;
   validForm: boolean = true
-  categories: Array<category> = new Array();
+  categories: Array<ProductCategory> = new Array();
   suppliers: Array<Supplier> = new Array();
+
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
 
   p: any;
   idInput: number = 0;
@@ -33,7 +37,7 @@ export class ProductDetailComponent implements OnInit {
 
   initialSKU: string = ''
 
-  curretnProduct: Product = {
+  currentProduct: Product = {
     id: 0,
     sku: '',
     categoryId: {
@@ -56,6 +60,7 @@ export class ProductDetailComponent implements OnInit {
       categoryId: {
         id: 0,
         name: '',
+        deleted: false
       },
       taxConditionId: {
         id: 0,
@@ -111,13 +116,13 @@ export class ProductDetailComponent implements OnInit {
 
       if (id != undefined && this.isUpdating) {
         this.productService.getProduct(id).subscribe((res) => {
-          this.curretnProduct = res;
-          this.initialSKU = this.curretnProduct.sku;
+          this.currentProduct = res;
+          this.initialSKU = this.currentProduct.sku;
          
         });
       } else if (id != undefined && this.isDetails) {
         this.productService.getProduct(id).subscribe((res) => {
-          this.curretnProduct = res;
+          this.currentProduct = res;
         });
       }
     });
@@ -129,10 +134,10 @@ export class ProductDetailComponent implements OnInit {
 
   saveProduct(){
     if (this.isUpdating) {
-      this.productService.updateProduct(this.curretnProduct).subscribe();
+      this.productService.updateProduct(this.currentProduct).subscribe(res=> this.successMessage="Product updated succesfully.");
     } else {
       //this.currentSupplier.deleted = false;
-      this.productService.addProduct(this.curretnProduct).subscribe();
+      this.productService.addProduct(this.currentProduct).subscribe(res=> this.successMessage="Product created succesfully.");
     }
   }
 
@@ -149,7 +154,7 @@ export class ProductDetailComponent implements OnInit {
       // this.precioInput = this.p[0].precio;
       // this.proveedorInput = this.p[0].proveedor
       // this.imgInput = this.p[0].img;
-      this.curretnProduct = res;
+      this.currentProduct = res;
     });
   }
 

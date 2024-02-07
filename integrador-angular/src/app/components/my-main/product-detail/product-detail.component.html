@@ -1,214 +1,112 @@
-<div class="row">
+<div class="container mt-5">
+  <!-- Sección de navegación -->
   <div class="row">
-    <div class="col">
-      <a class="text-decoration-none" routerLink="/products"
-        >← Back to products</a
-      >
-    </div>
+      <div class="col">
+          <a class="back-link text-muted" routerLink="/products">← Back to Products</a>
+      </div>
   </div>
-  <div class="text-center my-4">
-    <h1 *ngIf="!isUpdating && !isDetails">Add new product</h1>
-    <h1 *ngIf="isUpdating">Update product</h1>
-    <h1 *ngIf="isDetails">Product details</h1>
-  </div>
-  <hr />
-  <form #productForm="ngForm" (ngSubmit)="saveProduct()">
-    <div class="m-2 d-flex flex-column">
-      <div class="row mb-3">
-        <label for="id-proveedor" class="col-4 col-form-label text-start"
-          >SKU</label
-        >
-        <div class="col-4">
-          <input
-            type="text"
-            class="form-control"
-            id="id-proveedor"
-            name="sku"
-            #sku="ngModel"
-            [disabled]="isDetails"
-            #SKU="ngModel"
-            required=""
-            [(ngModel)]="curretnProduct.sku"
-            placeholder="SKU"
-          />
-          <div
-            *ngIf="productForm.controls['sku']?.hasError('required') &&
-            !validForm"
-            class="col-auto"
-          >
-            <span
-              class="form-text text-danger"
-              [class.required-field]="productForm.controls['sku'].touched"
-              >This field is required</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="category" class="col-4 col-form-label text-start"
-          >Category</label
-        >
-        <div class="col-4">
-          <select
-            type="text"
-            class="form-select"
-            id="category"
-            name="category"
-            #category="ngModel"
-            [disabled]="isDetails"
-            [(ngModel)]="curretnProduct.categoryId.id"
-          >
-            <option selected disabled value="0">Select a category</option>
-            <option *ngFor="let cat of categories" value="{{ cat.id }}">
-              {{ cat.name }}
-            </option>
-          </select>
-        </div>
-        <div class="col-2">
-          <button class="btn btn-sm btn-outline-info">Add category</button>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="input-nombre" class="col-sm-4 col-form-label text-start"
-          >Product name</label
-        >
-        <div class="col-4">
-          <input
-            type="text"
-            class="form-control"
-            id="input-nombre"
-            [disabled]="isDetails"
-            name="name"
-            #name="ngModel"
-            required=""
-            [(ngModel)]="curretnProduct.name"
-            placeholder="Name"
-          />
-          <div
-          *ngIf="productForm.controls['name']?.hasError('required') &&
-          !validForm"
-          class="col-auto"
-        >
-          <span
-            class="form-text text-danger"
-            [class.required-field]="productForm.controls['name'].touched"
-            >This field is required</span
-          >
-        </div>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label
-          for="input-descripcion"
-          class="col-sm-4 col-form-label text-start"
-          >Description</label
-        >
-        <div class="col-4">
-          <textarea
-            type="text"
-            class="form-control"
-            id="input-descripcion"
-            [disabled]="isDetails"
-            name="description"
-            #description="ngModel"
-            [(ngModel)]="curretnProduct.description"
-            placeholder="Some description"
-          ></textarea>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="input-precio" class="col-sm-4 col-form-label text-start"
-          >Price</label
-        >
-        <div class="col-4">
-          <div class="input-group">
-            <span class="input-group-text "><i class="bi bi-currency-dollar"></i></span>
-            <input
-              type="number"
-              class="form-control"
-              id="input-precio"
-              name="price"
-              #price="ngModel"
-              required=""
-              [disabled]="isDetails"
-              [(ngModel)]="curretnProduct.price"
-              placeholder="123"
-            />
-          </div>
-          <div
-          *ngIf="productForm.controls['price']?.hasError('required') &&
-          !validForm"
-          class="col-auto"
-        >
-          <span
-            class="form-text text-danger"
-            [class.required-field]="productForm.controls['price'].touched"
-            >This field is required</span
-          >
-        </div>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="input-proveedor" class="col-sm-4 col-form-label text-start"
-          >Supplier</label
-        >
-        <div class="col-4">
-          <select
-            type="text"
-            class="form-select"
-            id="input-proveedor"
-            name="supplier"
-            #supplier="ngModel"
-            [disabled]="isDetails"
-            [(ngModel)]="curretnProduct.supplierId.id"
-          >
-            <option selected disabled value="0">Select a supplier</option>
-            <option *ngFor="let sup of suppliers" value="{{ sup.id }}">
-              {{ sup.legalName }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="input-img" class="col-4 col-form-label text-start"
-          >Image</label
-        >
-        <div class="col-4">
-          <input
-            type="text"
-            [disabled]="isDetails"
-            id="input-img"
-            class="form-control"
-            name="imgUrl"
-            #imgUrl="ngModel"
-            [(ngModel)]="curretnProduct.imgUrl"
-            placeholder="URL"
-          />
-        </div>
 
-        <div class="col-4">
-          <img
-            class="img-fluid"
-            src="{{ curretnProduct.imgUrl }}"
-            alt="product"
-            (error)="imageNotFound($event)"
-          />
-        </div>
+  <!-- Sección de título -->
+  <div class="text-center my-4">
+      <h1 class="main-title" *ngIf="!isUpdating && !isDetails">Add New Product</h1>
+      <h1 class="main-title" *ngIf="isUpdating">Update Product</h1>
+      <h1 class="main-title" *ngIf="isDetails">Product Details</h1>
+  </div>
+  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
+  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{ errorMessage }}</ngb-alert>
+  <hr />
+
+  <!-- Formulario de Producto -->
+  <form #productForm="ngForm" (ngSubmit)="saveProduct()" class="mx-auto">
+      <div class="row">
+          <!-- Columna de información del producto -->
+          <div class="col-md-6">
+              <!-- SKU -->
+              <div class="form-group mb-4">
+                  <label class="form-label">SKU</label>
+                  <input type="text" class="form-control" name="sku" #sku="ngModel"
+                      [disabled]="isDetails" required [(ngModel)]="currentProduct.sku" placeholder="Enter SKU">
+                  <div *ngIf="productForm.controls['sku']?.hasError('required') && productForm.controls['sku'].touched"
+                      class="form-text text-danger mt-1">SKU is required</div>
+              </div>
+
+              <!-- Categoría -->
+              <div class="form-group mb-4">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" name="category" #category="ngModel"
+                      [disabled]="isDetails" [(ngModel)]="currentProduct.categoryId.id">
+                      <option selected disabled value="0">Select a category</option>
+                      <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+                  </select>
+                  <button class="btn btn-outline-info mt-2" routerLink="/categories">Add New Category</button>
+              </div>
+
+              <!-- Nombre del Producto -->
+              <div class="form-group mb-4">
+                  <label class="form-label">Product Name</label>
+                  <input type="text" class="form-control" name="name" #name="ngModel"
+                      [disabled]="isDetails" required [(ngModel)]="currentProduct.name" placeholder="Enter Product Name">
+                  <div *ngIf="productForm.controls['name']?.hasError('required') && productForm.controls['name'].touched"
+                      class="form-text text-danger mt-1">Product name is required</div>
+              </div>
+          </div>
+
+          <!-- Columna de detalles y vista previa de imagen -->
+          <div class="col-md-6">
+              <!-- Descripción -->
+              <div class="form-group mb-4">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description"
+                      [disabled]="isDetails" #description="ngModel" [(ngModel)]="currentProduct.description" placeholder="Enter Description"></textarea>
+              </div>
+
+              <!-- Precio -->
+              <div class="form-group mb-4">
+                  <label class="form-label">Price</label>
+                  <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                      <input type="number" class="form-control" name="price" #price="ngModel"
+                          required [disabled]="isDetails" [(ngModel)]="currentProduct.price" placeholder="Enter Price">
+                  </div>
+                  <div *ngIf="productForm.controls['price']?.hasError('required') && productForm.controls['price'].touched"
+                      class="form-text text-danger mt-1">Price is required</div>
+              </div>
+
+              <!-- Proveedor -->
+              <div class="form-group mb-4">
+                  <label class="form-label">Supplier</label>
+                  <select class="form-select" name="supplier" #supplier="ngModel"
+                      [disabled]="isDetails" [(ngModel)]="currentProduct.supplierId.id">
+                      <option selected disabled value="0">Select a supplier</option>
+                      <option *ngFor="let sup of suppliers" [value]="sup.id">{{ sup.legalName }}</option>
+                  </select>
+              </div>
+          </div>
       </div>
-    </div>
-    <div
-      class="modal-footer mt-2"
-      [ngClass]="isDetails ? 'visually-hidden' : ''"
-    >
-      <button type="button" class="btn btn-secondary">Cancel</button>
-      <button
-        type="submit"
-        class="btn btn-primary"
-        id="guardar-proveedor"
-        [disabled]="!productForm.valid"
-      >
-        Save
-      </button>
-    </div>
+
+      <!-- Sección de URL de imagen y vista previa -->
+      <div class="row">
+          <div class="col-md-6">
+              <div class="form-group mb-4">
+                  <label class="form-label">Image URL</label>
+                  <input type="text" class="form-control" name="imgUrl"
+                      [disabled]="isDetails" #imgUrl="ngModel" [(ngModel)]="currentProduct.imgUrl" placeholder="Enter Image URL">
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group mb-4">
+                  <label class="form-label">Preview Image</label>
+                  <div class="preview-image-container">
+                      <img class="img-fluid rounded preview-image" [src]="currentProduct.imgUrl || 'https://via.placeholder.com/150'" alt="Preview Image">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Sección de botones de acción -->
+      <div class="modal-footer mt-4" [ngClass]="isDetails ? 'visually-hidden' : ''">
+          <button type="button" class="btn btn-secondary me-2" routerLink="/products">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Save</button>
+      </div>
   </form>
 </div>

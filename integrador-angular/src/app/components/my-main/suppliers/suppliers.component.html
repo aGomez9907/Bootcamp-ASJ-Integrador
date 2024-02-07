@@ -4,33 +4,11 @@
     <li class="breadcrumb-item active">Suppliers</li>
   </ol>
 
-  <div class="row">
-    <!-- <div class="input-group-sm col-6">
-      <div class="input-group input-group-sm">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-sm"
-            ><i class="bi bi-search"></i
-          ></span>
-        </div>
-        <input
-          type="search"
-          class="input-group-text"
-          type="search"
-          placeholder="Search"
-          [(ngModel)]="searchInput"
-          (keyup)="search()"
-        />
-      </div>
-    </div> -->
+  <div class="row mb-3">
     <div class="col-6 d-flex">
-      <div ngbDropdown class="d-inline-block">
-        <button
-          type="button"
-          class="btn btn-outline-primary"
-          id="dropdownBasic1"
-          ngbDropdownToggle
-        >
-          <i class="bi bi-funnel"></i>
+      <div ngbDropdown class="d-inline-block me-2">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+          <i class="bi bi-funnel"></i> Filter
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <ul>
@@ -42,110 +20,49 @@
 
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-sm "
-            ><i class="bi bi-search"></i
-          ></span>
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
         </div>
-        <input
-          type="search"
-          class="input-group-text text-end"
-          type="search"
-          placeholder="Search"
-          [(ngModel)]="searchInput"
-          (keyup)="search()"
-        />
+        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchInput" (keyup)="search()">
       </div>
     </div>
-    <div class="col-6">
-      <button
-        type="button"
-        class="btn btn-primary float-end"
-        id="btn-agregar-proveedor"
-        routerLink="new"
-      >
+    <div class="col-6 text-end">
+      <button type="button" class="btn btn-primary" id="btn-agregar-proveedor" routerLink="new">
         Add new supplier
       </button>
     </div>
   </div>
+
   <table class="table table-hover">
     <thead>
       <tr>
-        <th class="ps-2"></th>
-
-        <th>CodProv</th>
+        <th></th>
+        <th>Supplier Code</th>
         <th>Razon social</th>
         <th>Contacto</th>
-
-        <th>Acciones</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let s of suppliersAux"
-        [ngClass]="{ deletedAlejo: s.deleted }"
-      >
+      <tr *ngFor="let s of suppliersAux" [ngClass]="{ 'deleted-supplier': s.deleted }">
         <td>
-          <img
-            class="img-table"
-            src="{{ s.urlLogo }}"
-            alt=""
-            (error)="imageNotFound($event)"
-          />
+          <img class="img-table" [src]="s.urlLogo" alt="{{ s.legalName }}" (error)="imageNotFound($event)" />
         </td>
         <td>{{ s.codProv }}</td>
         <td>{{ s.legalName }}</td>
         <td>
           {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
-          <span  class="" ngbTooltip="              
-          Email: {{ s.contactInfoId.email }}
-Website: {{ s.webSite }}
-Phone: {{
-          '+(' +
-            s.contactInfoId.phoneId.country +
-            ')' +
-            s.contactInfoId.phoneId.phoneNumber
-        }}"><i class="bi bi-info-circle"></i></span>
-          
-          <!-- <div>{{ s.contactInfoId.email }}</div>
-            <div>{{ s.webSite }}</div>
-            <div>{{ s.contactInfoId.phoneId.country + s.contactInfoId.phoneId.phoneNumber }} </div> -->
+          <span class="info-tooltip" ngbTooltip="Email: {{ s.contactInfoId.email }} | Website: {{ s.webSite }} | Phone: +{{ s.contactInfoId.phoneId.country }} {{ s.contactInfoId.phoneId.phoneNumber }}">
+            <i class="bi bi-info-circle"></i>
+          </span>
         </td>
         <td>
           <div class="d-flex flex-row">
-            <button
-              type="button"
-              class="btn btn-outline-success btn-sm"
-              value="{{ s.codProv }}"
-              routerLink="details/{{ s.id }}"
-            >
-              Details
-            </button>
-
-            <button
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              id="btn-agregar-proveedor"
-              routerLink="update/{{ s.id }}"
-            >
-              Edit
-            </button>
-
-            <button
-              *ngIf="!s.deleted"
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              value="{{ s.codProv }}"
-              (click)="deleteSupplier(s.id)"
-            >
+            <button type="button" class="btn btn-outline-success btn-sm" [routerLink]="'details/' + s.id">Details</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" [routerLink]="'update/' + s.id">Edit</button>
+            <button *ngIf="!s.deleted" type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSupplier(s.id)">
               Delete
             </button>
-            <button
-              *ngIf="s.deleted"
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              value="{{ s.codProv }}"
-              (click)="deleteSupplier(s.id)"
-            >
+            <button *ngIf="s.deleted" type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSupplier(s.id)">
               Restore
             </button>
           </div>
@@ -153,34 +70,4 @@ Phone: {{
       </tr>
     </tbody>
   </table>
-
-  <!-- <div class="card-body">
-      <table id="datatablesSimple">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Razon social</th>
-            <th>Rubro</th>
-            <th>CUIT</th>
-            <th>Email</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <th>ID</th>
-            <th>Razon social</th>
-            <th>Rubro</th>
-            <th>CUIT</th>
-            <th>Email</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Acciones</th>
-          </tr>
-        </tfoot>
-        <tbody id="lista-proveedores-tbody"></tbody>
-      </table>
-    </div> -->
 </div>

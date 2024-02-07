@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductServiceService } from '../../../services/product-service.service';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
-import { Product, category } from '../../../models/product';
+import { Product, ProductCategory } from '../../../models/product';
 import { NgForm } from '@angular/forms';
-import { ProductCategory } from '../../../../enum/category-products';
+
 import { Supplier } from '../../../models/supplier';
 
 @Component({
@@ -14,7 +14,7 @@ import { Supplier } from '../../../models/supplier';
 export class ProductsComponent implements OnInit {
   products: Array<Product> = new Array();
   productsAux: Array<Product> = new Array();
-  categories: Array<category> = new Array();
+  categories: Array<ProductCategory> = new Array();
   suppliers: string[] = new Array();
   URL_IMG =
     'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
@@ -43,6 +43,7 @@ export class ProductsComponent implements OnInit {
       categoryId: {
         id: 0,
         name: '',
+        deleted: false
       },
       taxConditionId: {
         id: 0,

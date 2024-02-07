@@ -1,339 +1,133 @@
-<!-- <form #poForm="ngForm" (ngSubmit)="addPO(poForm)">
-  <div class="row px-1">
-    <div class="col-4">
-      <h3 class="text-center">Add products</h3>
-      <div for="supplier" class="text-start">Supplier</div>
-      <select
-        class="form-select"
-        name="supplier"
-        id="select-supplier"
-        [(ngModel)]="supplierId"
-        [disabled]="isSupplierSelected"
-      >
-        <option *ngFor="let s of suppliers" [value]="s.id">
-          {{ s.legalName }}
-        </option>
-      </select>
-      <section>
-        <div>
-          <div for="product-select" class="text-start">Product</div>
-          <select
-            class="form-select"
-            id="product-select"
-            name="product"
-            [(ngModel)]="productId"
-          >
-            <option *ngFor="let p of filterProducts(supplierId)" [value]="p.id">
-              {{ p.name }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label for="quantity-input" class="float-start">Quantity</label>
-          <input
-            type="number"
-            class="form-control"
-            id="quantity-input"
-            name="number"
-            [(ngModel)]="quantityInput"
-          />
+<div class="container">
+  <h1 class="text-center mb-4" *ngIf="!isDetails">Create Purchase Order</h1>
+  <h1 class="text-center mb-4" *ngIf="isDetails">Purchas Order details</h1>
+  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
+  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{ errorMessage }}</ngb-alert>
+  <hr>
+
+  <form #poForm="ngForm" (ngSubmit)="addPO()">
+    <div class="row">
+      <!-- Información de Orden -->
+      <div class="col-md-6">
+        <!-- Número de Orden -->
+        <div class="mb-3">
+          <label for="order-number-input" class="form-label">PO Number</label>
+          <input type="number" class="form-control" id="order-number-input" name="number"
+            [(ngModel)]="purchaseOrderAux.orderNumber" placeholder="Enter PO Number" [disabled]="isDetails">
         </div>
 
-        <div class="row m-2">
-          <button
-            type="button"
-            class="btn btn-outline-info"
-            (click)="
-              loadProduct(productId); isSupplierSelected = true; getTotal()
-            "
-          >
-            Add product
-          </button>
+        <!-- Fechas de Emisión y Entrega -->
+        <div class="row mb-3">
+          <div class="col">
+            <label for="emission-date">Emission Date</label>
+            <ngb-datepicker [(ngModel)]="emissionSelected" name="emission" [disabled]="isDetails"
+              #datepicker1="ngbDatepicker"></ngb-datepicker>
+          </div>
+          <div class="col">
+            <label for="delivery-date">Delivery Date</label>
+            <ngb-datepicker [(ngModel)]="deliverySelected" name="delivery" [disabled]="isDetails"
+              #datepicker2="ngbDatepicker"></ngb-datepicker>
+          </div>
         </div>
-      </section>
-    </div>
-    <div class="col-8">
-      <h3 class="text-center">Purchase order</h3>
-      <div class="row mb-3">
-        <label for="order-number" class="col-sm-4 col-form-label text-start"
-          >Order N°</label
-        >
-        <div class="col-sm-8">
-          <input
-            type="number"
-            class="form-control"
-            id="order-number"
-            name="number"
-            required=""
-            [(ngModel)]="orderNumberInput"
-          />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="emission-date" class="col-sm-4 col-form-label text-start"
-          >Emission date</label
-        >
-        <div class="col-sm-8">
-          <input
-            type="text"
-            class="form-control"
-            id="emission-date"
-            disabled
-            name="emission"
-            [(ngModel)]="emissionInput"
-          />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="delivery-date" class="col-sm-4 col-form-label text-start"
-          >Delivery date</label
-        >
-        <div class="col-sm-8">
-          <input
-            type="date"
-            class="form-control"
-            id="delivery-date"
-            name="delivery"
-            [(ngModel)]="deliveryInput"
-          />
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="info-input" class="col-sm-4 col-form-label text-start"
-          >Additional Info</label
-        >
-        <div class="col-sm-8">
-          <textarea
-            type="text"
-            class="form-control"
-            id="info-input"
-            name="info"
-            [(ngModel)]="infoInput"
-          >
-          </textarea>
-        </div>
-      </div>
-    </div>
-    <table class="table table-hover card-body" *ngIf="poProducts.length != 0">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Unit price</th>
-          <th>Total price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let po of poProducts">
-          <td>{{ po.name }}</td>
-          <td>{{ po.amount }}</td>
-          <td>{{ po.price }}</td>
-          <td>{{ po.price * po.amount }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="row mb-3">
-      <label for="total" class="col-sm-4 col-form-label disabled text-start"
-        >Total</label
-      >
-      <div class="col-sm-8">
-        <input
-          type="number"
-          class="form-control"
-          id="total"
-          name="total"
-          [(ngModel)]="totalInput"
-        />
-      </div>
-      <button
-        type="submit"
-        class="btn btn-success mt-2"
-        data-bs-dismiss="modal"
-      >
-        Create order
-      </button>
-      <button
-        type="reset"
-        class="btn btn-outline-danger"
-        (click)="resetFields()"
-      >
-        Clear products
-      </button>
-    </div>
-  </div>
-</form>  -->
 
-<h1 class="text-center">Add purchase order</h1>
-<hr />
-
-<form #poForm="ngForm" (ngSubmit)="addPO()">
-  <div class="row">
-    <div class="col-6">
-      <div class="row">
-        <div class="col-12">
-          <label for="order-number-input" class="float-start">PO number</label>
-          <input
-            type="number"
-            class="form-control"
-            id="order-number-input"
-            name="number"
-            [(ngModel)]="purchaseOrderAux.orderNumber"
-            placeholder="Order number"
-            [disabled]="isDetails"
-          />
-        </div>
-        <div
-          class="col-6 d-flex flex-column justify-content-center align-items-center"
-        >
-          <div>
-            <label for="emission-date">Emission date</label>
-          </div>
-          <ngb-datepicker
-            #d
-            class=""
-            [(ngModel)]="emissionSelected"
-            name="emission"
-            #emission="ngModel"
-            (ngModelChange)="print()"
-            [disabled]="isDetails"
-            #datepicker1="ngbDatepicker"
-          ></ngb-datepicker>
-        </div>
-        <div
-          class="col-6 d-flex flex-column justify-content-center align-items-center"
-        >
-          <div>
-            <label for="delivery-date">Delivery date</label>
-          </div>
-          <ngb-datepicker
-            #d
-            [(ngModel)]="deliverySelected"
-            name="delivery"
-            #delivery="ngModel"
-            (ngModelChange)="print()"
-            #datepicker2="ngbDatepicker"
-            [disabled]="isDetails"
-          ></ngb-datepicker>
-        </div>
-        <div class="col-12 mt-2">
-          <label for="supplier-po">Supplier</label>
-          <select
-            class="form-control text-center"
-            name="supplier"
-            #supplier="ngModel"
-            id="supplier-po"
-            [(ngModel)]="purchaseOrderAux.supplierId.id"
-            (change)="getProductsBySelectedSupplier()"
-            [disabled]="isFirstItemAdded"
-            [disabled]="isDetails"
-          >
-            <option disabled selected value="0">Select a supplier</option>
-            <option *ngFor="let sup of suppliers" value="{{ sup.id }}">
-              {{ sup.legalName }}
-            </option>
-          </select>
-        </div>
-        <div [ngClass]="isDetails? 'visually-hidden':''">
-          <h4 class="mt-3">Item</h4>
-          <hr />
-          <div class="col-6">
-            <label for="selected-product">Product</label>
-            <select
-              class="form-control"
-              name="product"
-              #product="ngModel"
-              id=""
-              [(ngModel)]="currentOrderDetail.productId.id"
-            >
-              <option disabled selected value="0">Select a product</option>
-              <option value="{{ prod.id }}" *ngFor="let prod of products">
-                {{ prod.name }}
-              </option>
-            </select>
-          </div>
-          <div class="col-6">
-            <label for="quantity">Quantity</label>
-            <input
-              class="form-control"
-              type="number"
-              name="quantity"
-              #quantity="ngModel"
-              placeholder="Quantity"
-              [(ngModel)]="currentOrderDetail.quantity"
-            />
-          </div>
-          <button
-            class="btn btn-outline-info mt-1"
-            type="button"
-            (click)="addItem()"
-          >
-            Add Item
-          </button>
-        </div>
-      </div>
-        </div>
-    <div class="col-6">
-      <table class="table table-hover table-striped">
-        <thead>
-          <th>SKU</th>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Unit price</th>
-          <th>Subtotal</th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of details; let i = index">
-            <td>{{ item.productId.sku }}</td>
-            <td>{{ item.productId.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.productId.price }}</td>
-            <td>{{ item.productId.price * item.quantity }}</td>
-            <td>
-              <button class="btn btn-danger" (click)="removeItem(i)" [disabled]="isDetails">
-                <i class="bi bi-trash3"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <ul class="list-unstyled">
-        <li>
+        <!-- Selección de Proveedor y Producto -->
+        <div class="mb-3" >
           <div class="row">
-            <div class="col-6 text-start"><span>Total before tax</span></div>
-            <div class="col-6 text-end">{{ calculateTotal() | currency }}</div>
-          </div>
-        </li>
-        <li>
-          <div class="row">
-            <div class="col-6 text-start">
-              <span
-                >Tax
-                <span ngbTooltip="10%">
-                  <i class="bi bi-info-circle"></i> </span
-              ></span>
+            <div class="col">
+              <label for="supplier-po" class="form-label">Supplier</label>
+              <select class="form-select" name="supplier" [(ngModel)]="purchaseOrderAux.supplierId.id"
+                (change)="getProductsBySelectedSupplier()" [disabled]="isFirstItemAdded || isDetails">
+                <option disabled selected value="0">Select a supplier</option>
+                <option *ngFor="let sup of suppliers" [value]="sup.id">{{ sup.legalName }}</option>
+              </select>
             </div>
-            <div class="col-6 text-end">
-              {{ calculateTotal() * 0.1 | currency }}
+            <div class="col" [ngClass]="isDetails? 'd-none':''">
+              <label for="selected-product" class="form-label">Product</label>
+              <select class="form-select" name="product" [(ngModel)]="currentOrderDetail.productId.id">
+                <option disabled selected value="0">Select a product</option>
+                <option *ngFor="let prod of products" [value]="prod.id">{{ prod.name }}</option>
+              </select>
             </div>
           </div>
-        </li>
-        <li>
-          <div class="row">
-            <div class="col-6 text-start"><span>Total price</span></div>
-            <div class="col-6 text-end">
-              {{ calculateTotal() * 0.1 + calculateTotal() | currency }}
+          <div class="row mt-3" [ngClass]="isDetails? 'd-none':''">
+            <div class="col">
+              <label for="quantity" class="form-label">Quantity</label>
+              <input type="number" class="form-control" name="quantity" [(ngModel)]="currentOrderDetail.quantity"
+                placeholder="Enter Quantity">
+            </div>
+            <div class="col align-self-end">
+              <button type="button" class="btn btn-outline-info mt-2" (click)="addItem()">Add Item</button>
             </div>
           </div>
-        </li>
-      </ul>
-      <div class="row" [ngClass]="isDetails? 'visually-hidden':''">
-        <div class="col-6" >
-          <button type="submit" class="btn btn-success">Create Order</button>
         </div>
-        <div class="col-6"><button class="btn btn-danger">Cancel</button></div>
+      </div>
+
+      <!-- Detalles de Orden y Totales -->
+      <div class="col-md-6">
+        <div class="row mb-1">
+          <div class="col-12">
+            <label for="details">Additional details</label>
+            <textarea class="form-control" name="description" #description="ngModel" id="" [ngClass]="isDetails? 'd-none':''" [(ngModel)]="purchaseOrderAux.description"></textarea>
+          </div>
+        </div>
+        <!-- Tabla de Productos Agregados -->
+        <table class="table table-hover table-striped" *ngIf="details.length != 0">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of details; let i = index">
+              <td>{{ item.productId.sku }}</td>
+              <td>{{ item.productId.name }}</td>
+              <td class="text-center">{{ item.quantity }}</td>
+              <td>{{ item.productId.price | currency}}</td>
+              <td>{{ item.productId.price * item.quantity |currency}}</td>
+              <td>
+                <button class="btn btn-danger" (click)="removeItem(i)" [disabled]="isDetails">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Totales -->
+        <div class="card">
+          <div class="card-body row">
+            <div class="col-8">
+              <h5 class="card-title">Order Summary</h5>
+              <ul class="list-unstyled">
+                <li>Total before tax: {{ calculateTotal() | currency }}</li>
+                <li>Tax (10%): {{ calculateTotal() * 0.1 | currency }}</li>
+                <li>Total price: {{ calculateTotal() * 1.1 | currency }}</li>
+              </ul>
+            </div>
+            <div class="col-4" [ngClass]="!isDetails? 'd-none':''">
+              <span>Status: </span>
+            <span *ngIf="purchaseOrderAux.statusId.status == 'Paid'" class="rounded px-1 text-bg-success ">Paid</span>
+            <span *ngIf="purchaseOrderAux.statusId.status == 'Outstanding'" class="rounded px-1 text-bg-warning  ">Outstanding</span>
+            <span *ngIf="purchaseOrderAux.statusId.status == 'Canceled'" class="rounded px-1 text-bg-danger  ">Canceled</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="row mt-3" [ngClass]="isDetails? 'd-none':''">
+          <div class="col">
+            <button type="submit" class="btn btn-success">Create Order</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-danger" routerLink="/purchase-orders">Cancel</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>

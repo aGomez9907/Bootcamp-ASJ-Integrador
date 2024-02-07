@@ -44,7 +44,7 @@ public class PurchaseOrderService {
 		}
 	}
 
-	public String updatePurchaseOrder(Integer id, PurchaseOrder purchaseOrder) {
+	public PurchaseOrder updatePurchaseOrder(Integer id, PurchaseOrder purchaseOrder) throws Exception {
 		try {
 			PurchaseOrder prod = purchaseOrderRepository.findById(id).get();// obtengo la tarea original
 			if (prod != null) {
@@ -55,13 +55,14 @@ public class PurchaseOrderService {
 				prod.setStatusId(purchaseOrder.getStatusId());
 				prod.setSupplierId(purchaseOrder.getSupplierId());
 				prod.setUpdatedAt(Timestamp.from(Instant.now()));
-				purchaseOrderRepository.save(prod);
-				return "PurchaseOrder with id: " + id + " updated successfully.";
+				return  purchaseOrderRepository.save(prod);
+				
+			}else {
+				throw new Exception();
 			}
-			return "Error: The purchaseOrder is null.";
 
 		} catch (Exception err) {
-			return "Error: The purchaseOrder couldn´t be found.";
+			throw err;
 		}
 
 	}

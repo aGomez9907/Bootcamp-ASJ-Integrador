@@ -4,10 +4,11 @@ import { SuppliersServiceService } from '../../../services/suppliers-service.ser
 import {
   TaxCondition,
   Supplier,
-  categoryId,
-  Country,
+  SupplierCategory,
+   Country,
   Province,
 } from '../../../models/supplier';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCategory } from '../../../../enum/category-products';
 import { CuitFormatDirective } from '../../../directives/cuit-format.directive';
 
@@ -48,6 +49,9 @@ export class NewSupplierComponent implements OnInit {
   countries: Array<Country> = new Array();
   provinces: Array<Province> = new Array();
   provincesToShow: Array<Province> = new Array();
+  
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   // countries = ['Argentina', 'Chile', 'Brazil'];
 
@@ -78,7 +82,7 @@ export class NewSupplierComponent implements OnInit {
 
   //categories = Object.entries(ProductCategory).map(([key, value]) => ({ key, value })); // temporal hasta traer las categorias de proveedor desde la BD
 
-  categories: Array<categoryId> = new Array();
+  categories: Array<SupplierCategory> = new Array();
 
   currentSupplier: Supplier = {
     legalName: '',
@@ -90,6 +94,7 @@ export class NewSupplierComponent implements OnInit {
     categoryId: {
       id: 0,
       name: '',
+      deleted: false
     },
     taxConditionId: {
       id: 0,
@@ -155,15 +160,16 @@ export class NewSupplierComponent implements OnInit {
   }
 
   saveSupplier(): void {
-    this.validForm = this.validateForm();
-    if (this.validForm) {
+    // this.validForm = this.validateForm();
+    // if (this.validForm) {
       if (this.isUpdating) {
-        this.supplierService.updateSupplier(this.currentSupplier).subscribe();
+        this.supplierService.updateSupplier(this.currentSupplier).subscribe(res=>this.successMessage = 'Supplier updated successfully');
+        
       } else {
         //this.currentSupplier.deleted = false;
-        this.supplierService.addSupplier(this.currentSupplier).subscribe();
+        this.supplierService.addSupplier(this.currentSupplier).subscribe(res=>this.successMessage = 'Supplier created successfully');
       }
-    }
+    // }
   }
 
   getSuppliers() {
@@ -204,9 +210,7 @@ export class NewSupplierComponent implements OnInit {
     //aca irian todas las validaciones
   }
 
-  createNewCategory() {
-    //con esto añadiria rubros
-  }
+
 
   onSelectCountry() {
     let country: Country = this.currentSupplier.addressId.provinceId.countryId;

@@ -21,6 +21,9 @@ export class NewPurchaseOrderComponent implements OnInit {
   @ViewChild('datepicker1') datepicker1!: NgbDatepicker;
   @ViewChild('datepicker2') datepicker2!: NgbDatepicker;
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   purchaseOrders: Array<PurchasOrder> = new Array();
   details: Array<PurchaseOrderDetail> = new Array();
   suppliers: Supplier[] = [];
@@ -58,6 +61,7 @@ export class NewPurchaseOrderComponent implements OnInit {
       categoryId: {
         id: 0,
         name: '',
+        deleted: false
       },
       taxConditionId: {
         id: 0,
@@ -128,6 +132,7 @@ export class NewPurchaseOrderComponent implements OnInit {
         categoryId: {
           id: 0,
           name: '',
+          deleted: false
         },
         taxConditionId: {
           id: 0,
@@ -227,7 +232,7 @@ export class NewPurchaseOrderComponent implements OnInit {
         });
         setTimeout(()=>{
           this.isDetails = true
-        }, 400);
+        }, 40);
       }
     });
   }
@@ -374,6 +379,9 @@ export class NewPurchaseOrderComponent implements OnInit {
       for (let det of this.details) {
         this.poService.addDetail(det).subscribe();
       }
+      this.successMessage = "Order created successfully."
+      this.clearOrderDetail()
+      this.clearOrder()
     });
 
     // this.purchaseOrderAux.number = this.orderNumberInput;
@@ -449,6 +457,7 @@ export class NewPurchaseOrderComponent implements OnInit {
           categoryId: {
             id: 0,
             name: '',
+            deleted: false
           },
           taxConditionId: {
             id: 0,
@@ -489,6 +498,71 @@ export class NewPurchaseOrderComponent implements OnInit {
         deleted: false,
       },
       quantity: 0,
+      deleted: false,
+    };
+  }
+
+  clearOrder(){
+    this.details = new Array()
+    this.purchaseOrderAux = {
+      orderNumber: 0,
+      emissionDate: new Date(),
+      deliveryDate: new Date(),
+      description: '',
+      supplierId: {
+        id: 0,
+        legalName: '',
+        codProv: '',
+        webSite: '',
+        email: '',
+        cuit: '',
+        urlLogo: '',
+        categoryId: {
+          id: 0,
+          name: '',
+          deleted: false
+        },
+        taxConditionId: {
+          id: 0,
+        },
+        phoneId: {
+          id: 0,
+          country: '',
+          phoneNumber: '',
+        },
+        addressId: {
+          id: 0,
+          street: '',
+          number: 0,
+          postcode: '',
+          city: '',
+          provinceId: {
+            id: 0,
+            name: '',
+            countryId: {
+              id: 0,
+              name: '',
+            },
+          },
+        },
+        contactInfoId: {
+          id: 0,
+          firstName: '',
+          lastName: '',
+          phoneId: {
+            id: 0,
+            country: '',
+            phoneNumber: '',
+          },
+          email: '',
+          contactRole: '',
+        },
+      },
+      statusId: {
+        id: 2,
+        status: '',
+        deleted: false,
+      },
       deleted: false,
     };
   }

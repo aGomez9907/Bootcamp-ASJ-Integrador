@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product, category } from '../models/product';
+import { Product, ProductCategory } from '../models/product';
 import { Observable } from 'rxjs';
 
 
@@ -31,8 +31,8 @@ export class ProductServiceService {
     return this.http.get<Product[]>(this.URL_API+'/products/sup/'+id)
   }
 
-  getCategories(): Observable<category[]>{
-    return this.http.get<category[]>(this.URL_API+"/productcategories")
+  getCategories(): Observable<ProductCategory[]>{
+    return this.http.get<ProductCategory[]>(this.URL_API+"/productcategories")
   }
 
   addProduct(product: Product): Observable<Product> {
@@ -43,6 +43,14 @@ export class ProductServiceService {
     //   return false;
     // }
     return this.http.post<Product>(this.URL_API+'/products', product);
+  }
+
+  addProductCategory(category : ProductCategory): Observable<ProductCategory>{
+    return this.http.post<ProductCategory>(this.URL_API+"/productcategories", category)
+  }
+
+  deleteProductCategory(id: number):Observable<ProductCategory>{
+    return this.http.delete<ProductCategory>(this.URL_API+"/productcategories/"+id)
   }
 
   deleteProduct(id: number): Observable<Product> {

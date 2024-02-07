@@ -3,7 +3,7 @@ import { Supplier } from "./supplier";
 export interface Product{
     id: number,
     sku: string,
-    categoryId: category,
+    categoryId: ProductCategory,
     name: string,
     description: string,
     price: number,
@@ -12,7 +12,7 @@ export interface Product{
     deleted:boolean,
 }
 
-export interface category{
+export interface ProductCategory{
     id: number,
     name: string,
     deleted: boolean

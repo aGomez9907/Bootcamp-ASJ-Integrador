@@ -45,7 +45,7 @@ public class PurchaseOrderController {
 		return ResponseEntity.ok(purchaseOrderService.getPurchaseOrderById(id));
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updatePurchaseOrder(@PathVariable int id, @RequestBody PurchaseOrder purchaseOrder) {
+	public ResponseEntity<Object> updatePurchaseOrder(@PathVariable int id, @RequestBody PurchaseOrder purchaseOrder) throws Exception {
 		return ResponseEntity.ok(purchaseOrderService.updatePurchaseOrder(id, purchaseOrder));
 	}
 

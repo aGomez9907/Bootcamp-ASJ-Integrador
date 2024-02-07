@@ -3,222 +3,27 @@
   <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Purchasse orders</li>
   </ol>
+  <div class="text-end">
+    <button
+      type="button"
+      class="btn btn-primary"
+      routerLink="/purchase-orders/new"
+      id="btn-agregar-proveedor"
+    >
+      Add new purchase order
+    </button>
 
-  <div class="card mb-4">
-    <div class="card-header row px-2 mx-0">
-      <div class="col-6">
-        <i class="fas fa-table me-1"></i>Purchase order list
-      </div>
-      <div class="col-6 text-end">
-        <!-- Button trigger modal -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          routerLink="/purchase-orders/new"
-          id="btn-agregar-proveedor"
-        >
-          Add new purchase order
-        </button>
-        <!-- Modal -->
-        <!-- <div
-          class="modal fade"
-          id="agregarProductoModal"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="agregarProductoModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2 class="modal-title fs-5" id="agregarProductoModalLabel">
-                  Create purchase order
-                </h2>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  (click)="resetFields()"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form #poForm="ngForm" (ngSubmit)="addPO(poForm)">
-                  <div class="row px-1">
-                    <div class="col-4">
-                      <h3 class="text-center">Add products</h3>
-                      <div for="supplier" class="text-start">Supplier</div>
-                      <select
-                        class="form-select"
-                        name="supplier"
-                        id="select-supplier"
-                        [(ngModel)]="supplierId"
-                        [disabled]="isSupplierSelected"
-                      >
-                        <option *ngFor="let s of suppliers" [value]="s.id">
-                          {{ s.razonSocial }}
-                        </option>
-                      </select>
-                      <section>
-                        <div>
-                          <div for="product-select" class="text-start">
-                            Product
-                          </div>
-                          <select
-                            class="form-select"
-                            id="product-select"
-                            name="product"
-                            [(ngModel)]="productId"
-                          >
-                            <option
-                              *ngFor="let p of filterProducts(supplierId)"
-                              [value]="p.id"
-                            >
-                              {{ p.nombre }}
-                            </option>
-                          </select>
-                        </div>
-                        <div>
-                          <label for="quantity-input" class="float-start"
-                            >Quantity</label
-                          >
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="quantity-input"
-                            name="number"
-                            [(ngModel)]="quantityInput"
-                          />
-                        </div>
+  </div>
+  
+  <div class="mb-4">
 
-                        <div class="row m-2">
-                          <button
-                            type="button"
-                            class="btn btn-outline-info"
-                            (click)="
-                              loadProduct(productId);
-                              isSupplierSelected = true;
-                              getTotal()
-                            "
-                          >
-                            Add product
-                          </button>
-                        </div>
-                      </section>
-                    </div>
-                    <div class="col-8">
-                      <h3 class="text-center">Purchase order</h3>
-                      <div class="row mb-3">
-                        <label
-                          for="order-number"
-                          class="col-sm-4 col-form-label text-start"
-                          >Order N°</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="order-number"
-                            name="number"
-                            required=""
-                            [(ngModel)]="orderNumberInput"
-                          />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="emission-date"
-                          class="col-sm-4 col-form-label text-start"
-                          >Emission date</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="emission-date"
-                            disabled
-                            name="emission"
-                            [(ngModel)]="emissionInput"
-                          />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label
-                          for="delivery-date"
-                          class="col-sm-4 col-form-label text-start"
-                          >Delivery date</label
-                        >
-                        <div class="col-sm-8">
-                          <input
-                            type="date"
-                            class="form-control"
-                            id="delivery-date"
-                            name="delivery"
-                            [(ngModel)]="deliveryInput"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <table
-                      class="table table-hover card-body"
-                      *ngIf="poProducts.getValue().length != 0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Quantity</th>
-                          <th>Unit price</th>
-                          <th>Total price</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let po of poProducts | async">
-                          <td>{{ po.name }}</td>
-                          <td>{{ po.amount }}</td>
-                          <td>{{ po.price }}</td>
-                          <td>{{ po.price * po.amount }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="row mb-3">
-                      <label
-                        for="total"
-                        class="col-sm-4 col-form-label disabled text-start"
-                        >Total</label
-                      >
-                      <div class="col-sm-8">
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="total"
-                          name="total"
-                          [(ngModel)]="totalInput"
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        class="btn btn-outline-success mt-2"
-                        data-bs-dismiss="modal"
-                      >
-                        Create order
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
-    </div>
-    <table class="table table-hover card-body">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>Order N°</th>
           <th>Emission date</th>
           <th>Delivery date</th>
-          <!-- <th>Total</th> -->
+          <th>Status</th> 
           <th>Actions</th>
         </tr>
       </thead>
@@ -227,7 +32,12 @@
           <td>{{ po.orderNumber }}</td>
           <td>{{ po.emissionDate | date }}</td>
           <td>{{ po.deliveryDate | date }}</td>
-          <!-- <td>{{ po.total | currency }}</td> -->
+          <td>
+            <select class="form-select-sm " [(ngModel)]="po.statusId.id" (change)="changeOrderStatus(po)">
+              <option *ngFor="let stat of statuses" [value]="stat.id">{{stat.status}}</option>
+            </select>
+          
+          </td>
           <td>
             <div class="d-flex flex-row">
               <button
@@ -239,118 +49,21 @@
                 Detalles
               </button>
 
-              <button
+              
+              <!-- <button
                 type="button"
                 class="btn btn-outline-danger btn-sm"
                 value="{{ po.id }}"
                 (click)="deletePO(po.id)"
               >
                 Borrar
-              </button>
+              </button> -->
             </div>
-            <!-- <div class="modal fade" id="editarPrductoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editarPrductoModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editarPrductoModal">
-                      Editar producto
-                    </h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form #productsForm="ngForm" (ngSubmit)="updateProduct(productsForm)">
-                      <input type="text" class="form-control visually-hidden " id="id-proveedor" name="id"  [(ngModel)]="idInput" #id="ngModel" />
-                      <div class="row mb-3">
-                        <label for="id-proveedor" class="col-sm-4 col-form-label text-start">Codigo SKU</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="SKU-proveedor" name="SKU" required="" minlength="4" [(ngModel)]="SKUInput" #name="ngModel" />
-                          <div *ngIf="name.errors?.['minlength']" class="col-auto">
-                            <span class="form-text text-danger">Debe tener al menos 4 caracteres alfanumericos.</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-categoria" class="col-sm-4 col-form-label text-start">Category</label>
-                        <div class="col-sm-8">
-                          <select class="form-select"id="input-categoria" name="categoria" [(ngModel)]="categoriaInput">
-                            <option *ngFor="let c of categories">{{ c.value }}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="select-rubro" class="col-sm-4 col-form-label text-start">Product name</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="select-rubro" name="nombre" [(ngModel)]="nombreInput" />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-web" class="col-sm-4 col-form-label text-start">Description</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="input-web" name="descripcion" [(ngModel)]="descripcionInput" />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-tel" class="col-sm-4 col-form-label text-start">Price</label>
-                        <div class="col-sm-8">
-                          <input type="number" class="form-control" id="input-tel" name="precio" required="" [(ngModel)]="precioInput" />
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-email" class="col-sm-4 col-form-label text-start">Supplier</label>
-                        <div class="col-sm-8">
-                          <select class="form-select" name="proveedor" id="proveedor-input" [(ngModel)]="proveedorInput">
-                            <option *ngFor="let s of suppliers">{{ s }}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="input-img" class="col-sm-4 col-form-label text-start">Image</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" id="input-img" name="img" required="" [(ngModel)]="imgInput" />
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetFields()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" id="guardar-proveedor" data-bs-dismiss="modal" [disabled]="!productsForm.valid">Guardar</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </td>
         </tr>
       </tbody>
     </table>
 
-    <!-- <div class="card-body">
-        <table id="datatablesSimple">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Razon social</th>
-              <th>Rubro</th>
-              <th>CUIT</th>
-              <th>Email</th>
-              <th>Direccion</th>
-              <th>Telefono</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Razon social</th>
-              <th>Rubro</th>
-              <th>CUIT</th>
-              <th>Email</th>
-              <th>Direccion</th>
-              <th>Telefono</th>
-              <th>Acciones</th>
-            </tr>
-          </tfoot>
-          <tbody id="lista-proveedores-tbody"></tbody>
-        </table>
-      </div> -->
+
   </div>
 </div>

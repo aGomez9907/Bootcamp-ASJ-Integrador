@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PurchasOrder } from '../models/purchase-order';
+import { PurchasOrder, Status } from '../models/purchase-order';
 import { Observable } from 'rxjs';
 import { PurchaseOrderDetail } from '../models/purchase-order-detail';
 
@@ -22,6 +22,10 @@ export class POServiceService {
 
   getDetails(POid: string):Observable<PurchaseOrderDetail[]>{
     return this.http.get<PurchaseOrderDetail[]>(this.URL_API+'/purchaseorderdetails/order/'+ POid)
+  }
+
+  getStatuses():Observable<Status[]>{
+    return this.http.get<Status[]>(this.URL_API+"/purchaseorderstatuses")
   }
 
   getPO(id : string): Observable<PurchasOrder> {

@@ -5,7 +5,7 @@ export interface Supplier {
   codProv: string;
   urlLogo?: string;
   legalName: string;
-  categoryId: categoryId;
+  categoryId: SupplierCategory;
   webSite?: string;
   phoneId: Phone;
   email: string;
@@ -17,9 +17,10 @@ export interface Supplier {
   contactInfoId: contactInfoId;
 }
 
-export type categoryId = {
+export type SupplierCategory = {
   id: number;
   name: string;
+  deleted: boolean
 };
 
 export type TaxCondition = {

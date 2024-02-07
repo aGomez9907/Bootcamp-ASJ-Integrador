@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
-import { Supplier, Country, Province } from '../../../models/supplier';
+import { Supplier} from '../../../models/supplier';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
 import { Iva } from '../../../../enum/iva-condition';
 
@@ -39,6 +40,8 @@ export class SuppliersComponent implements OnInit {
   rolContactoInput: string = '';
 
   searchInput: string = '';
+
+  
 
   constructor(public suppliersService: SuppliersServiceService) {
     this.suppliersService;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { POServiceService } from '../../../services/po-service.service';
-import { PurchasOrder } from '../../../models/purchase-order';
+import { PurchasOrder, Status } from '../../../models/purchase-order';
 import { NgForm } from '@angular/forms';
 import { Supplier } from '../../../models/supplier';
 import { Product } from '../../../models/product';
@@ -8,7 +8,7 @@ import { SuppliersServiceService } from '../../../services/suppliers-service.ser
 import { ProductServiceService } from '../../../services/product-service.service';
 // import { POProduct } from '../../../models/purchase-order-detail';
 import { DatePipe, formatDate } from '@angular/common';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-purchase-orders',
@@ -19,37 +19,8 @@ export class PurchaseOrdersComponent implements OnInit {
   purchaseOrders: PurchasOrder[] = [];
   suppliers: Supplier[] = [];
   products: Product[] = [];
+  statuses:Status[] = []
 
-  // poProducts = new BehaviorSubject<POProduct[]>([]);
-
-  // supAux: Supplier = {
-  //   id: -1,
-  //   codProv: '',
-  //   razonSocial: '',
-  //   rubro: '',
-  //   website: '',
-  //   telefono: -1,
-  //   email: '',
-  //   direccion: '',
-  //   cp: '',
-  //   localidad: '',
-  //   provincia: '',
-  //   pais: '',
-  //   iva: '',
-  //   cuit: '',
-  //   nombreContacto: '',
-  //   apellidoContacto: '',
-  //   telefonoContacto: -1,
-  //   emailContacto: '',
-  //   rolContacto: '',
-  // };
-
-  // poProductAux: POProduct = {
-  //   SKU: '',
-  //   name: '',
-  //   amount: 0,
-  //   price: 0,
-  // };
 
   constructor(
     public poService: POServiceService,
@@ -61,41 +32,11 @@ export class PurchaseOrdersComponent implements OnInit {
     this.getPOs();
     this.getSuppliers();
     this.getProducts();
-    // this.poProducts.asObservable().subscribe(a=>{
-    //   this.poProducts.next(a)
-    // })
+    this.getStatuses()
+
   }
 
-  // isSupplierSelected: boolean = false;
 
-  // idInput: number = 0;
-  // orderNumberInput: number = 0;
-  // emissionInput: string = new Date().toLocaleDateString('es-AR');
-  // deliveryInput: string = '';
-  // infoInput: string = '';
-  // supplierInput: Supplier = this.supAux;
-  // supplierId: number = 0;
-  // productId: number = 0;
-  // productsInput: POProduct = this.poProductAux;
-  // quantityInput: number = 0;
-  // totalInput: number = 0;
-
-  // resetFields() {
-  //   this.poProducts.next([]);
-  //   this.isSupplierSelected = false;
-  //   this.idInput = 0;
-  //   this.orderNumberInput = 0;
-  //   this.emissionInput = new Date().toLocaleDateString('es-AR');
-  //   this.deliveryInput = '';
-  //   this.infoInput = '';
-  //   this.supplierId = 0;
-  //   this.productId = 0;
-  //   this.supplierInput = this.supAux;
-  //   this.productsInput = this.poProductAux;
-  //   this.quantityInput = 0;
-
-  //   console.log(this.poProducts);
-  // }
 
   activePOs() {
     let h = this.purchaseOrders.filter((po) => !po.deleted);
@@ -161,6 +102,12 @@ export class PurchaseOrdersComponent implements OnInit {
     });
   }
 
+  getStatuses(){
+    this.poService.getStatuses().subscribe((res)=>{
+      this.statuses = res
+    })
+  }
+
   addPO(form: NgForm) {
     console.log(form.value);
 
@@ -188,10 +135,18 @@ export class PurchaseOrdersComponent implements OnInit {
     }
   }
 
-  updatePO(form: NgForm) {
-    this.poService.updatePO(form.value).subscribe((res) => {
+  // updatePO(form: NgForm) {
+  //   this.poService.updatePO(form.value).subscribe((res) => {
+  //     console.log(res);
+  //     this.getPOs();
+  //   });
+  // }
+
+  changeOrderStatus(po: PurchasOrder){
+    this.poService.updatePO(po).subscribe((res)=>{
+      this.getPOs
       console.log(res);
-      this.getPOs();
-    });
+      
+    })
   }
 }

@@ -12,15 +12,14 @@ import { SuppliersComponent } from './components/my-main/suppliers/suppliers.com
 import { ProductsComponent } from './components/my-main/products/products.component';
 import { PurchaseOrdersComponent } from './components/my-main/purchase-orders/purchase-orders.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SupplierDetailComponent } from './components/my-main/supplier-detail/supplier-detail.component';
+import { SupplierDetailComponent } from './components/my-main/supplier-detail-DEPRECATED/supplier-detail.component';
 import { Iva } from '../enum/iva-condition';
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
 import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
 import { PurchaseOrderDetailComponent } from './components/my-main/purchase-order-detail/purchase-order-detail.component';
 import { NewSupplierComponent } from './components/my-main/new-supplier/new-supplier.component';
 import { CuitFormatDirective } from './directives/cuit-format.directive';
-
-
+import { CategoriesComponent } from './components/my-main/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +37,16 @@ import { CuitFormatDirective } from './directives/cuit-format.directive';
     PurchaseOrderDetailComponent,
     NewSupplierComponent,
     CuitFormatDirective,
-
+    CategoriesComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule,HttpClientModule],
-  exports:[    CuitFormatDirective  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    FormsModule,
+    HttpClientModule,
+  ],
+  exports: [CuitFormatDirective],
   providers: [],
   bootstrap: [AppComponent],
 })

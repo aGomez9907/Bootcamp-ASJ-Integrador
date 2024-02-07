@@ -3,15 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { SuppliersComponent } from './components/my-main/suppliers/suppliers.component';
 import { ProductsComponent } from './components/my-main/products/products.component';
 import { PurchaseOrdersComponent } from './components/my-main/purchase-orders/purchase-orders.component';
-import { SupplierDetailComponent } from './components/my-main/supplier-detail/supplier-detail.component';
+
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
 import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
 import { PurchaseOrderDetailComponent } from './components/my-main/purchase-order-detail/purchase-order-detail.component';
 import { NewSupplierComponent } from './components/my-main/new-supplier/new-supplier.component';
-
+import { CategoriesComponent } from './components/my-main/categories/categories.component';
 
 const routes: Routes = [
-  { path: "", redirectTo:'/suppliers', pathMatch: 'full' },
+  { path: '', redirectTo: '/suppliers', pathMatch: 'full' },
   { path: 'suppliers', component: SuppliersComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'suppliers/new', component: NewSupplierComponent },
@@ -25,10 +25,10 @@ const routes: Routes = [
       { path: ':id', component: NewPurchaseOrderComponent },
     ],
   },
-  //{ path: 'suppliers/:codProv', component: SupplierDetailComponent },
   { path: 'products/update/:id', component: ProductDetailComponent },
   { path: 'products/details/:id', component: ProductDetailComponent },
-  { path: 'products/new', component: ProductDetailComponent }
+  { path: 'products/new', component: ProductDetailComponent },
+  { path: 'categories', component: CategoriesComponent },
 ];
 
 @NgModule({

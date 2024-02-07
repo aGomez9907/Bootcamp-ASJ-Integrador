@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { proveedores } from '../data/proveedores';
-import { Supplier, categoryId, Country, Province, TaxCondition } from '../models/supplier';
+import { Supplier, Country, Province, TaxCondition, SupplierCategory } from '../models/supplier';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -28,8 +28,8 @@ URL_API = 'http://localhost:8080'
     return this.http.get<Supplier>(this.URL_API+'/suppliers/' + codProv);
   }
 
-  getSupplierCategories(): Observable<categoryId[]>{
-    return this.http.get<categoryId[]>(this.URL_API+"/suppliercategories");
+  getSupplierCategories(): Observable<SupplierCategory[]>{
+    return this.http.get<SupplierCategory[]>(this.URL_API+"/suppliercategories");
   }
 
   getCountries(): Observable<Country[]>{
@@ -52,6 +52,13 @@ URL_API = 'http://localhost:8080'
     // }
     console.log(supplier)
     return this.http.post<Supplier>(this.URL_API+'/suppliers', supplier);
+  }
+  addSupplierCategory(category : SupplierCategory): Observable<SupplierCategory>{
+    return this.http.post<SupplierCategory>(this.URL_API+"/suppliercategories", category)
+  }
+
+  deleteSupplierCategory(id: number):Observable<SupplierCategory>{
+    return this.http.delete<SupplierCategory>(this.URL_API+"/suppliercategories/"+id)
   }
 
   deleteSupplier(id: number): Observable<Supplier> {
