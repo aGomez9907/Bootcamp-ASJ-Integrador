@@ -50,7 +50,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestBody Product product) {
+	public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody Product product) throws Exception {
 		return ResponseEntity.ok(productService.updateProduct(id, product));
 	}
 

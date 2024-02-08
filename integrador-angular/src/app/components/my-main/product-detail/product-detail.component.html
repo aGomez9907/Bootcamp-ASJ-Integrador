@@ -1,112 +1,273 @@
-<div class="container mt-5">
-  <!-- Sección de navegación -->
-  <div class="row">
-      <div class="col">
-          <a class="back-link text-muted" routerLink="/products">← Back to Products</a>
-      </div>
-  </div>
-
+<div class="container-fluid px-4">
+  <h1 class="mt-4">PRODUCTS</h1>
   <!-- Sección de título -->
-  <div class="text-center my-4">
-      <h1 class="main-title" *ngIf="!isUpdating && !isDetails">Add New Product</h1>
-      <h1 class="main-title" *ngIf="isUpdating">Update Product</h1>
-      <h1 class="main-title" *ngIf="isDetails">Product Details</h1>
-  </div>
-  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
-  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{ errorMessage }}</ngb-alert>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">
+      <a href="/products" class="text-decoration-none text-muted">Products</a>
+    </li>
+    <li class="breadcrumb-item active" *ngIf="!isUpdating && !isDetails">
+      Create
+    </li>
+    <li class="breadcrumb-item active" *ngIf="isUpdating">Update</li>
+    <li class="breadcrumb-item active" *ngIf="isDetails">Details</li>
+    <li class="breadcrumb-item active" *ngIf="isDetails || isUpdating">
+      {{ currentProduct.sku }}
+    </li>
+  </ol>
+  <ngb-alert
+    *ngIf="successMessage"
+    type="success"
+    (close)="successMessage = ''"
+    >{{ successMessage }}</ngb-alert
+  >
+  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{
+    errorMessage
+  }}</ngb-alert>
   <hr />
 
   <!-- Formulario de Producto -->
   <form #productForm="ngForm" (ngSubmit)="saveProduct()" class="mx-auto">
-      <div class="row">
-          <!-- Columna de información del producto -->
-          <div class="col-md-6">
-              <!-- SKU -->
-              <div class="form-group mb-4">
-                  <label class="form-label">SKU</label>
-                  <input type="text" class="form-control" name="sku" #sku="ngModel"
-                      [disabled]="isDetails" required [(ngModel)]="currentProduct.sku" placeholder="Enter SKU">
-                  <div *ngIf="productForm.controls['sku']?.hasError('required') && productForm.controls['sku'].touched"
-                      class="form-text text-danger mt-1">SKU is required</div>
-              </div>
-
-              <!-- Categoría -->
-              <div class="form-group mb-4">
-                  <label class="form-label">Category</label>
-                  <select class="form-select" name="category" #category="ngModel"
-                      [disabled]="isDetails" [(ngModel)]="currentProduct.categoryId.id">
-                      <option selected disabled value="0">Select a category</option>
-                      <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
-                  </select>
-                  <button class="btn btn-outline-info mt-2" routerLink="/categories">Add New Category</button>
-              </div>
-
-              <!-- Nombre del Producto -->
-              <div class="form-group mb-4">
-                  <label class="form-label">Product Name</label>
-                  <input type="text" class="form-control" name="name" #name="ngModel"
-                      [disabled]="isDetails" required [(ngModel)]="currentProduct.name" placeholder="Enter Product Name">
-                  <div *ngIf="productForm.controls['name']?.hasError('required') && productForm.controls['name'].touched"
-                      class="form-text text-danger mt-1">Product name is required</div>
-              </div>
+    <div class="row">
+      <!-- Columna de información del producto -->
+      <div class="col-md-6">
+        <!-- SKU -->
+        <div class="form-group mb-4">
+          <label class="form-label">SKU</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sku"
+            #sku="ngModel"
+            [disabled]="isDetails"
+            required
+            [(ngModel)]="currentProduct.sku"
+            (keyup)="SKUExists()"
+            placeholder="Enter SKU"
+            minlength="4"
+            maxlength="12"
+          />
+          <div *ngIf="sku.errors?.['minlength']" class="col-auto">
+            <span class="form-text text-danger"
+              >Must have at least 4 characters.</span
+            >
           </div>
-
-          <!-- Columna de detalles y vista previa de imagen -->
-          <div class="col-md-6">
-              <!-- Descripción -->
-              <div class="form-group mb-4">
-                  <label class="form-label">Description</label>
-                  <textarea class="form-control" name="description"
-                      [disabled]="isDetails" #description="ngModel" [(ngModel)]="currentProduct.description" placeholder="Enter Description"></textarea>
-              </div>
-
-              <!-- Precio -->
-              <div class="form-group mb-4">
-                  <label class="form-label">Price</label>
-                  <div class="input-group">
-                      <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                      <input type="number" class="form-control" name="price" #price="ngModel"
-                          required [disabled]="isDetails" [(ngModel)]="currentProduct.price" placeholder="Enter Price">
-                  </div>
-                  <div *ngIf="productForm.controls['price']?.hasError('required') && productForm.controls['price'].touched"
-                      class="form-text text-danger mt-1">Price is required</div>
-              </div>
-
-              <!-- Proveedor -->
-              <div class="form-group mb-4">
-                  <label class="form-label">Supplier</label>
-                  <select class="form-select" name="supplier" #supplier="ngModel"
-                      [disabled]="isDetails" [(ngModel)]="currentProduct.supplierId.id">
-                      <option selected disabled value="0">Select a supplier</option>
-                      <option *ngFor="let sup of suppliers" [value]="sup.id">{{ sup.legalName }}</option>
-                  </select>
-              </div>
+          <div
+            *ngIf="
+              productForm.controls['sku']?.hasError('required') &&
+              !validForm
+            "
+            class="form-text text-danger mt-1"
+          >
+            SKU is required
           </div>
+          <div *ngIf="this.existsSKU" class="col-auto">
+            <span class="form-text text-danger">The code is already in use</span>
+          </div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="form-group mb-4">
+          <label class="form-label">Category</label>
+          <select
+            class="form-select"
+            name="category"
+            #category="ngModel"
+            [disabled]="isDetails"
+            [(ngModel)]="currentProduct.categoryId.id"
+          >
+            <option selected disabled value="0">Select a category</option>
+            <option *ngFor="let cat of categories" [value]="cat.id">
+              {{ cat.name }}
+            </option>
+          </select>
+          <div
+          *ngIf="
+            currentProduct.categoryId.id == 0 && !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            >This field is required</span
+          >
+        </div>
+          <button class="btn btn-outline-info mt-2" routerLink="/categories">
+            Add New Category
+          </button>
+        </div>
+
+        <!-- Nombre del Producto -->
+        <div class="form-group mb-4">
+          <label class="form-label">Product Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            #name="ngModel"
+            [disabled]="isDetails"
+            required
+            [(ngModel)]="currentProduct.name"
+            placeholder="Enter Product Name"
+          />
+          <div
+            *ngIf="
+              productForm.controls['name']?.hasError('required') &&
+              !validForm
+            "
+            class="form-text text-danger mt-1"
+          >
+            This field is required
+          </div>
+        </div>
       </div>
 
-      <!-- Sección de URL de imagen y vista previa -->
-      <div class="row">
-          <div class="col-md-6">
-              <div class="form-group mb-4">
-                  <label class="form-label">Image URL</label>
-                  <input type="text" class="form-control" name="imgUrl"
-                      [disabled]="isDetails" #imgUrl="ngModel" [(ngModel)]="currentProduct.imgUrl" placeholder="Enter Image URL">
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="form-group mb-4">
-                  <label class="form-label">Preview Image</label>
-                  <div class="preview-image-container">
-                      <img class="img-fluid rounded preview-image" [src]="currentProduct.imgUrl || 'https://via.placeholder.com/150'" alt="Preview Image">
-                  </div>
-              </div>
-          </div>
-      </div>
+      <!-- Columna de detalles y vista previa de imagen -->
+      <div class="col-md-6">
+        <!-- Descripción -->
+        <div class="form-group mb-4">
+          <label class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            [disabled]="isDetails"
+            #description="ngModel"
+            [(ngModel)]="currentProduct.description"
+            placeholder="Enter Description"
+          ></textarea>
+        </div>
 
-      <!-- Sección de botones de acción -->
-      <div class="modal-footer mt-4" [ngClass]="isDetails ? 'visually-hidden' : ''">
-          <button type="button" class="btn btn-secondary me-2" routerLink="/products">Cancel</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Save</button>
+        <!-- Precio -->
+        <div class="form-group mb-4">
+          <label class="form-label">Price</label>
+          <div class="input-group">
+            <span class="input-group-text"
+              ><i class="bi bi-currency-dollar"></i
+            ></span>
+            <input
+              type="number"
+              class="form-control"
+              name="price"
+              #price="ngModel"
+              required
+              [disabled]="isDetails"
+              [(ngModel)]="currentProduct.price"
+              placeholder="Enter Price"
+            />
+            
+          </div>
+          <div
+          *ngIf="
+            currentProduct.price == 0 && !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            >This field is required</span
+          >
+        </div>
+        </div>
+
+        <!-- Proveedor -->
+        <div class="form-group mb-4">
+          <label class="form-label">Supplier</label>
+          <select
+            class="form-select"
+            name="supplier"
+            #supplier="ngModel"
+            [disabled]="isDetails"
+            [(ngModel)]="currentProduct.supplierId.id"
+          >
+            <option selected disabled value="0">Select a supplier</option>
+            <option *ngFor="let sup of suppliers" [value]="sup.id">
+              {{ sup.legalName }}
+            </option>
+          </select>
+          <div
+          *ngIf="
+            currentProduct.supplierId.id == 0 && !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            >This field is required</span
+          >
+        </div>
+        </div>
       </div>
+    </div>
+
+    <!-- Sección de URL de imagen y vista previa -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-4">
+          <label class="form-label">Image URL</label>
+          <input
+            type="text"
+            class="form-control"
+            name="imgUrl"
+            [disabled]="isDetails"
+            #imgUrl="ngModel"
+            [(ngModel)]="currentProduct.imgUrl"
+            placeholder="Enter Image URL"
+           
+          />
+          <div
+          *ngIf="
+            !validateWebSite(currentProduct.imgUrl) && currentProduct.imgUrl != '' && !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            >Not a valid URL</span
+          >
+        </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group mb-4">
+          <label class="form-label">Preview Image</label>
+          <div class="preview-image-container">
+            <img
+              class="img-fluid rounded preview-image"
+              [src]="currentProduct.imgUrl "
+              (error)="imageNotFound($event)"
+              alt="Preview Image"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de botones de acción -->
+    <div
+      class="modal-footer mt-4"
+      [ngClass]="isDetails ? 'visually-hidden' : ''"
+    >
+      <button
+        type="button"
+        class="btn btn-secondary me-2"
+        routerLink="/products"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        
+      >
+        Save
+      </button>
+    </div>
+    <div
+      class="modal-footer mt-2"
+      [ngClass]="isDetails ? '' : 'visually-hidden'"
+    >
+      <button class="btn btn-secondary" routerLink="/products">
+        Back to products
+      </button>
+    </div>
   </form>
 </div>

@@ -20,7 +20,7 @@
           <ul>
             <span class="text-light-emphasis">By status</span>
             <hr />
-            <li ngbDropdownItem><a (click)="filterActive()">Active</a></li>
+            <li ngbDropdownItem ><a (click)="filterActive()">Active</a></li>
             <li ngbDropdownItem><a (click)="filterDeleted()">Deleted</a></li>
             <br />
             <span class="text-light-emphasis">By Category</span>
@@ -62,7 +62,8 @@
   <table class="table table-hover mt-4">
     <thead>
       <tr>
-        <th>Image</th>
+        <th></th>
+        <th>Status</th>
         <th>SKU</th>
         <th>Name</th>
         <th>Category</th>
@@ -72,7 +73,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of productsAux" [ngClass]="{ 'bg-deleted': p.deleted }">
+      <tr *ngFor="let p of productsAux">
         <td>
           <img
             [src]="p.imgUrl"
@@ -81,6 +82,8 @@
             (error)="imageNotFound($event)"
           />
         </td>
+        <td *ngIf="p.deleted"><span class="rounded px-1 text-bg-danger ">Deleted</span></td>
+        <td *ngIf="!p.deleted" ><span class="rounded px-1 text-bg-success">Active</span></td>
         <td>{{ p.sku }}</td>
         <td>{{ p.name }}</td>
         <td>{{ p.categoryId.name }}</td>
@@ -123,4 +126,8 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="products.length == 0" class="empty-list-message">
+    <p>The list of products is currently empty.</p>
+    <p>Would you like to <a href="/products/new">add a new product</a>? </p>
+  </div>
 </div>

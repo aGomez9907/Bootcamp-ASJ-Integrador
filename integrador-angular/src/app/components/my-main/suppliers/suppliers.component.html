@@ -7,7 +7,12 @@
   <div class="row mb-3">
     <div class="col-6 d-flex">
       <div ngbDropdown class="d-inline-block me-2">
-        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
           <i class="bi bi-funnel"></i> Filter
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -22,11 +27,22 @@
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="bi bi-search"></i></span>
         </div>
-        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchInput" (keyup)="search()">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search"
+          [(ngModel)]="searchInput"
+          (keyup)="search()"
+        />
       </div>
     </div>
     <div class="col-6 text-end">
-      <button type="button" class="btn btn-primary" id="btn-agregar-proveedor" routerLink="new">
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="btn-agregar-proveedor"
+        routerLink="new"
+      >
         Add new supplier
       </button>
     </div>
@@ -36,33 +52,76 @@
     <thead>
       <tr>
         <th></th>
+        <th>Status</th>
         <th>Supplier Code</th>
-        <th>Razon social</th>
-        <th>Contacto</th>
+        <th>Legal name</th>
+        <th>Contact info</th>
+        <th>Location</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let s of suppliersAux" [ngClass]="{ 'deleted-supplier': s.deleted }">
+      <tr
+        *ngFor="let s of suppliersAux"
+        [ngClass]="{ 'deleted-supplier': s.deleted }"
+      >
         <td>
-          <img class="img-table" [src]="s.urlLogo" alt="{{ s.legalName }}" (error)="imageNotFound($event)" />
+          <img
+            class="img-table"
+            [src]="s.urlLogo"
+            class="img-thumbnail img-table"
+            alt="{{ s.legalName }}"
+            (error)="imageNotFound($event)"
+          />
         </td>
+        <td *ngIf="s.deleted"><span class="rounded px-1 text-bg-danger ">Deleted</span></td>
+        <td *ngIf="!s.deleted" ><span class="rounded px-1 text-bg-success">Active</span></td>
         <td>{{ s.codProv }}</td>
         <td>{{ s.legalName }}</td>
         <td>
           {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
-          <span class="info-tooltip" ngbTooltip="Email: {{ s.contactInfoId.email }} | Website: {{ s.webSite }} | Phone: +{{ s.contactInfoId.phoneId.country }} {{ s.contactInfoId.phoneId.phoneNumber }}">
+          <span
+            class="info-tooltip"
+            ngbTooltip="Email: {{ s.contactInfoId.email }} | Website: {{
+              s.webSite
+            }} | Phone: +{{ s.contactInfoId.phoneId.country }} {{
+              s.contactInfoId.phoneId.phoneNumber
+            }}"
+          >
             <i class="bi bi-info-circle"></i>
           </span>
         </td>
+        <td>{{s.addressId.provinceId.name + ", "+ s.addressId.provinceId.countryId.name}}</td>
         <td>
           <div class="d-flex flex-row">
-            <button type="button" class="btn btn-outline-success btn-sm" [routerLink]="'details/' + s.id">Details</button>
-            <button type="button" class="btn btn-outline-primary btn-sm" [routerLink]="'update/' + s.id">Edit</button>
-            <button *ngIf="!s.deleted" type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSupplier(s.id)">
+            <button
+              type="button"
+              class="btn btn-outline-success btn-sm"
+              [routerLink]="'details/' + s.id"
+            >
+              Details
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              [routerLink]="'update/' + s.id"
+            >
+              Edit
+            </button>
+            <button
+              *ngIf="!s.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              (click)="deleteSupplier(s.id)"
+            >
               Delete
             </button>
-            <button *ngIf="s.deleted" type="button" class="btn btn-outline-danger btn-sm" (click)="deleteSupplier(s.id)">
+            <button
+              *ngIf="s.deleted"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              (click)="deleteSupplier(s.id)"
+            >
               Restore
             </button>
           </div>
@@ -70,4 +129,8 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="suppliers.length == 0" class="empty-list-message">
+    <p>The list of suppliers is currently empty.</p>
+    <p>Would you like to <a href="/suppliers/new">add a new supplier</a>? </p>
+  </div>
 </div>

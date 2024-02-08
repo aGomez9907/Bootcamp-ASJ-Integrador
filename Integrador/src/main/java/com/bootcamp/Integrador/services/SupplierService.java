@@ -79,7 +79,7 @@ public class SupplierService {
 		}
 	}
 
-	public String updateSupplier(Integer id, Supplier supplier) {
+	public Supplier updateSupplier(Integer id, Supplier supplier) throws Exception {
 		try {
 			Supplier supp = supplierRepository.findById(id).get();// obtengo la tarea original
 			if (supp != null) {
@@ -98,13 +98,13 @@ public class SupplierService {
 				supp.setUrlLogo(supplier.getUrlLogo());
 				supp.setWebSite(supplier.getWebSite());
 				supp.setUpdatedAt(Timestamp.from(Instant.now()));
-				supplierRepository.save(supp);
-				return "Supplier with id: " + id + " updated successfully.";
+				
+				return supplierRepository.save(supp);
 			}
-			return "Error: The supplier is null.";
+			throw new Exception();
 
 		} catch (Exception err) {
-			return "Error: The supplier couldn´t be found.";
+			throw err;
 		}
 
 	}

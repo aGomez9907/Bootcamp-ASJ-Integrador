@@ -1,0 +1,29 @@
+<div class="home-container">
+    <div class="header">
+      <h1>Welcome to the Purchasing Management Software</h1>
+      <p>As an administrator, you can manage your purchases efficiently with our powerful tools.</p>
+    </div>
+  
+    <div class="dashboard">
+      <div class="card">
+        <h2>Products</h2>
+        <p>{{ products.length }}</p>
+        <button routerLink="/products" *ngIf="products.length > 0">Go to list</button>
+        <button routerLink="/products/new">Add New Product</button>
+      </div>
+  
+      <div class="card">
+        <h2>Suppliers</h2>
+        <p>{{ suppliers.length }}</p>
+        <button routerLink="/suppliers" *ngIf="suppliers.length > 0">Go to list</button>
+        <button routerLink="/suppliers/new">Add New Supplier</button>
+      </div>
+  
+      <div class="card">
+        <h2>Purchase Orders</h2>
+        <p>{{ purchaseOrders.length }}</p>
+        <button routerLink="/purchase-orders" *ngIf="purchaseOrders.length > 0">Go to list</button>
+        <button routerLink="/purchase-orders/new">Create New Order</button>
+      </div>
+    </div>
+  </div>

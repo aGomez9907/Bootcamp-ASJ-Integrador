@@ -1,0 +1,16 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'cuitFormat'
+})
+export class CuitFormatPipe implements PipeTransform {
+  transform(cuit: string): string {
+    if (!cuit) return ''; // Maneja el caso en que el CUIT sea null o undefined
+
+    // Elimina caracteres no numéricos
+    const numericCuit = cuit.replace(/\D/g, '');
+
+    // Formatea el CUIT según el formato xx-xxxxxxxx-x
+    return numericCuit.replace(/^(\d{2})(\d{8})(\d{1})$/, '$1-$2-$3');
+  }
+}

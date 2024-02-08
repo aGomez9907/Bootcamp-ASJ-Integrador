@@ -1,67 +1,136 @@
 <div class="container mt-5">
-    <h1>Categories</h1>
+  <h1>Categories</h1>
 
-    <!-- Form to add product categories -->
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Add Product Category</h2>
-            <form id="addProductCategoryForm">
-                <div class="form-group">
-                    <label for="productCategory">Product Category:</label>
-                    <input type="text" id="productCategory" name="productCategory" #productCategory="ngModel" class="form-control" required [(ngModel)]="productCategoryInput.name">
-                </div>
-                <button type="button" class="btn btn-primary" (click)="addProductCategory()">Add Product Category</button>
-            </form>
+  <!-- Form to add product categories -->
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Add Product Category</h2>
+      <form id="addProductCategoryForm">
+        <div class="form-group">
+          <label for="productCategory">Product Category:</label>
+          <input
+            type="text"
+            id="productCategory"
+            name="productCategory"
+            #productCategory="ngModel"
+            class="form-control"
+            required
+            [(ngModel)]="productCategoryInput.name"
+          />
         </div>
-
-        <!-- Form to add supplier categories -->
-        <div class="col-md-6">
-            <h2>Add Supplier Category</h2>
-            <form id="addSupplierCategoryForm">
-                <div class="form-group">
-                    <label for="supplierCategory">Supplier Category:</label>
-                    <input type="text" id="supplierCategory" name="supplierCategory"  #supplierCategory="ngModel" class="form-control" required [(ngModel)]="supplierCategoryInput.name">
-                </div>
-                <button type="button" class="btn btn-primary" (click)="addSupplierCategory()">Add Supplier Category</button>
-            </form>
-        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addProductCategory()"
+        >
+          Add Product Category
+        </button>
+      </form>
     </div>
 
-    <!-- Reference Section -->
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <h5>Reference: <span class="active-category"> Active </span>  <span class="deleted-category"> Deleted </span></h5>
+    <!-- Form to add supplier categories -->
+    <div class="col-md-6">
+      <h2>Add Supplier Category</h2>
+      <form id="addSupplierCategoryForm">
+        <div class="form-group">
+          <label for="supplierCategory">Supplier Category:</label>
+          <input
+            type="text"
+            id="supplierCategory"
+            name="supplierCategory"
+            #supplierCategory="ngModel"
+            class="form-control"
+            required
+            [(ngModel)]="supplierCategoryInput.name"
+          />
         </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="addSupplierCategory()"
+        >
+          Add Supplier Category
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reference Section -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h5>
+        Reference: <span class="active-category"> Active </span>
+        <span class="deleted-category"> Deleted </span>
+      </h5>
+    </div>
+  </div>
+
+  <!-- Category Lists -->
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Product Category List -->
+      <div class="category-list">
+        <h3>Product Categories</h3>
+        <ul id="productCategoryList">
+          <!-- Product category items will be dynamically added here -->
+          <li
+            *ngFor="let cat of productCategories"
+            [ngClass]="{
+              'deleted-category': cat.deleted,
+              'active-category': !cat.deleted
+            }"
+          >
+            <span>{{ cat.name }}</span>
+            <button
+              class="btn delete-category"
+              (click)="deleteProductCategory(cat.id)"
+              *ngIf="!cat.deleted"
+            >
+              Delete
+            </button>
+            <button
+              class="btn delete-category"
+              (click)="deleteProductCategory(cat.id)"
+              *ngIf="cat.deleted"
+            >
+              Restore
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <!-- Category Lists -->
-    <div class="row">
-        <div class="col-md-6">
-            <!-- Product Category List -->
-            <div class="category-list">
-                <h3>Product Categories</h3>
-                <ul id="productCategoryList">
-                    <!-- Product category items will be dynamically added here -->
-                    <li *ngFor="let cat of productCategories" [ngClass]="{'deleted-category': cat.deleted, 'active-category': !cat.deleted}">
-                        <span>{{cat.name}}</span>
-                        <button class="btn delete-category" (click)="deleteProductCategory(cat.id)">Delete</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <!-- Supplier Category List -->
-            <div class="category-list">
-                <h3>Supplier Categories</h3>
-                <ul id="supplierCategoryList">
-                    <!-- Supplier category items will be dynamically added here -->
-                    <li *ngFor="let cat of supplierCategories" [ngClass]="{'deleted-category': cat.deleted, 'active-category': !cat.deleted}">
-                        <span>{{cat.name}}</span>
-                        <button class="btn delete-category" (click)="deleteSupplierCategory(cat.id)">Delete</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="col-md-6">
+      <!-- Supplier Category List -->
+      <div class="category-list">
+        <h3>Supplier Categories</h3>
+        <ul id="supplierCategoryList">
+          <!-- Supplier category items will be dynamically added here -->
+          <li
+            *ngFor="let cate of supplierCategories"
+            [ngClass]="{
+              'deleted-category': cate.deleted,
+              'active-category': !cate.deleted
+            }"
+          >
+            <span>{{ cate.name }}</span>
+            <button
+              class="btn delete-category"
+              (click)="deleteSupplierCategory(cate.id)"
+              *ngIf="!cate.deleted"
+            >
+              Delete
+            </button>
+            <button
+              class="btn delete-category"
+              (click)="deleteSupplierCategory(cate.id)"
+              *ngIf="cate.deleted"
+            >
+              Restore
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </div>

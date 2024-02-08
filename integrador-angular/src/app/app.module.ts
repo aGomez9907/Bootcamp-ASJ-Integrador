@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyHeaderComponent } from './components/my-header/my-header.component';
 import { MyFooterComponent } from './components/my-footer/my-footer.component';
 import { MySidebarComponent } from './components/my-sidebar/my-sidebar.component';
@@ -12,7 +12,7 @@ import { SuppliersComponent } from './components/my-main/suppliers/suppliers.com
 import { ProductsComponent } from './components/my-main/products/products.component';
 import { PurchaseOrdersComponent } from './components/my-main/purchase-orders/purchase-orders.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SupplierDetailComponent } from './components/my-main/supplier-detail-DEPRECATED/supplier-detail.component';
+
 import { Iva } from '../enum/iva-condition';
 import { ProductDetailComponent } from './components/my-main/product-detail/product-detail.component';
 import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-order/new-purchase-order.component';
@@ -20,6 +20,7 @@ import { PurchaseOrderDetailComponent } from './components/my-main/purchase-orde
 import { NewSupplierComponent } from './components/my-main/new-supplier/new-supplier.component';
 import { CuitFormatDirective } from './directives/cuit-format.directive';
 import { CategoriesComponent } from './components/my-main/categories/categories.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +32,13 @@ import { CategoriesComponent } from './components/my-main/categories/categories.
     SuppliersComponent,
     ProductsComponent,
     PurchaseOrdersComponent,
-    SupplierDetailComponent,
     ProductDetailComponent,
     NewPurchaseOrderComponent,
     PurchaseOrderDetailComponent,
     NewSupplierComponent,
     CuitFormatDirective,
     CategoriesComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,7 @@ import { CategoriesComponent } from './components/my-main/categories/categories.
     HttpClientModule,
   ],
   exports: [CuitFormatDirective],
-  providers: [],
+  providers: [ NgbDatepickerConfig],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

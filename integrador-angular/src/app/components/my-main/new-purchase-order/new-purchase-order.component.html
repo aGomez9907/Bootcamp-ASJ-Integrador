@@ -1,9 +1,27 @@
 <div class="container">
-  <h1 class="text-center mb-4" *ngIf="!isDetails">Create Purchase Order</h1>
-  <h1 class="text-center mb-4" *ngIf="isDetails">Purchas Order details</h1>
-  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
-  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{ errorMessage }}</ngb-alert>
-  <hr>
+  <h1 class="mt-4">PURCHASE ORDERS</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">
+      <a href="/purchase-orders" class="text-decoration-none text-muted"
+        >Purchase orders</a
+      >
+    </li>
+    <li class="breadcrumb-item active" *ngIf="!isDetails">Create</li>
+    <li class="breadcrumb-item active" *ngIf="isDetails">Details</li>
+    <li class="breadcrumb-item active" *ngIf="isDetails">
+      Order N° {{ purchaseOrderAux.orderNumber }}
+    </li>
+  </ol>
+  <ngb-alert
+    *ngIf="successMessage"
+    type="success"
+    (close)="successMessage = ''"
+    >{{ successMessage }}</ngb-alert
+  >
+  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{
+    errorMessage
+  }}</ngb-alert>
+  <hr />
 
   <form #poForm="ngForm" (ngSubmit)="addPO()">
     <div class="row">
@@ -12,51 +30,130 @@
         <!-- Número de Orden -->
         <div class="mb-3">
           <label for="order-number-input" class="form-label">PO Number</label>
-          <input type="number" class="form-control" id="order-number-input" name="number"
-            [(ngModel)]="purchaseOrderAux.orderNumber" placeholder="Enter PO Number" [disabled]="isDetails">
+          <input
+            type="number"
+            class="form-control"
+            id="order-number-input"
+            name="number"
+            [(ngModel)]="purchaseOrderAux.orderNumber"
+            placeholder="Enter PO Number"
+            [disabled]="isDetails"
+            required=""
+            (keyup)="orderNumberExists()"
+          />
+          <div *ngIf="this.existsOrderNumber" class="col-auto">
+            <span class="form-text text-danger"
+              >The order number already exists</span
+            >
+          </div>
         </div>
+        <div *ngIf="!validForm && purchaseOrderAux.orderNumber == 0" class="col-auto">
+          <span class="form-text text-danger"
+            >The order number cannot be 0</span
+          >
+        </div>
+
 
         <!-- Fechas de Emisión y Entrega -->
         <div class="row mb-3">
           <div class="col">
             <label for="emission-date">Emission Date</label>
-            <ngb-datepicker [(ngModel)]="emissionSelected" name="emission" [disabled]="isDetails"
-              #datepicker1="ngbDatepicker"></ngb-datepicker>
+            <ngb-datepicker
+              [(ngModel)]="emissionSelected"
+              name="emission"
+              [disabled]="isDetails"
+              [minDate]="minDate"
+              #datepicker1="ngbDatepicker"
+            ></ngb-datepicker>
           </div>
           <div class="col">
             <label for="delivery-date">Delivery Date</label>
-            <ngb-datepicker [(ngModel)]="deliverySelected" name="delivery" [disabled]="isDetails"
-              #datepicker2="ngbDatepicker"></ngb-datepicker>
+            <ngb-datepicker
+              [(ngModel)]="deliverySelected"
+              name="delivery"
+              [disabled]="isDetails"
+              [minDate]="minDate"
+              #datepicker2="ngbDatepicker"
+            ></ngb-datepicker>
           </div>
         </div>
 
         <!-- Selección de Proveedor y Producto -->
-        <div class="mb-3" >
+        <div class="mb-3">
           <div class="row">
             <div class="col">
               <label for="supplier-po" class="form-label">Supplier</label>
-              <select class="form-select" name="supplier" [(ngModel)]="purchaseOrderAux.supplierId.id"
-                (change)="getProductsBySelectedSupplier()" [disabled]="isFirstItemAdded || isDetails">
+              <select
+                class="form-select"
+                name="supplier"
+                [(ngModel)]="purchaseOrderAux.supplierId.id"
+                (change)="getProductsBySelectedSupplier()"
+                [disabled]="isFirstItemAdded || isDetails"
+              >
                 <option disabled selected value="0">Select a supplier</option>
-                <option *ngFor="let sup of suppliers" [value]="sup.id">{{ sup.legalName }}</option>
+                <option *ngFor="let sup of suppliers" [value]="sup.id">
+                  {{ sup.legalName }}
+                </option>
               </select>
+              <div
+              *ngIf="
+                !validOrderDetail && purchaseOrderAux.supplierId.id == 0
+              "
+            >
+              <span class="form-text text-danger">
+                Select a supplier.</span
+              >
             </div>
-            <div class="col" [ngClass]="isDetails? 'd-none':''">
+            </div>
+            <div class="col" [ngClass]="isDetails ? 'd-none' : ''">
               <label for="selected-product" class="form-label">Product</label>
-              <select class="form-select" name="product" [(ngModel)]="currentOrderDetail.productId.id">
+              <select
+                class="form-select"
+                name="product"
+                [(ngModel)]="currentOrderDetail.productId.id"
+              >
                 <option disabled selected value="0">Select a product</option>
-                <option *ngFor="let prod of products" [value]="prod.id">{{ prod.name }}</option>
+                <option *ngFor="let prod of products" [value]="prod.id">
+                  {{ prod.name }}
+                </option>
               </select>
+              <div
+                *ngIf="
+                  !validOrderDetail && currentOrderDetail.productId.id == 0
+                "
+              >
+                <span class="form-text text-danger">
+                  Select a product.</span
+                >
+              </div>
             </div>
           </div>
-          <div class="row mt-3" [ngClass]="isDetails? 'd-none':''">
+          <div class="row mt-3" [ngClass]="isDetails ? 'd-none' : ''">
             <div class="col">
               <label for="quantity" class="form-label">Quantity</label>
-              <input type="number" class="form-control" name="quantity" [(ngModel)]="currentOrderDetail.quantity"
-                placeholder="Enter Quantity">
+              <input
+                type="number"
+                class="form-control"
+                name="quantity"
+                [(ngModel)]="currentOrderDetail.quantity"
+                placeholder="Enter Quantity"
+              />
+              <div
+                *ngIf="!validOrderDetail && currentOrderDetail.quantity == 0"
+              >
+                <span class="form-text text-danger">
+                  Quantity must be greater than 0.</span
+                >
+              </div>
             </div>
             <div class="col align-self-end">
-              <button type="button" class="btn btn-outline-info mt-2" (click)="addItem()">Add Item</button>
+              <button
+                type="button"
+                class="btn btn-outline-info mt-2"
+                (click)="addItem()"
+              >
+                Add Item
+              </button>
             </div>
           </div>
         </div>
@@ -67,11 +164,21 @@
         <div class="row mb-1">
           <div class="col-12">
             <label for="details">Additional details</label>
-            <textarea class="form-control" name="description" #description="ngModel" id="" [ngClass]="isDetails? 'd-none':''" [(ngModel)]="purchaseOrderAux.description"></textarea>
+            <textarea
+              class="form-control"
+              name="description"
+              #description="ngModel"
+              id=""
+              [ngClass]="isDetails ? 'd-none' : ''"
+              [(ngModel)]="purchaseOrderAux.description"
+            ></textarea>
           </div>
         </div>
         <!-- Tabla de Productos Agregados -->
-        <table class="table table-hover table-striped" *ngIf="details.length != 0">
+        <table
+          class="table table-hover table-striped"
+          *ngIf="details.length != 0"
+        >
           <thead>
             <tr>
               <th>SKU</th>
@@ -87,10 +194,14 @@
               <td>{{ item.productId.sku }}</td>
               <td>{{ item.productId.name }}</td>
               <td class="text-center">{{ item.quantity }}</td>
-              <td>{{ item.productId.price | currency}}</td>
-              <td>{{ item.productId.price * item.quantity |currency}}</td>
+              <td>{{ item.productId.price | currency }}</td>
+              <td>{{ item.productId.price * item.quantity | currency }}</td>
               <td>
-                <button class="btn btn-danger" (click)="removeItem(i)" [disabled]="isDetails">
+                <button
+                  class="btn btn-danger"
+                  (click)="removeItem(i)"
+                  [disabled]="isDetails"
+                >
                   <i class="bi bi-trash3"></i>
                 </button>
               </td>
@@ -109,22 +220,54 @@
                 <li>Total price: {{ calculateTotal() * 1.1 | currency }}</li>
               </ul>
             </div>
-            <div class="col-4" [ngClass]="!isDetails? 'd-none':''">
+            <div class="col-4" [ngClass]="!isDetails ? 'd-none' : ''">
               <span>Status: </span>
-            <span *ngIf="purchaseOrderAux.statusId.status == 'Paid'" class="rounded px-1 text-bg-success ">Paid</span>
-            <span *ngIf="purchaseOrderAux.statusId.status == 'Outstanding'" class="rounded px-1 text-bg-warning  ">Outstanding</span>
-            <span *ngIf="purchaseOrderAux.statusId.status == 'Canceled'" class="rounded px-1 text-bg-danger  ">Canceled</span>
+              <span
+                *ngIf="purchaseOrderAux.statusId.status == 'Paid'"
+                class="rounded px-1 text-bg-success"
+                >Paid</span
+              >
+              <span
+                *ngIf="purchaseOrderAux.statusId.status == 'Outstanding'"
+                class="rounded px-1 text-bg-warning"
+                >Outstanding</span
+              >
+              <span
+                *ngIf="purchaseOrderAux.statusId.status == 'Canceled'"
+                class="rounded px-1 text-bg-danger"
+                >Canceled</span
+              >
             </div>
           </div>
         </div>
+        <div
+              *ngIf="
+                !validForm && details.length === 0
+              "
+            >
+              <span class="form-text text-danger">
+                You must add at least 1 product.</span
+              >
+            </div>
+            <div
+            *ngIf="
+              !validForm && purchaseOrderAux.emissionDate > purchaseOrderAux.deliveryDate
+            "
+          >
+            <span class="form-text text-danger">
+              Emission date cannot be later than delivery date</span
+            >
+          </div>
 
         <!-- Botones de Acción -->
-        <div class="row mt-3" [ngClass]="isDetails? 'd-none':''">
+        <div class="row mt-3" [ngClass]="isDetails ? 'd-none' : ''">
           <div class="col">
             <button type="submit" class="btn btn-success">Create Order</button>
           </div>
           <div class="col">
-            <button class="btn btn-danger" routerLink="/purchase-orders">Cancel</button>
+            <button class="btn btn-danger" routerLink="/purchase-orders">
+              Cancel
+            </button>
           </div>
         </div>
       </div>

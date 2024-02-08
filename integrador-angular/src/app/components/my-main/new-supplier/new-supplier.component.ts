@@ -5,12 +5,10 @@ import {
   TaxCondition,
   Supplier,
   SupplierCategory,
-   Country,
+  Country,
   Province,
 } from '../../../models/supplier';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
-import { ProductCategory } from '../../../../enum/category-products';
-import { CuitFormatDirective } from '../../../directives/cuit-format.directive';
+
 
 // interface Provinces {
 //   [country: string]: string[];
@@ -42,45 +40,16 @@ export class NewSupplierComponent implements OnInit {
   validForm: boolean = true;
   showbadCountryCode1: boolean = false;
   showbadCountryCode2: boolean = false;
-  //ivas = ['IVA Responsable Inscripto','IVA Sujeto Exento','Responsable Monotributo','Proveedor del Exterior','Otro'];
+
   ivas: Array<TaxCondition> = new Array();
 
   suppliers: Array<Supplier> = new Array();
   countries: Array<Country> = new Array();
   provinces: Array<Province> = new Array();
   provincesToShow: Array<Province> = new Array();
-  
+
   successMessage: string | null = null;
   errorMessage: string | null = null;
-
-  // countries = ['Argentina', 'Chile', 'Brazil'];
-
-  // provinces: Provinces = {
-  //   'Argentina': [
-  //     'Buenos Aires', 'Cordoba', 'Santa Fe', 'Mendoza', 'Tucuman',
-  //     'Entre Rios', 'Salta', 'Chaco', 'Corrientes', 'Santiago del Estero',
-  //     'Jujuy', 'La Pampa', 'Formosa', 'Misiones', 'San Juan', 'San Luis',
-  //     'Catamarca', 'La Rioja', 'Tierra del Fuego', 'Neuquen', 'Rio Negro', 'Chubut'
-  //   ],
-  //   'Chile': [
-  //     'Santiago', 'Valparaiso', 'Concepcion', 'Antofagasta', 'Araucania',
-  //     'Coquimbo', 'Magallanes', 'Los Lagos', 'Atacama', 'Tarapaca',
-  //     'Aysen', 'Los Rios', 'Maule', 'O\'Higgins'
-  //   ],
-  //   'Brazil': [
-  //     'Sao Paulo', 'Rio de Janeiro', 'Brasilia', 'Minas Gerais', 'Bahia',
-  //     'Rio Grande do Sul', 'Parana', 'Ceara', 'Pernambuco', 'Amazonas',
-  //     'Santa Catarina', 'Goias', 'Para', 'Maranhao', 'Espirito Santo',
-  //     'Paraiba', 'Rio Grande do Norte', 'Alagoas', 'Piaui', 'Acre', 'Tocantins',
-  //     'Rondonia', 'Sergipe'
-  //   ]
-  // };
-
-  // cities: City = {
-  //   "Buenos Aires":["lomas de zamora", "banfield"],
-  //   "Cordoba": ["Cordoba"]};
-
-  //categories = Object.entries(ProductCategory).map(([key, value]) => ({ key, value })); // temporal hasta traer las categorias de proveedor desde la BD
 
   categories: Array<SupplierCategory> = new Array();
 
@@ -94,18 +63,18 @@ export class NewSupplierComponent implements OnInit {
     categoryId: {
       id: 0,
       name: '',
-      deleted: false
+      deleted: false,
     },
     taxConditionId: {
       id: 0,
     },
     phoneId: {
-      id:0,
+      id: 0,
       country: '',
       phoneNumber: '',
     },
     addressId: {
-      id:0,
+      id: 0,
       street: '',
       number: 0,
       postcode: '',
@@ -120,11 +89,11 @@ export class NewSupplierComponent implements OnInit {
       },
     },
     contactInfoId: {
-      id:0,
+      id: 0,
       firstName: '',
       lastName: '',
       phoneId: {
-        id:0,
+        id: 0,
         country: '',
         phoneNumber: '',
       },
@@ -160,16 +129,25 @@ export class NewSupplierComponent implements OnInit {
   }
 
   saveSupplier(): void {
-    // this.validForm = this.validateForm();
-    // if (this.validForm) {
+    this.validForm = this.validateForm();
+    console.log(this.validateForm());
+
+    if (this.validForm) {
       if (this.isUpdating) {
-        this.supplierService.updateSupplier(this.currentSupplier).subscribe(res=>this.successMessage = 'Supplier updated successfully');
-        
+        this.supplierService
+          .updateSupplier(this.currentSupplier)
+          .subscribe(
+            (res) => (this.successMessage = 'Supplier updated successfully')
+          );
       } else {
-        //this.currentSupplier.deleted = false;
-        this.supplierService.addSupplier(this.currentSupplier).subscribe(res=>this.successMessage = 'Supplier created successfully');
+
+        this.supplierService
+          .addSupplier(this.currentSupplier)
+          .subscribe(
+            (res) => (this.successMessage = 'Supplier created successfully')
+          );
       }
-    // }
+    }
   }
 
   getSuppliers() {
@@ -196,7 +174,7 @@ export class NewSupplierComponent implements OnInit {
 
   getCategories(): void {
     this.supplierService.getSupplierCategories().subscribe((res) => {
-      this.categories = res;
+      this.categories = res.filter((cat) => cat.deleted == false);
     });
   }
 
@@ -209,8 +187,6 @@ export class NewSupplierComponent implements OnInit {
   validate() {
     //aca irian todas las validaciones
   }
-
-
 
   onSelectCountry() {
     let country: Country = this.currentSupplier.addressId.provinceId.countryId;
@@ -226,11 +202,21 @@ export class NewSupplierComponent implements OnInit {
     if (
       !this.validateStringOf4Digits(this.currentSupplier.codProv) ||
       !this.validateStringBetweeen3And50(this.currentSupplier.legalName) ||
-      !this.validatePhoneCountry(this.currentSupplier.phoneId.country)||
-      !this.validateEmail(this.currentSupplier.email)||
-      !this.validateUrl(this.currentSupplier.urlLogo)||
-      !this.validateCuit(this.currentSupplier.cuit)||
-      !this.validatePostCode(this.currentSupplier.addressId.postcode)
+      this.currentSupplier.categoryId.id == 0 ||
+      !this.validateWebSite(this.currentSupplier.webSite) ||
+      !this.validatePhoneCountry(this.currentSupplier.phoneId.country) ||
+      !this.validateEmail(this.currentSupplier.email) ||
+      !this.validateWebSite(this.currentSupplier.urlLogo) ||
+      this.currentSupplier.addressId.number == 0 ||
+      !this.validatePostCode(this.currentSupplier.addressId.postcode) ||
+      this.currentSupplier.addressId.provinceId.countryId.id == 0 ||
+      this.currentSupplier.addressId.provinceId.id == 0 ||
+      !this.validateCuit(this.currentSupplier.cuit) ||
+      this.currentSupplier.taxConditionId.id == 0 ||
+      !this.validatePhoneCountry(
+        this.currentSupplier.contactInfoId.phoneId.country
+      ) ||
+      !this.validateEmail(this.currentSupplier.contactInfoId.email)
     ) {
       return false;
     } else {
@@ -240,39 +226,46 @@ export class NewSupplierComponent implements OnInit {
 
   validateStringBetweeen3And50(strng: string): boolean {
     const regex = /^[0-9 A-Z a-z]{3,50}$/;
+
     return regex.test(strng);
   }
 
   validateStringOf4Digits(strng: string) {
-    const regex = /^(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{4,12}$/;
+    //const regex = /^(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{4,12}$/;
+    const regex2 = /^[a-zA-Z0-9]{4,12}$/;
+
+    return regex2.test(strng);
+  }
+
+  validatePhoneCountry(strng: string): boolean {
+    const regex = /^\+\d{1,4}$/;
+
     return regex.test(strng);
   }
 
-  validatePhoneCountry(strng: string) {
-    const regex = /^\+\d{1-4}+$/;
+  validateEmail(strng: string) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     return regex.test(strng);
   }
 
-  validateEmail(strng: string): boolean {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(strng);
-  }
-
-  validateUrl(strng: string | undefined): boolean {
-    const regex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (typeof strng !== 'undefined'){
+  validateWebSite(strng: string | undefined) {
+    const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/;
+    if (strng != undefined && strng != '') {
       return regex.test(strng);
-    }else{
+    } else {
       return true;
     }
   }
 
   validatePostCode(strng: string): boolean {
     const regex = /^[0-9]{4,8}$/;
+
     return regex.test(strng);
   }
   validateCuit(strng: string): boolean {
     const regex = /^\d{2}-\d{8}-\d{1}$/;
+    console.log(this.currentSupplier.cuit);
     return regex.test(strng);
   }
 
@@ -302,11 +295,11 @@ export class NewSupplierComponent implements OnInit {
       countryCode = this.currentSupplier.contactInfoId.phoneId.country;
     }
 
+    countryCode = countryCode.replace(/\D/g, '');
+
     if (!countryCode.startsWith('+')) {
       countryCode = '+' + countryCode;
     }
-
-    countryCode = countryCode.replace(/\D/g, '');
 
     // Check if there are letters in the country code
     showError = /[a-zA-Z]/.test(countryCode);
@@ -320,5 +313,21 @@ export class NewSupplierComponent implements OnInit {
       this.currentSupplier.contactInfoId.phoneId.country = countryCode;
       this.showbadCountryCode2 = showError;
     }
+  }
+
+  onCuitChange(event: any) {
+    let inputValue = event.target.value;
+    // Eliminar caracteres no numéricos del valor del CUIT
+    inputValue = inputValue.replace(/\D/g, '');
+
+    // Aplicar el formato del CUIT (xx-xxxxxxxx-x)
+    if (inputValue.length > 2) {
+      inputValue = inputValue.substring(0, 2) + '-' + inputValue.substring(2);
+    }
+    if (inputValue.length > 11) {
+      inputValue =
+        inputValue.substring(0, 11) + '-' + inputValue.substring(11, 12);
+    }
+    this.currentSupplier.cuit = inputValue; // Actualizar el ngModel con el valor formateado
   }
 }

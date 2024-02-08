@@ -45,7 +45,7 @@ public class ProductService {
 		}
 	}
 
-	public String updateProduct(Integer id, Product product) {
+	public Product updateProduct(Integer id, Product product) throws Exception {
 		try {
 			Product prod = productRepository.findById(id).get();// obtengo la tarea original
 			if (prod != null) {
@@ -57,13 +57,13 @@ public class ProductService {
 				prod.setSku(product.getSku());
 				prod.setSupplierId(product.getSupplierId());
 				prod.setUpdatedAt(Timestamp.from(Instant.now()));
-				productRepository.save(prod);
-				return "Product with id: " + id + " updated successfully.";
+				
+				return productRepository.save(prod);
 			}
-			return "Error: The product is null.";
+			throw new Exception();
 
 		} catch (Exception err) {
-			return "Error: The product couldn´t be found.";
+			throw err;
 		}
 
 	}

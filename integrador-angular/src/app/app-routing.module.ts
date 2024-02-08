@@ -9,9 +9,11 @@ import { NewPurchaseOrderComponent } from './components/my-main/new-purchase-ord
 import { PurchaseOrderDetailComponent } from './components/my-main/purchase-order-detail/purchase-order-detail.component';
 import { NewSupplierComponent } from './components/my-main/new-supplier/new-supplier.component';
 import { CategoriesComponent } from './components/my-main/categories/categories.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/suppliers', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'suppliers', component: SuppliersComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'suppliers/new', component: NewSupplierComponent },

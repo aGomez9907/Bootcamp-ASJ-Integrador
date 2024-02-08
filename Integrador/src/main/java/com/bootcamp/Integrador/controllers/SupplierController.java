@@ -44,7 +44,7 @@ public class SupplierController {
 		return ResponseEntity.ok(supplierService.getSupplierById(id));
 	}
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateSupplier(@PathVariable int id, @RequestBody Supplier supplier) {
+	public ResponseEntity<Supplier> updateSupplier(@PathVariable int id, @RequestBody Supplier supplier) throws Exception {
 		return ResponseEntity.ok(supplierService.updateSupplier(id, supplier));
 	}
 

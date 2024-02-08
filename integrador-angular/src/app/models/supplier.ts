@@ -10,7 +10,6 @@ export interface Supplier {
   phoneId: Phone;
   email: string;
   cuit: string;
-  logo?: string;
   deleted?: boolean;
   taxConditionId: TaxCondition;
   addressId: Address;

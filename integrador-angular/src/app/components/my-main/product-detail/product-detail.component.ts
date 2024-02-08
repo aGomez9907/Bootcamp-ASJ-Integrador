@@ -18,11 +18,14 @@ export class ProductDetailComponent implements OnInit {
   isDetails: boolean = false;
   isUpdating: boolean= false;
   validForm: boolean = true
+  existsSKU: boolean = false
   categories: Array<ProductCategory> = new Array();
   suppliers: Array<Supplier> = new Array();
-
+  products: Array<Product> = new Array();
   successMessage: string | null = null;
   errorMessage: string | null = null;
+
+  
 
 
   p: any;
@@ -129,15 +132,26 @@ export class ProductDetailComponent implements OnInit {
 
     this.getCategories()
     this.getSupplierList()
+    this.getProducts()
 
   }
 
   saveProduct(){
-    if (this.isUpdating) {
-      this.productService.updateProduct(this.currentProduct).subscribe(res=> this.successMessage="Product updated succesfully.");
-    } else {
-      //this.currentSupplier.deleted = false;
-      this.productService.addProduct(this.currentProduct).subscribe(res=> this.successMessage="Product created succesfully.");
+    this.validForm = this.validateForm()
+    console.log(this.validForm);
+    
+    if(this.validForm){
+      if (this.isUpdating) {
+        this.productService.updateProduct(this.currentProduct).subscribe(res=> this.successMessage="Product updated succesfully.");
+  
+      } else {
+        //this.currentSupplier.deleted = false;
+        this.productService.addProduct(this.currentProduct).subscribe((res)=> {
+          this.successMessage="Product created succesfully." 
+          // this.router.navigate(['/products']);
+          this.clearFields()
+        });
+      }
     }
   }
 
@@ -158,10 +172,15 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  getProducts(){
+    this.productService.getProducts().subscribe((res)=>{
+      this.products = res
+    })
+  }
 
   getCategories(){
     this.productService.getCategories().subscribe((res)=>{
-      this.categories=res;
+      this.categories=res.filter((cat)=> cat.deleted == false);
     })
   }
   
@@ -174,5 +193,106 @@ export class ProductDetailComponent implements OnInit {
 
   imageNotFound(event: Event) {
     (event.target as HTMLImageElement).src = this.URL_IMG;
+  }
+
+  SKUExists(): void {
+    if (this.initialSKU !== this.currentProduct.sku) {
+      this.existsSKU = this.products.some(
+        (prod: Product) => prod.sku === this.currentProduct.sku
+      );
+    }
+  }
+
+  clearFields(){
+    this.currentProduct = {
+      id: 0,
+      sku: '',
+      categoryId: {
+        id: 0,
+        name: '',
+        deleted: false,
+      },
+      name: '',
+      description: '',
+      price: 0,
+      imgUrl: '',
+      supplierId: {
+        id:0,
+        legalName: '',
+        codProv: '',
+        webSite: '',
+        email: '',
+        cuit: '',
+        urlLogo: '',
+        categoryId: {
+          id: 0,
+          name: '',
+          deleted: false
+        },
+        taxConditionId: {
+          id: 0,
+        },
+        phoneId: {
+          id:0,
+          country: '',
+          phoneNumber: '',
+        },
+        addressId: {
+          id: 0,
+          street: '',
+          number: 0,
+          postcode: '',
+          city: '',
+          provinceId: {
+            id: 0,
+            name: '',
+            countryId: {
+              id: 0,
+              name: '',
+            },
+          },
+        },
+        contactInfoId: {
+          id:0,
+          firstName: '',
+          lastName: '',
+          phoneId: {
+            id:0,
+            country: '',
+            phoneNumber: '',
+          },
+          email: '',
+          contactRole: '',
+        },
+      },
+      deleted: false,
+    };
+  }
+
+  validateForm(){
+    if(this.currentProduct.categoryId.id == 0  ||
+        this.currentProduct.supplierId.id == 0 ||
+        this.currentProduct.price == 0||
+        !this.validateWebSite(this.currentProduct.imgUrl) ||
+        !this.validateStringOf4Digits(this.currentProduct.sku)
+      ){
+      return false
+    }else{
+      return true
+    }
+  }
+  validateStringOf4Digits(strng: string) {
+    const regex2 = /^[a-zA-Z0-9]{4,12}$/;
+
+    return regex2.test(strng);
+  }
+
+  validateWebSite(strng: string | undefined) {
+    const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/;
+    if (strng != undefined && strng != '') {
+      return regex.test(strng);
+    } else {
+      return true;
+    }
   }
 }

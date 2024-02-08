@@ -1,16 +1,28 @@
-<section class="row">
-  <div class="row">
-    <div class="col">
-      <a class="text-decoration-none" routerLink="/suppliers">← Back to list</a>
-    </div>
-  </div>
-  <div class="text-center my-4">
-    <h1 *ngIf="!isUpdating && !isDetails">Add new supplier</h1>
-    <h1 *ngIf="isUpdating">Update supplier</h1>
-    <h1 *ngIf="isDetails">Supplier details</h1>
-  </div>
-  <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
-  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{ errorMessage }}</ngb-alert>
+<section class="container-fluid px-4">
+  <h1 class="mt-4">SUPPLIERS</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">
+      <a href="/suppliers" class="text-decoration-none text-muted">Suppliers</a>
+    </li>
+    <li class="breadcrumb-item active" *ngIf="!isUpdating && !isDetails">
+      Create
+    </li>
+    <li class="breadcrumb-item active" *ngIf="isUpdating">Update</li>
+    <li class="breadcrumb-item active" *ngIf="isDetails">Details</li>
+    <li class="breadcrumb-item active" *ngIf="isDetails || isUpdating">
+      {{ currentSupplier.codProv }}
+    </li>
+  </ol>
+
+  <ngb-alert
+    *ngIf="successMessage"
+    type="success"
+    (close)="successMessage = ''"
+    >{{ successMessage }}</ngb-alert
+  >
+  <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = ''">{{
+    errorMessage
+  }}</ngb-alert>
   <hr />
   <form #suppliersForm="ngForm" (ngSubmit)="saveSupplier()" class="row">
     <section id="supplier-info" class="row">
@@ -53,7 +65,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="razon-social" class="col-sm-4 col-form-label text-start"
           >Supplier name <span class="fw-light">*</span></label
@@ -71,7 +83,10 @@
           maxlength="50"
           [disabled]="isDetails"
         />
-        <div *ngIf="legalName.errors?.['minlength']&& !validForm" class="col-auto">
+        <div
+          *ngIf="legalName.errors?.['minlength']&& !validForm"
+          class="col-auto"
+        >
           <span class="form-text text-danger"
             >Must have at least 3 characters.</span
           >
@@ -90,7 +105,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <div class="row">
           <div class="col-8">
@@ -111,7 +126,7 @@
             </button>
           </div>
         </div>
-  
+
         <select
           class="form-select"
           id="select-category"
@@ -127,9 +142,7 @@
           </option>
         </select>
         <div
-          *ngIf="
-            suppliersForm.controls['category']?.hasError('required') && !validForm
-          "
+          *ngIf="currentSupplier.categoryId.id == 0 && !validForm"
           class="col-auto"
         >
           <span
@@ -139,7 +152,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="input-web" class="col-sm-4 col-form-label text-start"
           >Website</label
@@ -152,17 +165,16 @@
           #website="ngModel"
           [(ngModel)]="currentSupplier.webSite"
           placeholder="www.example.com"
-          minlength="5"
-          maxlength="30"
           [disabled]="isDetails"
         />
-        <div *ngIf="website.errors?.['minlength']&& !validForm" class="col-auto">
-          <span class="form-text text-danger"
-            >Must have at least 3 characters.</span
-          >
+        <div
+          *ngIf="!validateWebSite(currentSupplier.webSite) && !validForm"
+          class="col-auto"
+        >
+          <span class="form-text text-danger">Not a valid website</span>
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="input-tel" class="col-sm-4 col-form-label text-start"
           >Phone <span class="fw-light">*</span></label
@@ -173,8 +185,8 @@
               type="text"
               class="form-control"
               id="input-tel-country"
-              name="phoneCountry"
-              #phoneCountry="ngModel"
+              name="phoneCountry1"
+              #phoneCountry1="ngModel"
               [(ngModel)]="currentSupplier.phoneId.country"
               placeholder="+1"
               required=""
@@ -183,6 +195,32 @@
               maxlength="4"
               [disabled]="isDetails"
             />
+            <div
+              *ngIf="
+                !validForm &&
+                !validatePhoneCountry(currentSupplier.phoneId.country)
+              "
+              class="error-message"
+            >
+              <span class="form-text text-danger">
+                Country code must be numeric.
+              </span>
+            </div>
+            <div
+              *ngIf="
+                suppliersForm.controls['phoneCountry1']?.hasError('required') &&
+                !validForm
+              "
+              class="col-auto"
+            >
+              <span
+                class="form-text text-danger"
+                [class.required-field]="
+                  suppliersForm.controls['phoneCountry1'].touched
+                "
+                >This field is required</span
+              >
+            </div>
           </div>
           <div class="col-9">
             <input
@@ -194,42 +232,25 @@
               [(ngModel)]="currentSupplier.phoneId.phoneNumber"
               placeholder="123456789"
               [disabled]="isDetails"
+              required=""
             />
+            <div
+              *ngIf="
+                suppliersForm.controls['phone']?.hasError('required') &&
+                !validForm
+              "
+              class="col-auto"
+            >
+              <span
+                class="form-text text-danger"
+                [class.required-field]="suppliersForm.controls['phone'].touched"
+                >This field is required</span
+              >
+            </div>
           </div>
         </div>
-        <div *ngIf="showbadCountryCode1&& !validForm" class="error-message">
-          Country code must be numeric.
-        </div>
-        <div
-          *ngIf="
-            suppliersForm.controls['phone']?.hasError('required') && !validForm
-          "
-          class="col-auto"
-        >
-          <span
-            class="form-text text-danger"
-            [class.required-field]="suppliersForm.controls['phone'].touched"
-            >This field is required</span
-          >
-        </div>
-  
-        <div
-          *ngIf="
-            suppliersForm.controls['phoneCountry']?.hasError('required') &&
-            !validForm
-          "
-          class="col-auto"
-        >
-          <span
-            class="form-text text-danger"
-            [class.required-field]="
-              suppliersForm.controls['phoneCountry'].touched
-            "
-            >This field is required</span
-          >
-        </div>
       </div>
-  
+
       <div class="col-4">
         <label for="input-email" class="col-sm-4 col-form-label text-start"
           >Email</label
@@ -244,8 +265,14 @@
           placeholder="someone@example.com"
           [disabled]="isDetails"
         />
+        <div
+          *ngIf="!validateEmail(currentSupplier.email) && !validForm"
+          class="col-auto"
+        >
+          <span class="form-text text-danger">Email is not valid</span>
+        </div>
       </div>
-      <div class="col-4" [ngClass]="isDetails? 'd-none':''">
+      <div class="col-4" [ngClass]="isDetails ? 'd-none' : ''">
         <label for="input-email" class="col-sm-4 col-form-label text-start"
           >Logo URL</label
         >
@@ -259,9 +286,15 @@
           placeholder="www.example.com"
           [disabled]="isDetails"
         />
+        <div
+          *ngIf="!validateWebSite(currentSupplier.urlLogo) && !validForm"
+          class="col-auto"
+        >
+          <span class="form-text text-danger">Not a valid URL</span>
+        </div>
       </div>
-      <div class="col-4" [ngClass]="!isDetails? 'd-none':''">
-      <img src="{{currentSupplier.urlLogo}}" alt="">
+      <div class="col-4" [ngClass]="!isDetails ? 'd-none' : ''">
+        <img src="{{ currentSupplier.urlLogo }}" alt="" />
       </div>
     </section>
 
@@ -283,7 +316,7 @@
           placeholder="Street"
           [disabled]="isDetails"
         />
-  
+
         <div
           *ngIf="
             suppliersForm.controls['street']?.hasError('required') && !validForm
@@ -297,7 +330,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="input-numero" class="col-sm-4 col-form-label text-start"
           >Number <span class="fw-light">*</span></label
@@ -313,11 +346,9 @@
           placeholder="123"
           [disabled]="isDetails"
         />
-  
+
         <div
-          *ngIf="
-            suppliersForm.controls['number']?.hasError('required') && !validForm
-          "
+          *ngIf="currentSupplier.addressId.number == 0 && !validForm"
           class="col-auto"
         >
           <span
@@ -327,7 +358,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="input-cp" class="col-sm-4 col-form-label text-start"
           >Post Code <span class="fw-light">*</span></label
@@ -345,7 +376,8 @@
         />
         <div
           *ngIf="
-            suppliersForm.controls['postCode']?.hasError('required') && !validForm
+            suppliersForm.controls['postCode']?.hasError('required') &&
+            !validForm
           "
           class="col-auto"
         >
@@ -356,7 +388,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="country" class="col-sm-4 col-form-label text-start"
           >Country <span class="fw-light">*</span></label
@@ -378,7 +410,7 @@
         </select>
         <div
           *ngIf="
-            suppliersForm.controls['country']?.hasError('required') && !validForm
+            currentSupplier.addressId.provinceId.countryId.id == 0 && !validForm
           "
           class="col-auto"
         >
@@ -389,7 +421,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="province" class="col-sm-4 col-form-label text-start"
           >Province <span class="fw-light">*</span></label
@@ -411,11 +443,9 @@
             {{ province.name }}
           </option>
         </select>
-  
+
         <div
-          *ngIf="
-            suppliersForm.controls['province']?.hasError('required') && !validForm
-          "
+          *ngIf="currentSupplier.addressId.provinceId.id == 0 && !validForm"
           class="col-auto"
         >
           <span
@@ -425,7 +455,7 @@
           >
         </div>
       </div>
-  
+
       <div class="col-4">
         <label for="city" class="col-sm-4 col-form-label text-start"
           >City <span class="fw-light">*</span></label
@@ -455,292 +485,318 @@
       </div>
     </section>
 
-<section id="supplier-tax" class="row">
-  <h4 class="mt-3">Tax information</h4>
-  <hr />
-  <div class="col-6">
-    <label for="input-cuit" class="col-sm-4 col-form-label text-start"
-      >CUIT <span class="fw-light">*</span>
-    </label>
-    <input
-      type="text"
-      class="form-control"
-      id="input-cuit"
-      name="cuit"
-      #cuit="ngModel"
-      [(ngModel)]="currentSupplier.cuit"
-      appCuitFormat
-      placeholder="01-23456789-1"
-      (keyup)="cuitExists()"
-      required=""
-      [disabled]="isDetails"
-    />
-    <div *ngIf="this.existsCuit" class="col-auto">
-      <span class="form-text text-danger"
-        >The CUIT is already registered</span
-      >
-    </div>
-    <div
-      *ngIf="
-        suppliersForm.controls['cuit']?.hasError('required') && !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="suppliersForm.controls['cuit'].touched"
-        >This field is required</span
-      >
-    </div>
-  </div>
-  
-  <div class="col-6">
-    <label for="select-iva" class="col-sm-4 col-form-label text-start"
-      >IVA <span class="fw-light">*</span>
-    </label>
-    <select
-      class="form-select"
-      id="select-iva"
-      name="iva"
-      #iva="ngModel"
-      [(ngModel)]="currentSupplier.taxConditionId.id"
-      [disabled]="isDetails"
-    >
-      <option disabled selected value="0">Select a IVA</option>
-      <option *ngFor="let i of ivas" value="{{ i.id }}">
-        {{ i.name }}
-      </option>
-    </select>
-  
-    <div
-      *ngIf="
-        suppliersForm.controls['iva']?.hasError('required') && !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="suppliersForm.controls['iva'].touched"
-        >This field is required</span
-      >
-    </div>
-  </div>
-</section>
-
-<section id="supplier-contact" class="row">
-  <h4 class="mt-3">Contact information</h4>
-  <hr />
-  <div class="col-5">
-    <label for="nombre-contacto" class="col-sm-4 col-form-label text-start"
-      >Contact first name <span class="fw-light">*</span></label
-    >
-    <input
-      type="text"
-      class="form-control"
-      id="nombre-contacto"
-      name="contactFirstName"
-      #contactFirstName="ngModel"
-      [(ngModel)]="currentSupplier.contactInfoId.firstName"
-      placeholder="First name"
-      required=""
-      [disabled]="isDetails"
-    />
-    <div
-      *ngIf="
-        suppliersForm.controls['contactFirstName']?.hasError('required') &&
-        !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="
-          suppliersForm.controls['contactFirstName'].touched
-        "
-        >This field is required</span
-      >
-    </div>
-  </div>
-  
-  <div class="col-5">
-    <label for="apellido-contacto" class="col-sm-4 col-form-label text-start"
-      >Contact last name <span class="fw-light">*</span></label
-    >
-    <input
-      type="text"
-      class="form-control"
-      id="apellido-contacto"
-      name="contactLasttName"
-      #contactLasttName="ngModel"
-      [(ngModel)]="currentSupplier.contactInfoId.lastName"
-      placeholder="Last name"
-      required=""
-      [disabled]="isDetails"
-    />
-  
-    <div
-      *ngIf="
-        suppliersForm.controls['contactLasttName']?.hasError('required') &&
-        !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="
-          suppliersForm.controls['contactLasttName'].touched
-        "
-        >This field is required</span
-      >
-    </div>
-  </div>
-  <div class="col-2">
-    <label for="rol-contacto" class="col-sm-4 col-form-label text-start"
-      >Role <span class="fw-light">*</span></label
-    >
-    <input
-      type="text"
-      class="form-control"
-      id="rol-contacto"
-      name="contactRole"
-      #contactRole="ngModel"
-      [(ngModel)]="currentSupplier.contactInfoId.contactRole"
-      placeholder="Role"
-      required=""
-      [disabled]="isDetails"
-    />
-  
-    <div
-      *ngIf="
-        suppliersForm.controls['contactRole']?.hasError('required') &&
-        !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="suppliersForm.controls['contactRole'].touched"
-        >This field is required</span
-      >
-    </div>
-  </div>
-  
-  <div class="col-6">
-    <label for="telefono-contacto" class="col-sm-4 col-form-label text-start"
-      >Contact phone <span class="fw-light">*</span></label
-    >
-    <div class="row">
-      <div class="col-3">
+    <section id="supplier-tax" class="row">
+      <h4 class="mt-3">Tax information</h4>
+      <hr />
+      <div class="col-6">
+        <label for="input-cuit" class="col-sm-4 col-form-label text-start"
+          >CUIT <span class="fw-light">*</span>
+        </label>
         <input
           type="text"
           class="form-control"
-          id="telefono-contacto"
-          name="contactPhoneCountry"
-          #contactPhoneCountry="ngModel"
-          [(ngModel)]="currentSupplier.contactInfoId.phoneId.country"
-          placeholder="+1"
-          (keyup)="validateCountryCode(2)"
+          id="input-cuit"
+          name="cuit"
+          #cuit="ngModel"
+          [(ngModel)]="currentSupplier.cuit"
+          (input)="onCuitChange($event)"
+          placeholder="01-23456789-1"
+          (input)="cuitExists()"
           required=""
+          [maxlength]="13"
           [disabled]="isDetails"
         />
+        <div *ngIf="this.existsCuit" class="col-auto">
+          <span class="form-text text-danger"
+            >The CUIT is already registered</span
+          >
+        </div>
+        <div
+          *ngIf="
+            suppliersForm.controls['cuit']?.hasError('required') && !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            [class.required-field]="suppliersForm.controls['cuit'].touched"
+            >This field is required</span
+          >
+        </div>
+        <div
+          *ngIf="!validateCuit(currentSupplier.cuit) && !validForm"
+          class="col-auto"
+        >
+          <span class="form-text text-danger">Invalid cuit</span>
+        </div>
       </div>
-      <div class="col-9">
-        <input
-          type="number"
-          class="form-control"
-          id="telefono-contacto"
-          name="contactPhoneNumber"
-          #contactPhoneNumber="ngModel"
-          [(ngModel)]="currentSupplier.contactInfoId.phoneId.phoneNumber"
-          placeholder="123456789"
-          required=""
-          [disabled]="isDetails"
-        />
-      </div>
-    </div>
-    <div *ngIf="showbadCountryCode2 && !validForm" class="error-message">
-      Country code must be numeric.
-    </div>
-  
-    <div
-      *ngIf="
-        suppliersForm.controls['contactPhoneNumber']?.hasError('required') &&
-        !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="
-          suppliersForm.controls['contactPhoneNumber'].touched
-        "
-        >This field is required</span
-      >
-    </div>
-  
-    <div
-      *ngIf="
-        suppliersForm.controls['contactPhoneCountry']?.hasError('required') &&
-        !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="
-          suppliersForm.controls['contactPhoneCountry'].touched
-        "
-        >This field is required</span
-      >
-    </div>
-  </div>
-  
-  <div class="col-6">
-    <label for="email-contacto" class="col-sm-4 col-form-label text-start"
-      >Contact email <span class="fw-light">*</span></label
-    >
-    <input
-      type="email"
-      class="form-control"
-      id="email-contacto"
-      name="contactEmail"
-      #contactEmail="ngModel"
-      [(ngModel)]="currentSupplier.contactInfoId.email"
-      placeholder="someone@example.com"
-      required=""
-      [disabled]="isDetails"
-    />
-    <div
-      *ngIf="
-        suppliersForm.controls['contactEmail']?.hasError('required') &&
-        !validForm
-      "
-      class="col-auto"
-    >
-      <span
-        class="form-text text-danger"
-        [class.required-field]="
-          suppliersForm.controls['contactEmail'].touched
-        "
-        >This field is required</span
-      >
-    </div>
-  </div>
-</section>
 
+      <div class="col-6">
+        <label for="select-iva" class="col-sm-4 col-form-label text-start"
+          >IVA <span class="fw-light">*</span>
+        </label>
+        <select
+          class="form-select"
+          id="select-iva"
+          name="iva"
+          #iva="ngModel"
+          [(ngModel)]="currentSupplier.taxConditionId.id"
+          [disabled]="isDetails"
+        >
+          <option disabled selected value="0">Select a IVA</option>
+          <option *ngFor="let i of ivas" value="{{ i.id }}">
+            {{ i.name }}
+          </option>
+        </select>
+
+        <div
+          *ngIf="currentSupplier.taxConditionId.id == 0 && !validForm"
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            [class.required-field]="suppliersForm.controls['iva'].touched"
+            >This field is required</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section id="supplier-contact" class="row">
+      <h4 class="mt-3">Contact information</h4>
+      <hr />
+      <div class="col-5">
+        <label for="nombre-contacto" class="col-sm-4 col-form-label text-start"
+          >Contact first name <span class="fw-light">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="nombre-contacto"
+          name="contactFirstName"
+          #contactFirstName="ngModel"
+          [(ngModel)]="currentSupplier.contactInfoId.firstName"
+          placeholder="First name"
+          required=""
+          [disabled]="isDetails"
+        />
+        <div
+          *ngIf="
+            suppliersForm.controls['contactFirstName']?.hasError('required') &&
+            !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            [class.required-field]="
+              suppliersForm.controls['contactFirstName'].touched
+            "
+            >This field is required</span
+          >
+        </div>
+      </div>
+
+      <div class="col-5">
+        <label
+          for="apellido-contacto"
+          class="col-sm-4 col-form-label text-start"
+          >Contact last name <span class="fw-light">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="apellido-contacto"
+          name="contactLasttName"
+          #contactLasttName="ngModel"
+          [(ngModel)]="currentSupplier.contactInfoId.lastName"
+          placeholder="Last name"
+          required=""
+          [disabled]="isDetails"
+        />
+
+        <div
+          *ngIf="
+            suppliersForm.controls['contactLasttName']?.hasError('required') &&
+            !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            [class.required-field]="
+              suppliersForm.controls['contactLasttName'].touched
+            "
+            >This field is required</span
+          >
+        </div>
+      </div>
+      <div class="col-2">
+        <label for="rol-contacto" class="col-sm-4 col-form-label text-start"
+          >Role <span class="fw-light">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="rol-contacto"
+          name="contactRole"
+          #contactRole="ngModel"
+          [(ngModel)]="currentSupplier.contactInfoId.contactRole"
+          placeholder="Role"
+          required=""
+          [disabled]="isDetails"
+        />
+
+        <div
+          *ngIf="
+            suppliersForm.controls['contactRole']?.hasError('required') &&
+            !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            [class.required-field]="
+              suppliersForm.controls['contactRole'].touched
+            "
+            >This field is required</span
+          >
+        </div>
+      </div>
+
+      <div class="col-6">
+        <label
+          for="telefono-contacto"
+          class="col-sm-4 col-form-label text-start"
+          >Contact phone <span class="fw-light">*</span></label
+        >
+        <div class="row">
+          <div class="col-3">
+            <input
+              type="text"
+              class="form-control"
+              id="telefono-contacto"
+              name="contactPhoneCountry"
+              #contactPhoneCountry="ngModel"
+              [(ngModel)]="currentSupplier.contactInfoId.phoneId.country"
+              placeholder="+1"
+              (keyup)="validateCountryCode(2)"
+              required=""
+              [disabled]="isDetails"
+            />
+            <div
+              *ngIf="
+                !validForm &&
+                !validatePhoneCountry(
+                  currentSupplier.contactInfoId.phoneId.country
+                )
+              "
+              class="error-message"
+            >
+              <span class="form-text text-danger">
+                Country code must <br />
+                be numeric.</span
+              >
+            </div>
+            <div
+              *ngIf="
+                suppliersForm.controls['contactPhoneCountry']?.hasError(
+                  'required'
+                ) && !validForm
+              "
+              class="col-auto"
+            >
+              <span
+                class="form-text text-danger"
+                [class.required-field]="
+                  suppliersForm.controls['contactPhoneCountry'].touched
+                "
+                >This field is required</span
+              >
+            </div>
+          </div>
+          <div class="col-9">
+            <input
+              type="number"
+              class="form-control"
+              id="telefono-contacto"
+              name="contactPhoneNumber"
+              #contactPhoneNumber="ngModel"
+              [(ngModel)]="currentSupplier.contactInfoId.phoneId.phoneNumber"
+              placeholder="123456789"
+              required=""
+              [disabled]="isDetails"
+            />
+            <div
+              *ngIf="
+                suppliersForm.controls['contactPhoneNumber']?.hasError(
+                  'required'
+                ) && !validForm
+              "
+              class="col-auto"
+            >
+              <span
+                class="form-text text-danger"
+                [class.required-field]="
+                  suppliersForm.controls['contactPhoneNumber'].touched
+                "
+                >This field is required</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <label for="email-contacto" class="col-sm-4 col-form-label text-start"
+          >Contact email <span class="fw-light">*</span></label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="email-contacto"
+          name="contactEmail"
+          #contactEmail="ngModel"
+          [(ngModel)]="currentSupplier.contactInfoId.email"
+          placeholder="someone@example.com"
+          required=""
+          [disabled]="isDetails"
+        />
+        <div
+          *ngIf="
+            suppliersForm.controls['contactEmail']?.hasError('required') &&
+            !validForm
+          "
+          class="col-auto"
+        >
+          <span
+            class="form-text text-danger"
+            [class.required-field]="
+              suppliersForm.controls['contactEmail'].touched
+            "
+            >This field is required</span
+          >
+        </div>
+      </div>
+    </section>
 
     <div
       class="modal-footer mt-2"
       [ngClass]="isDetails ? 'visually-hidden' : ''"
     >
-      <button type="button" class="btn btn-secondary" routerLink="/suppliers">Cancel</button>
-      <button
-        type="submit"
-        class="btn btn-primary"
-        id="guardar-proveedor"
-        [disabled]="!suppliersForm.valid"
-      >
+      <button type="button" class="btn btn-secondary" routerLink="/suppliers">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary" id="guardar-proveedor">
         Save
+      </button>
+    </div>
+    <div
+      class="modal-footer mt-2"
+      [ngClass]="isDetails ? '' : 'visually-hidden'"
+    >
+      <button class="btn btn-secondary" routerLink="/suppliers">
+        Back to suppliers
       </button>
     </div>
   </form>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { POServiceService } from '../../../services/po-service.service';
 import { ProductServiceService } from '../../../services/product-service.service';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
@@ -10,7 +10,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PurchasOrder } from '../../../models/purchase-order';
 import { PurchaseOrderDetail } from '../../../models/purchase-order-detail';
 import { waitForAsync } from '@angular/core/testing';
-import { NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateStruct,
+  NgbDatepicker,
+  NgbDatepickerConfig,
+} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-new-purchase-order',
@@ -23,6 +29,11 @@ export class NewPurchaseOrderComponent implements OnInit {
 
   successMessage: string | null = null;
   errorMessage: string | null = null;
+
+  minDate: NgbDateStruct = { year: 1900, month: 1, day: 1 };
+  existsOrderNumber: boolean = false;
+  validOrderDetail: boolean = true;
+  validForm: boolean = true;
 
   purchaseOrders: Array<PurchasOrder> = new Array();
   details: Array<PurchaseOrderDetail> = new Array();
@@ -61,7 +72,7 @@ export class NewPurchaseOrderComponent implements OnInit {
       categoryId: {
         id: 0,
         name: '',
-        deleted: false
+        deleted: false,
       },
       taxConditionId: {
         id: 0,
@@ -132,7 +143,7 @@ export class NewPurchaseOrderComponent implements OnInit {
         categoryId: {
           id: 0,
           name: '',
-          deleted: false
+          deleted: false,
         },
         taxConditionId: {
           id: 0,
@@ -176,26 +187,17 @@ export class NewPurchaseOrderComponent implements OnInit {
     deleted: false,
   };
 
-  print() {
-    console.log(this.purchaseOrderAux.deliveryDate);
-  }
-  // poProductAux: POProduct = {
-  //   SKU: '',
-  //   name: '',
-  //   amount: 0,
-  //   price: 0,
-  // };
-
   constructor(
     public poService: POServiceService,
     public suppliersService: SuppliersServiceService,
     public productsService: ProductServiceService,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private calendar: NgbCalendar
   ) {}
 
   ngOnInit(): void {
-    //   this.getPOs();
+    this.getPOs();
     this.getSuppliers();
     //this.getProducts();
     this.route.paramMap.subscribe((response) => {
@@ -230,83 +232,18 @@ export class NewPurchaseOrderComponent implements OnInit {
         this.poService.getDetails(id).subscribe((res) => {
           this.details = res;
         });
-        setTimeout(()=>{
-          this.isDetails = true
-        }, 40);
+        setTimeout(() => {
+          this.isDetails = true;
+        }, 300);
+      } else {
+        this.minDate = this.calendar.getToday();
       }
     });
   }
 
-  // isSupplierSelected: boolean = false;
-
-  // idInput: number | undefined = 0;
-  // orderNumberInput: number = 0;
-  // emissionInput: string = new Date().toLocaleDateString('es-AR');
-  // deliveryInput: string = '';
-  // infoInput: string = '';
-
-  // supplierId: number = 0;
-  // productId: number = 0;
-  // productsInput: POProduct = this.poProductAux;
-  // quantityInput: number = 0;
-  // totalInput: number = 0;
-
-  // resetFields() {
-  //   this.poProducts = [];
-  //   this.isSupplierSelected = false;
-  //   this.idInput = 0;
-  //   this.orderNumberInput = 0;
-  //   this.emissionInput = new Date().toLocaleDateString('es-AR');
-  //   this.deliveryInput = '';
-  //   this.infoInput = '';
-  //   this.supplierId = 0;
-  //   this.productId = 0;
-  //   this.productsInput = this.poProductAux;
-  //   this.quantityInput = 0;
-  //   //se que esto está mal pero ya no se me ocurre otra forma de solucionarlo
-  //   window.location.reload();
-  // }
-
-  // activePOs() {
-  //  let h = this.purchaseOrders.filter((po) => !po.isDeleted);
-  // return h;
-  //  }
-
-  // filterProducts(sup: Supplier){
-  //   console.log(sup)
-  //   console.log("filtered products",this.products.filter(p => p.proveedor == sup.razonSocial))
-  //   return this.products.filter(p => p.proveedor == sup.razonSocial)
-  // }
-
-  // filterProducts(id: number) {
-  //   let prov = this.suppliers.filter((sup) => sup.id == id);
-  //   //console.log("filtered products",this.products.filter(p => p.proveedor == sup.razonSocial))
-  //   return this.products.filter((p) => p.supplierId.legalName == prov[0].legalName);
-  // }
-
-  // loadProduct(id: number) {
-  //   let p = this.products.filter((p) => p.id == id);
-  //   let poToAdd = {
-  //     SKU: p[0].sku,
-  //     name: p[0].name,
-  //     amount: this.quantityInput,
-  //     price: p[0].price * this.quantityInput,
-  //   };
-
-  //   this.poProducts.push(poToAdd);
-  // }
-
-  // getTotal() {
-  //   let total = 0;
-  //   for (let p of this.poProducts) {
-  //     total += p.amount * p.price;
-  //   }
-  //   this.totalInput = total;
-  // }
-
   getSuppliers() {
     this.suppliersService.getSuppliers().subscribe((res) => {
-      this.suppliers = res;
+      this.suppliers = res.filter((sup) => sup.deleted == false);
     });
   }
 
@@ -316,11 +253,11 @@ export class NewPurchaseOrderComponent implements OnInit {
     });
   }
 
-  // getPOs() {
-  //   this.poService.getPOs().subscribe((res) => {
-  //     this.purchaseOrders = res;
-  //   });
-  // }
+  getPOs() {
+    this.poService.getPOs().subscribe((res) => {
+      this.purchaseOrders = res;
+    });
+  }
 
   getProductsBySelectedSupplier() {
     this.productsService
@@ -331,22 +268,31 @@ export class NewPurchaseOrderComponent implements OnInit {
   }
 
   addItem() {
+    this.validOrderDetail = true;
     let addedProduct: boolean = false;
     let det: PurchaseOrderDetail = this.currentOrderDetail;
     let prod = this.products.find((produ) => produ.id == det.productId.id);
-    for (let detail of this.details) {
-      if (prod !== undefined && detail.productId.id === prod.id) {
-        detail.quantity += det.quantity;
-        addedProduct = true;
+    if (
+      this.currentOrderDetail.quantity != 0 &&
+      this.currentOrderDetail.productId.id != 0 &&
+      this.purchaseOrderAux.supplierId.id != 0
+    ) {
+      for (let detail of this.details) {
+        if (prod !== undefined && detail.productId.id === prod.id) {
+          detail.quantity += det.quantity;
+          addedProduct = true;
+          this.clearOrderDetail();
+          this.isFirstItemAdded = true;
+        }
+      }
+      if (prod !== undefined && !addedProduct) {
+        det.productId = prod;
+        this.details.push(det);
         this.clearOrderDetail();
         this.isFirstItemAdded = true;
       }
-    }
-    if (prod !== undefined && !addedProduct) {
-      det.productId = prod;
-      this.details.push(det);
-      this.clearOrderDetail();
-      this.isFirstItemAdded = true;
+    } else {
+      this.validOrderDetail = false;
     }
   }
 
@@ -368,61 +314,39 @@ export class NewPurchaseOrderComponent implements OnInit {
       this.deliverySelected.month,
       this.deliverySelected.day
     );
+    if (
+      this.details.length > 0 &&
+      !(
+        this.purchaseOrderAux.emissionDate > this.purchaseOrderAux.deliveryDate
+      ) &&
+      this.purchaseOrderAux.orderNumber != 0 &&
+      this.purchaseOrderAux.supplierId.id != 0
+    ) {
+      this.poService.addPO(this.purchaseOrderAux).subscribe((res) => {
+        this.purchaseOrderAux = res;
+        this.details.forEach((det) => {
+          det.purchaseOrderId = res;
+        });
+        console.log(this.details);
 
-    this.poService.addPO(this.purchaseOrderAux).subscribe((res) => {
-      this.purchaseOrderAux = res;
-      this.details.forEach((det) => {
-        det.purchaseOrderId = res;
+        for (let det of this.details) {
+          this.poService.addDetail(det).subscribe();
+        }
+        this.successMessage = 'Order created successfully.';
+        this.clearOrderDetail();
+        this.clearOrder();
       });
-      console.log(this.details);
-
-      for (let det of this.details) {
-        this.poService.addDetail(det).subscribe();
-      }
-      this.successMessage = "Order created successfully."
-      this.clearOrderDetail()
-      this.clearOrder()
-    });
-
-    // this.purchaseOrderAux.number = this.orderNumberInput;
-    // this.purchaseOrderAux.delivery = this.deliveryInput;
-    // this.purchaseOrderAux.emission = this.emissionInput;
-    // this.purchaseOrderAux.info = this.infoInput;
-    // this.purchaseOrderAux.supplierID = this.supplierId;
-    // this.purchaseOrderAux.total = this.totalInput;
-    // this.purchaseOrderAux.products = this.poProducts;
-    // console.log(form.value);
-    // if (form.valid) {
-    //   this.poService.addPO(this.purchaseOrderAux).subscribe((res) => {
-    //     console.log(res);
-    //     this.getPOs();
-    //     this.router.navigate(['/purchase-orders']);
-    //   });
-    // }
+    } else {
+      this.validForm = false;
+    }
   }
 
-  // // deletePO(id: number) {
-  // //   let confirmacion = confirm('¿Desea eliminar la orden #' + id + '?');
-  // //   if (confirmacion) {
-  // //     // this.poService.deletePO(id).subscribe(res=>{
-  // //     //   console.log(res);
-  // //     //   this.getPOs();
-  // //     // })
-  // //     this.purchaseOrders.filter((po) => {
-  // //       if (po.id == id) {
-  // //         po.isDeleted = true;
-  // //       }
-  // //     });
-  // //     this.activePOs();
-  // //   }
-  // // }
-
-  // updatePO(form: NgForm) {
-  //   this.poService.updatePO(form.value).subscribe((res) => {
-  //     console.log(res);
-  //     this.getPOs();
-  //   });
-  // }
+  orderNumberExists() {
+    this.existsOrderNumber = this.purchaseOrders.some(
+      (ord: PurchasOrder) =>
+        ord.orderNumber == this.purchaseOrderAux.orderNumber
+    );
+  }
 
   calculateTotal() {
     let total: number = 0;
@@ -457,7 +381,7 @@ export class NewPurchaseOrderComponent implements OnInit {
           categoryId: {
             id: 0,
             name: '',
-            deleted: false
+            deleted: false,
           },
           taxConditionId: {
             id: 0,
@@ -502,8 +426,8 @@ export class NewPurchaseOrderComponent implements OnInit {
     };
   }
 
-  clearOrder(){
-    this.details = new Array()
+  clearOrder() {
+    this.details = new Array();
     this.purchaseOrderAux = {
       orderNumber: 0,
       emissionDate: new Date(),
@@ -520,7 +444,7 @@ export class NewPurchaseOrderComponent implements OnInit {
         categoryId: {
           id: 0,
           name: '',
-          deleted: false
+          deleted: false,
         },
         taxConditionId: {
           id: 0,

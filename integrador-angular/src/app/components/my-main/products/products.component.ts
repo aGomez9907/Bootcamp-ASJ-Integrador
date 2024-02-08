@@ -91,6 +91,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
+
     this.getSupplierList();
     this.getCategories();
   }
@@ -136,6 +137,7 @@ export class ProductsComponent implements OnInit {
       this.productsAux = this.products;
       this.orderList()
       console.log(res);
+      this.filterActive()
     });
   }
 
@@ -208,5 +210,7 @@ export class ProductsComponent implements OnInit {
   filterActive(){
     this.productsAux = this.products.filter(sup=> sup.deleted == false)
     this.orderList();
+    console.log("Estoy andando");
+    
   }
 }

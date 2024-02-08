@@ -1,7 +1,7 @@
 <div class="container-fluid px-4">
   <h1 class="mt-4">PURCHASE ORDERS</h1>
   <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Purchasse orders</li>
+    <li class="breadcrumb-item active">Purchase orders</li>
   </ol>
   <div class="text-end">
     <button
@@ -63,7 +63,10 @@
         </tr>
       </tbody>
     </table>
-
+    <div *ngIf="purchaseOrders.length == 0" class="empty-list-message">
+      <p>The list of purchase orders is currently empty.</p>
+      <p>Would you like to <a href="/purchase-orders/new">add a new purchase order</a>? </p>
+    </div>
 
   </div>
 </div>
