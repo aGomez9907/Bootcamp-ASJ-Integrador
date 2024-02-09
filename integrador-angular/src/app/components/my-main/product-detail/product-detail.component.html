@@ -32,7 +32,7 @@
       <div class="col-md-6">
         <!-- SKU -->
         <div class="form-group mb-4">
-          <label class="form-label">SKU</label>
+          <label class="form-label">SKU <span class="fw-light">*</span></label>
           <input
             type="text"
             class="form-control"
@@ -51,6 +51,11 @@
               >Must have at least 4 characters.</span
             >
           </div>
+          <div *ngIf="!validateStringOf4Digits(currentProduct.sku) && !validForm" class="col-auto">
+            <span class="form-text text-danger"
+              >SKU can contain only alphanumeric characters.</span
+            >
+          </div>
           <div
             *ngIf="
               productForm.controls['sku']?.hasError('required') &&
@@ -67,7 +72,7 @@
 
         <!-- Categoría -->
         <div class="form-group mb-4">
-          <label class="form-label">Category</label>
+          <label class="form-label">Category <span class="fw-light">*</span></label>
           <select
             class="form-select"
             name="category"
@@ -98,7 +103,7 @@
 
         <!-- Nombre del Producto -->
         <div class="form-group mb-4">
-          <label class="form-label">Product Name</label>
+          <label class="form-label">Product Name <span class="fw-light">*</span></label>
           <input
             type="text"
             class="form-control"
@@ -170,7 +175,7 @@
 
         <!-- Proveedor -->
         <div class="form-group mb-4">
-          <label class="form-label">Supplier</label>
+          <label class="form-label">Supplier <span class="fw-light">*</span></label>
           <select
             class="form-select"
             name="supplier"

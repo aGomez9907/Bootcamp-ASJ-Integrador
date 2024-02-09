@@ -17,6 +17,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "contact_info")
@@ -41,6 +42,7 @@ public class ContactInfo {
 
 	@NotBlank(message = "Email cannot be blank")
 	@NotNull(message = "Email cannot be null")
+	@Pattern(regexp="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message="Invalid email")
 	@Column(name = "email")
 	private String email;
 	@NotBlank(message = "ContactRole cannot be blank")

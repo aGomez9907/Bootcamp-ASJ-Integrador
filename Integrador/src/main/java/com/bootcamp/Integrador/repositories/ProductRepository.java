@@ -13,7 +13,7 @@ import com.bootcamp.Integrador.models.PurchaseOrderDetail;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
-	 @Query(value="select prod.* from PRODUCTS as prod where  SUPPLIER_ID = :id and IS_DELETED = false", nativeQuery = true )
+	 @Query(value="select prod.* from PRODUCTS as prod where  SUPPLIER_ID = :id and IS_DELETED = 'false'", nativeQuery = true )
 	    List<Product> findActiveProductsBySupplierId(@Param("id") Integer id);
 
 }

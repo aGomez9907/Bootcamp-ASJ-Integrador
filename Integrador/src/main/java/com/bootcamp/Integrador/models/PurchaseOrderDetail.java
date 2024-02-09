@@ -26,16 +26,11 @@ public class PurchaseOrderDetail {
 	@Column(unique = true, nullable = false)
 	private Integer id;
 	
-//	@NotBlank(message = "quantity cannot be blank")
+
 	@NotNull(message = "quantity cannot be null")
 	private Integer quantity;
 	
-//	@NotBlank(message = "unitPrice cannot be blank")
-//	@NotNull(message = "unitPrice cannot be null")
-//	@Column(name = "unit_price")
-//	private double unitPrice;
-//	
-//	@NotBlank(message = "isDeleted cannot be blank")
+
 	@NotNull(message = "isDeleted cannot be null")
 	@Column(name = "is_deleted")
 	private boolean isDeleted; 
@@ -50,25 +45,25 @@ public class PurchaseOrderDetail {
 	
 	
 	//FK
-//	@NotBlank(message = "purchaseOrderId cannot be blank")
+
 	@NotNull(message = "purchaseOrderId cannot be null")
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(name = "purchase_order_id")
+
 	private PurchaseOrder purchaseOrder;
 	
 	@NotNull(message = "productId cannot be null")
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(name = "purchase_order_status_id")
+
 	private Product product;
 
 	public PurchaseOrderDetail(Integer id,
 			 Integer quantity,
-//			 double unitPrice,
+
 			 PurchaseOrder purchaseOrderId) {
 
 		this.id = id;
 		this.quantity = quantity;
-//		this.unitPrice = unitPrice;
+
 		this.isDeleted = false;
 		this.purchaseOrder = purchaseOrderId;
 		this.createdAt = Timestamp.from(Instant.now());
@@ -76,12 +71,12 @@ public class PurchaseOrderDetail {
 	}
 	public PurchaseOrderDetail(
 			 Integer quantity,
-//			 double unitPrice,
+
 			 PurchaseOrder purchaseOrderId) {
 
 
 		this.quantity = quantity;
-//		this.unitPrice = unitPrice;
+
 		this.isDeleted = false;
 		this.purchaseOrder = purchaseOrderId;
 		this.createdAt = Timestamp.from(Instant.now());;

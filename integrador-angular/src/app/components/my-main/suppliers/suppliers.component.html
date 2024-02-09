@@ -74,24 +74,34 @@
             (error)="imageNotFound($event)"
           />
         </td>
-        <td *ngIf="s.deleted"><span class="rounded px-1 text-bg-danger ">Deleted</span></td>
-        <td *ngIf="!s.deleted" ><span class="rounded px-1 text-bg-success">Active</span></td>
+        <td *ngIf="s.deleted">
+          <span class="rounded px-1 text-bg-danger">Deleted</span>
+        </td>
+        <td *ngIf="!s.deleted">
+          <span class="rounded px-1 text-bg-success">Active</span>
+        </td>
         <td>{{ s.codProv }}</td>
         <td>{{ s.legalName }}</td>
         <td>
           {{ s.contactInfoId.firstName + " " + s.contactInfoId.lastName }}
           <span
             class="info-tooltip"
-            ngbTooltip="Email: {{ s.contactInfoId.email }} | Website: {{
+            ngbTooltip="Email: {{ s.contactInfoId.email }}  Website: {{
               s.webSite
-            }} | Phone: +{{ s.contactInfoId.phoneId.country }} {{
+            }}  Phone: +{{ s.contactInfoId.phoneId.country }} {{
               s.contactInfoId.phoneId.phoneNumber
             }}"
           >
             <i class="bi bi-info-circle"></i>
           </span>
         </td>
-        <td>{{s.addressId.provinceId.name + ", "+ s.addressId.provinceId.countryId.name}}</td>
+        <td>
+          {{
+            s.addressId.provinceId.name +
+              ", " +
+              s.addressId.provinceId.countryId.name
+          }}
+        </td>
         <td>
           <div class="d-flex flex-row">
             <button
@@ -131,6 +141,6 @@
   </table>
   <div *ngIf="suppliers.length == 0" class="empty-list-message">
     <p>The list of suppliers is currently empty.</p>
-    <p>Would you like to <a href="/suppliers/new">add a new supplier</a>? </p>
+    <p>Would you like to <a href="/suppliers/new">add a new supplier</a>?</p>
   </div>
 </div>

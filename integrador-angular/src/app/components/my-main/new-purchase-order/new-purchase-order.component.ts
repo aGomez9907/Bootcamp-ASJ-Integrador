@@ -111,7 +111,7 @@ export class NewPurchaseOrderComponent implements OnInit {
       },
     },
     statusId: {
-      id: 2,
+      id: 3,
       status: '',
       deleted: false,
     },

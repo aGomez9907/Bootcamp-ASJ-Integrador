@@ -60,8 +60,7 @@ public class SupplierController {
 	@PostMapping()
 	public ResponseEntity<Object> createSupplier(@Valid @RequestBody Supplier supplier, BindingResult bindingResult) {
 		
-		//pregunto si existen errores en el model
-		//se puede crear una clase que haga lo mismo para todos los metodos de cada entidad y controlador. Por ej:
+	
 		if(bindingResult.hasErrors()) {
 			Map<String, String> errors = new ErrorHandler().validateInputs(bindingResult);
 			System.out.println(errors.toString());

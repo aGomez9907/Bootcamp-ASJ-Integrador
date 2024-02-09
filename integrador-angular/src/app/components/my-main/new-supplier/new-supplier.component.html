@@ -49,6 +49,11 @@
             >Must have at least 4 characters.</span
           >
         </div>
+        <div *ngIf="!validateStringOf4Digits(currentSupplier.codProv) && !validForm" class="col-auto">
+          <span class="form-text text-danger"
+            >Supplier code can only include alphanumeric characters.</span
+          >
+        </div>
         <div *ngIf="this.existsCodProv" class="col-auto">
           <span class="form-text text-danger">The code is already in use</span>
         </div>
@@ -373,6 +378,7 @@
           placeholder="1234"
           required=""
           [disabled]="isDetails"
+          maxlength="4"
         />
         <div
           *ngIf="
@@ -383,7 +389,6 @@
         >
           <span
             class="form-text text-danger"
-            [class.required-field]="suppliersForm.controls['postCode'].touched"
             >This field is required</span
           >
         </div>

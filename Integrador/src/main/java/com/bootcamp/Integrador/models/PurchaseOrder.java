@@ -56,18 +56,17 @@ public class PurchaseOrder {
 	private Timestamp updatedAt;
 	
 	
-	//@NotBlank(message = "PurchaseOrderStatus cannot be blank")
+	//FK
 	@NotNull(message = "PurchaseOrderStatus cannot be null")
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(name = "purchase_order_status_id")
 	private PurchaseOrderStatus status;
 	
 	
-	//FK
-	//@NotBlank(message = "supplierId cannot be blank")
+
+
 	@NotNull(message = "supplierId cannot be null")
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(name = "supplier_id")
+
 	private Supplier supplier;
 
 	public PurchaseOrder(Integer id,

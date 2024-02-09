@@ -17,6 +17,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "products")
@@ -32,6 +33,7 @@ public class Product {
 
 	@NotBlank(message = "sku cannot be blank")
 	@NotNull(message = "sku cannot be null")
+	@Pattern(regexp="^[a-zA-Z0-9]{4,12}$", message="SKU must be alphanumeric and between 4 to 12 characters")
 	@Column(unique = true, nullable = false)
 	private String sku;
 
@@ -41,6 +43,7 @@ public class Product {
 	@NotNull(message = "price cannot be null")
 	private double price;
 
+	@Pattern(regexp="^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(\\/\\S*)?$", message="Invalid image URL")
 	@Column(name = "img_url")
 	private String imgUrl;
 	

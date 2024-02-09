@@ -16,6 +16,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "addresses")
@@ -32,6 +33,7 @@ public class Address {
 	private Integer number;
 	@NotBlank(message = "postcode cannot be blank")
 	@NotNull(message = "postcode cannot be null")
+	@Pattern(regexp="^[0-9]{4,8}$", message="PostCode must be numeric between 4 to 8 characters")
 	private String postcode;
 	//@NotBlank(message = "isDeleted cannot be blank")
 	@NotNull(message = "isDeleted cannot be null")

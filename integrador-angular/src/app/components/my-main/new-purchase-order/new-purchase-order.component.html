@@ -29,7 +29,9 @@
       <div class="col-md-6">
         <!-- Número de Orden -->
         <div class="mb-3">
-          <label for="order-number-input" class="form-label">PO Number</label>
+          <label for="order-number-input" class="form-label"
+            >PO Number <span class="fw-light">*</span></label
+          >
           <input
             type="number"
             class="form-control"
@@ -47,17 +49,21 @@
             >
           </div>
         </div>
-        <div *ngIf="!validForm && purchaseOrderAux.orderNumber == 0" class="col-auto">
+        <div
+          *ngIf="!validForm && purchaseOrderAux.orderNumber == 0"
+          class="col-auto"
+        >
           <span class="form-text text-danger"
             >The order number cannot be 0</span
           >
         </div>
 
-
         <!-- Fechas de Emisión y Entrega -->
         <div class="row mb-3">
           <div class="col">
-            <label for="emission-date">Emission Date</label>
+            <label for="emission-date"
+              >Emission Date <span class="fw-light">*</span></label
+            >
             <ngb-datepicker
               [(ngModel)]="emissionSelected"
               name="emission"
@@ -67,7 +73,9 @@
             ></ngb-datepicker>
           </div>
           <div class="col">
-            <label for="delivery-date">Delivery Date</label>
+            <label for="delivery-date"
+              >Delivery Date <span class="fw-light">*</span></label
+            >
             <ngb-datepicker
               [(ngModel)]="deliverySelected"
               name="delivery"
@@ -81,8 +89,10 @@
         <!-- Selección de Proveedor y Producto -->
         <div class="mb-3">
           <div class="row">
-            <div class="col">
-              <label for="supplier-po" class="form-label">Supplier</label>
+            <div class="col-12">
+              <label for="supplier-po" class="form-label"
+                >Supplier <span class="fw-light">*</span></label
+              >
               <select
                 class="form-select"
                 name="supplier"
@@ -96,17 +106,17 @@
                 </option>
               </select>
               <div
-              *ngIf="
-                !validOrderDetail && purchaseOrderAux.supplierId.id == 0
-              "
-            >
-              <span class="form-text text-danger">
-                Select a supplier.</span
+                *ngIf="!validOrderDetail && purchaseOrderAux.supplierId.id == 0"
               >
+                <span class="form-text text-danger"> Select a supplier.</span>
+              </div>
             </div>
-            </div>
-            <div class="col" [ngClass]="isDetails ? 'd-none' : ''">
-              <label for="selected-product" class="form-label">Product</label>
+          </div>
+          <div class="row mt-3" [ngClass]="isDetails ? 'd-none' : ''">
+            <div class="col-5">
+              <label for="selected-product" class="form-label"
+                >Product <span class="fw-light">*</span></label
+              >
               <select
                 class="form-select"
                 name="product"
@@ -122,15 +132,13 @@
                   !validOrderDetail && currentOrderDetail.productId.id == 0
                 "
               >
-                <span class="form-text text-danger">
-                  Select a product.</span
-                >
+                <span class="form-text text-danger"> Select a product.</span>
               </div>
             </div>
-          </div>
-          <div class="row mt-3" [ngClass]="isDetails ? 'd-none' : ''">
             <div class="col">
-              <label for="quantity" class="form-label">Quantity</label>
+              <label for="quantity" class="form-label"
+                >Quantity <span class="fw-light">*</span></label
+              >
               <input
                 type="number"
                 class="form-control"
@@ -240,24 +248,21 @@
             </div>
           </div>
         </div>
-        <div
-              *ngIf="
-                !validForm && details.length === 0
-              "
-            >
-              <span class="form-text text-danger">
-                You must add at least 1 product.</span
-              >
-            </div>
-            <div
-            *ngIf="
-              !validForm && purchaseOrderAux.emissionDate > purchaseOrderAux.deliveryDate
-            "
+        <div *ngIf="!validForm && details.length === 0">
+          <span class="form-text text-danger">
+            You must add at least 1 product.</span
           >
-            <span class="form-text text-danger">
-              Emission date cannot be later than delivery date</span
-            >
-          </div>
+        </div>
+        <div
+          *ngIf="
+            !validForm &&
+            purchaseOrderAux.emissionDate > purchaseOrderAux.deliveryDate
+          "
+        >
+          <span class="form-text text-danger">
+            Emission date cannot be later than delivery date</span
+          >
+        </div>
 
         <!-- Botones de Acción -->
         <div class="row mt-3" [ngClass]="isDetails ? 'd-none' : ''">

@@ -13,6 +13,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "phone")
@@ -24,6 +25,7 @@ public class Phone {
 	private Integer id;
 	@NotBlank(message = "Country cannot be blank")
 	@NotNull(message = "Country cannot be null")
+	@Pattern(regexp="^\\+\\d{1,4}$", message="Phone country must start with + and have a maximum of 4 characters")
 	@Column(name = "country")
 	public String country;
 	@NotBlank(message = "PhoneNumber cannot be blank")

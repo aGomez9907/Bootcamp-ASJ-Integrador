@@ -19,6 +19,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "suppliers")
@@ -31,25 +32,30 @@ public class Supplier {
 
 	@NotBlank(message = "legalName cannot be blank")
 	@NotNull(message = "legalName cannot be null")
+	@Pattern(regexp="^[0-9 A-Z a-z]{3,50}$", message="Legal name must be alphanumeric and between 3 to 50 characters")
 	@Column(name = "legal_name")
 	private String legalName;
 
 	@NotBlank(message = "codProv cannot be blank")
 	@NotNull(message = "codProv cannot be null")
+	@Pattern(regexp="^[a-zA-Z0-9]{4,12}$", message="Supplier code must be alphanumeric and between 4 to 12 characters")
 	@Column(unique = true, nullable = false, name = "cod_prov")
 	private String codProv;
 
 	@NotBlank(message = "Email cannot be blank")
 	@NotNull(message = "Email cannot be null")
+	@Pattern(regexp="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message="Invalid email")
 	@Column(name = "email")
 	private String email;
 
+	@Pattern(regexp="^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(\\/\\S*)?$", message="Invalid web site URL")
 	@Column(name = "web_site")
 	private String webSite;
 
 	@NotBlank(message = "cuit cannot be blank")
 	@NotNull(message = "cuit cannot be null")
 	@Column(unique = true, nullable = false, name = "cuit")
+	@Pattern(regexp="^\\d{2}-\\d{8}-\\d{1}$", message="Cuit must have this format: '11-22334455-6'")
 	private String cuit;
 
 //	@NotBlank(message = "isDeleted cannot be blank")
@@ -57,6 +63,7 @@ public class Supplier {
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
 
+	@Pattern(regexp="^(https?:\\/\\/)?([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(\\/\\S*)?$", message="Invalid image URL")
 	@Column(name = "url_logo")
 	private String urlLogo;
 
