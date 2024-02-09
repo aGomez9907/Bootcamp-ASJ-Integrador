@@ -8,7 +8,7 @@ export interface Product{
     description: string,
     price: number,
     supplierId: Supplier,
-    imgUrl: string,
+    imgUrl: any,
     deleted:boolean,
 }
 

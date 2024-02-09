@@ -56,10 +56,10 @@ export class NewSupplierComponent implements OnInit {
   currentSupplier: Supplier = {
     legalName: '',
     codProv: '',
-    webSite: '',
+    webSite: null,
     email: '',
     cuit: '',
-    urlLogo: '',
+    urlLogo: null,
     categoryId: {
       id: 0,
       name: '',

@@ -3,10 +3,10 @@ import { NumberSymbol } from '@angular/common';
 export interface Supplier {
   id?: number;
   codProv: string;
-  urlLogo?: string;
+  urlLogo?: any;
   legalName: string;
   categoryId: SupplierCategory;
-  webSite?: string;
+  webSite?: any;
   phoneId: Phone;
   email: string;
   cuit: string;

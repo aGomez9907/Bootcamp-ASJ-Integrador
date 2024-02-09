@@ -51,7 +51,7 @@ export class ProductDetailComponent implements OnInit {
     name: '',
     description: '',
     price: 0,
-    imgUrl: '',
+    imgUrl: null,
     supplierId: {
       id:0,
       legalName: '',
