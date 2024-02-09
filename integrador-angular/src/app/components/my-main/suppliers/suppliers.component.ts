@@ -86,9 +86,7 @@ export class SuppliersComponent implements OnInit {
     this.suppliersService.getSuppliers().subscribe((res) => {
       this.suppliers = res;
       this.suppliersAux = this.suppliers;
-      console.log(res);
-      console.log(this.suppliers);
-      console.log(this.suppliersAux);
+      this.filterActive()
     });
   }
 
