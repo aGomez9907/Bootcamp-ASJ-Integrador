@@ -39,10 +39,6 @@ export class PurchaseOrdersComponent implements OnInit {
 
 
 
-  activePOs() {
-    let h = this.purchaseOrders.filter((po) => !po.deleted);
-    return h;
-  }
 
 
 

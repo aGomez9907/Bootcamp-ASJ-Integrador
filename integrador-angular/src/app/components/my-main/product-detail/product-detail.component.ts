@@ -186,7 +186,7 @@ export class ProductDetailComponent implements OnInit {
   
   getSupplierList() {
     this.supplierService.getSuppliers().subscribe((res) => {
-      this.suppliers = res;
+      this.suppliers = res.filter((sup) => sup.deleted == false);
     });
   }
 

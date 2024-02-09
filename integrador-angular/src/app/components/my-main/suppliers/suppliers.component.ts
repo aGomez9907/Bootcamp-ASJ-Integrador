@@ -148,17 +148,13 @@ export class SuppliersComponent implements OnInit {
   }
 
   sortSuppliers(criteria: string, order: 'asc' | 'desc') {
-    // Define una función de comparación para los criterios de ordenamiento
     const compareFn = (a: any, b: any) => {
-      // Implementa la lógica de comparación para cada criterio
       if (order === 'asc') {
         return a[criteria] > b[criteria] ? 1 : -1;
       } else {
         return a[criteria] < b[criteria] ? 1 : -1;
       }
     };
-
-    // Ordena el array de proveedores según la función de comparación
     this.suppliersAux.sort(compareFn);
   }
 }

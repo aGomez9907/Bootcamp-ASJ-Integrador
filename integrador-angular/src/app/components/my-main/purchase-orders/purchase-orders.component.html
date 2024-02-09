@@ -55,6 +55,7 @@
       <thead>
         <tr>
           <th>Order N°</th>
+          <th>Supplier</th>
           <th>Emission date</th>
           <th>Delivery date</th>
           <th>Status</th> 
@@ -64,6 +65,7 @@
       <tbody>
         <tr *ngFor="let po of purchaseOrdersAux">
           <td>{{ po.orderNumber }}</td>
+          <td>{{po.supplierId.legalName}} <span class="text-danger " *ngIf="po.supplierId.deleted">(Deleted)</span></td>
           <td>{{ po.emissionDate | date }}</td>
           <td>{{ po.deliveryDate | date }}</td>
           <td>

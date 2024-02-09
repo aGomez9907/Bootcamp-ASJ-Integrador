@@ -1,5 +1,6 @@
 <!-- <app-my-header></app-my-header> -->
-<div class="row">
+<app-login *ngIf="!loggedIn"></app-login>
+<div class="row" *ngIf="loggedIn">
   <app-my-sidebar
     class="col"
     (flagSidebar)="changeWidth($event)"

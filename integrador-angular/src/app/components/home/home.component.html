@@ -1,29 +1,71 @@
 <div class="home-container">
-    <div class="header">
-      <h1>Welcome to the Purchasing Management Software</h1>
-      <p>As an administrator, you can manage your purchases efficiently with our powerful tools.</p>
+  <div class="header">
+    <h1>Welcome to the Purchasing Management Software</h1>
+    <p>
+      As an administrator, you can manage your purchases efficiently with our
+      powerful tools.
+    </p>
+  </div>
+
+  <div class="dashboard">
+    <div class="card">
+      <img
+        class="card-img"
+        src="https://www.celar.com.ar/web/images/2023/10/10/proveedores.jpeg"
+        alt=""
+      />
+      <h2 class="text-center">Products</h2>
+      <p class="text-center">{{ products.length }}</p>
+      <button
+        class="btn btn-info"
+        routerLink="/products"
+        *ngIf="products.length > 0"
+      >
+        Go to list
+      </button>
+      <button class="btn btn-info" routerLink="/products/new">
+        Add New Product
+      </button>
     </div>
-  
-    <div class="dashboard">
-      <div class="card">
-        <h2>Products</h2>
-        <p>{{ products.length }}</p>
-        <button routerLink="/products" *ngIf="products.length > 0">Go to list</button>
-        <button routerLink="/products/new">Add New Product</button>
-      </div>
-  
-      <div class="card">
-        <h2>Suppliers</h2>
-        <p>{{ suppliers.length }}</p>
-        <button routerLink="/suppliers" *ngIf="suppliers.length > 0">Go to list</button>
-        <button routerLink="/suppliers/new">Add New Supplier</button>
-      </div>
-  
-      <div class="card">
-        <h2>Purchase Orders</h2>
-        <p>{{ purchaseOrders.length }}</p>
-        <button routerLink="/purchase-orders" *ngIf="purchaseOrders.length > 0">Go to list</button>
-        <button routerLink="/purchase-orders/new">Create New Order</button>
-      </div>
+
+    <div class="card">
+      <img
+        class="card-img"
+        src="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2022/02/compra-online-2613331.jpg?tf=3840x"
+        alt=""
+      />
+      <h2 class="text-center">Suppliers</h2>
+      <p class="text-center">{{ suppliers.length }}</p>
+      <button
+        class="btn btn-warning"
+        routerLink="/suppliers"
+        *ngIf="suppliers.length > 0"
+      >
+        Go to list
+      </button>
+      <button class="btn btn-warning" routerLink="/suppliers/new">
+        Add New Supplier
+      </button>
+    </div>
+
+    <div class="card">
+      <img
+        class="card-img"
+        src="https://media.istockphoto.com/id/1173767781/es/vector/icono-de-la-chequera.jpg?s=612x612&w=0&k=20&c=QHyb4CH3V9Zva57SSz-V4UZxCGaEeC6mYKteyGNYlXM="
+        alt=""
+      />
+      <h2 class="text-center">Purchase Orders</h2>
+      <p class="text-center">{{ purchaseOrders.length }}</p>
+      <button
+        class="btn btn-danger"
+        routerLink="/purchase-orders"
+        *ngIf="purchaseOrders.length > 0"
+      >
+        Go to list
+      </button>
+      <button class="btn btn-danger" routerLink="/purchase-orders/new">
+        Create New Order
+      </button>
     </div>
   </div>
+</div>

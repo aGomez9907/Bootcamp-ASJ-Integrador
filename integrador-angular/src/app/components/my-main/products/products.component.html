@@ -102,7 +102,7 @@
         <td>{{ p.sku }}</td>
         <td>{{ p.name }}</td>
         <td>{{ p.categoryId.name }}</td>
-        <td>{{ p.supplierId.legalName }}</td>
+        <td>{{ p.supplierId.legalName }} <span class="text-danger " *ngIf="p.supplierId.deleted">(Deleted)</span></td>
         <td>${{ p.price }}</td>
         <td>
           <div class="d-flex flex-row">

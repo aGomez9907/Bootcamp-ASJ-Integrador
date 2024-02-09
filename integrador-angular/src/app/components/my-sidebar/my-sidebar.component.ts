@@ -24,6 +24,7 @@ export class MySidebarComponent {
     this.flagSidebar.emit(this.isSidebarOpen);
   }
 
+  loggedIn = false;
 
   
 }
