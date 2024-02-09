@@ -5,6 +5,8 @@ import { Product, ProductCategory } from '../../../models/product';
 import { NgForm } from '@angular/forms';
 
 import { Supplier } from '../../../models/supplier';
+import { ConfirmModalComponent } from '../../modals/confirm-modal/confirm-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-products',
@@ -86,7 +88,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     public productService: ProductServiceService,
-    public suppliersService: SuppliersServiceService
+    public suppliersService: SuppliersServiceService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -158,13 +161,26 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(id: number) {
-    let confirmacion = confirm('¿Desea eliminar el producto #' + id + '?');
-    if (confirmacion) {
-      this.productService.deleteProduct(id).subscribe((res) => {
-        console.log(res);
-        this.getProducts();
-      });
+ 
+    const modalRef = this.modalService.open(ConfirmModalComponent);
+    let prod = this.products.find((prod)=> prod.id == id)
+    modalRef.componentInstance.id = prod?.sku;
+    modalRef.componentInstance.entity = "product"
+    if(prod!= undefined && prod.deleted == true){
+      modalRef.componentInstance.deletionType = "restoration"
+      modalRef.componentInstance.restoreOrDelete = "restore"
+    }else{
+      modalRef.componentInstance.deletionType = "deletion"
+      modalRef.componentInstance.restoreOrDelete = "delete"
     }
+    modalRef.result.then((result)=>{
+      if(result === 'confirm'){
+        this.productService.deleteProduct(id).subscribe((res) => {
+          console.log(res);
+          this.getProducts();
+        });
+      }
+    })
   }
 
   updateProduct(form: NgForm) {

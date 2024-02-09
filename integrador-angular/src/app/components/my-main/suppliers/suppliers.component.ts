@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SuppliersServiceService } from '../../../services/suppliers-service.service';
 import { Supplier} from '../../../models/supplier';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from '../../modals/confirm-modal/confirm-modal.component';
 import { NgForm } from '@angular/forms';
 import { Iva } from '../../../../enum/iva-condition';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // interface Provinces {
 //   [country: string]: string[];
@@ -43,7 +44,7 @@ export class SuppliersComponent implements OnInit {
 
   
 
-  constructor(public suppliersService: SuppliersServiceService) {
+  constructor(public suppliersService: SuppliersServiceService, private modalService: NgbModal) {
     this.suppliersService;
   }
   ngOnInit(): void {
@@ -148,13 +149,28 @@ export class SuppliersComponent implements OnInit {
   }
 
   deleteSupplier(id: any) {
-    let confirmacion = confirm('¿Desea eliminar el proveedor #' + id + '?');
-    if (confirmacion) {
-      this.suppliersService.deleteSupplier(id).subscribe((res) => {
-        console.log(res);
-        this.getSuppliers();
-      });
+    const modalRef = this.modalService.open(ConfirmModalComponent);
+    let sup = this.suppliers.find((sup)=> sup.id == id)
+    modalRef.componentInstance.id = sup?.codProv;
+    modalRef.componentInstance.entity = "supplier"
+    if(sup!= undefined && sup.deleted == true){
+      modalRef.componentInstance.deletionType = "restoration"
+      modalRef.componentInstance.restoreOrDelete = "restore"
+    }else{
+      modalRef.componentInstance.deletionType = "deletion"
+      modalRef.componentInstance.restoreOrDelete = "delete"
     }
+    
+    modalRef.result.then((result)=>{
+      if(result === 'confirm'){
+        this.suppliersService.deleteSupplier(id).subscribe((res) => {
+          console.log(res);
+          this.getSuppliers();
+        });
+      }
+    })
+      
+
   }
 
   updateSupplier(form: NgForm) {

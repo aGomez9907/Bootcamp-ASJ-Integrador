@@ -21,6 +21,7 @@ import { NewSupplierComponent } from './components/my-main/new-supplier/new-supp
 import { CuitFormatDirective } from './directives/cuit-format.directive';
 import { CategoriesComponent } from './components/my-main/categories/categories.component';
 import { HomeComponent } from './components/home/home.component';
+import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { HomeComponent } from './components/home/home.component';
     CuitFormatDirective,
     CategoriesComponent,
     HomeComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
