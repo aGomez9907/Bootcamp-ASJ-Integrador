@@ -53,8 +53,36 @@
       <tr>
         <th></th>
         <th>Status</th>
-        <th>Supplier Code</th>
-        <th>Legal name</th>
+        <th>
+          Supplier Code
+          <button class="btn p-0">
+            <i
+              class="bi bi-arrow-up-short"
+              (click)="sortSuppliers('codProv', 'asc')"
+            ></i>
+          </button>
+          <button class="btn p-0">
+            <i
+              class="bi bi-arrow-down-short"
+              (click)="sortSuppliers('codProv', 'desc')"
+            ></i>
+          </button>
+        </th>
+        <th>
+          Legal name
+          <button class="btn p-0">
+            <i
+              class="bi bi-arrow-up-short"
+              (click)="sortSuppliers('legalName', 'asc')"
+            ></i>
+          </button>
+          <button class="btn p-0">
+            <i
+              class="bi bi-arrow-down-short"
+              (click)="sortSuppliers('legalName', 'desc')"
+            ></i>
+          </button>
+        </th>
         <th>Contact info</th>
         <th>Location</th>
         <th>Actions</th>

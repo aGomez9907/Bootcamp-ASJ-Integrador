@@ -21,6 +21,9 @@ export class CategoriesComponent implements OnInit{
   supplierCategories: Array<SupplierCategory>= new Array()
   productCategories: Array<ProductCategory> = new Array()
 
+  productCategoryExists: boolean = false
+  supplierCategoryExists: boolean = false
+
   productCategoryInput: ProductCategory ={
     name : '',
     id: 0,
@@ -52,11 +55,18 @@ export class CategoriesComponent implements OnInit{
   }
   
   addProductCategory(){
-    this.productService.addProductCategory(this.productCategoryInput).subscribe(res=> this.getProductCategories())
+    this.productCategoryExists = this.productCategories.some((cat)=> cat.name.toLowerCase() == this.productCategoryInput.name.toLowerCase())
+    if(!this.productCategoryExists){
+      this.productService.addProductCategory(this.productCategoryInput).subscribe(res=> this.getProductCategories())
+    }
+
   }
 
   addSupplierCategory(){
+    this.supplierCategoryExists = this.supplierCategories.some((cat)=> cat.name.toLowerCase() == this.supplierCategoryInput.name.toLowerCase())
+    if(!this.supplierCategoryExists){
     this.supplierService.addSupplierCategory(this.supplierCategoryInput).subscribe(res=> this.getSupplierCategories())
+    }
   }
 
   deleteSupplierCategory(id:number){

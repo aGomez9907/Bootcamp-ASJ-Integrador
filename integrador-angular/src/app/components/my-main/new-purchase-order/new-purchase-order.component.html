@@ -89,7 +89,8 @@
         <!-- Selección de Proveedor y Producto -->
         <div class="mb-3">
           <div class="row">
-            <div class="col-12">
+
+            <div class="col-7">
               <label for="supplier-po" class="form-label"
                 >Supplier <span class="fw-light">*</span></label
               >
@@ -110,6 +111,14 @@
               >
                 <span class="form-text text-danger"> Select a supplier.</span>
               </div>
+            </div>
+            <div class="preview-image-container col-4">
+              <img
+                class="img-fluid rounded preview-image img-supp"
+                [src]="getSupplierImage(purchaseOrderAux.supplierId.id) "
+                (error)="imageNotFound($event)"
+                alt="Preview Image"
+              />
             </div>
           </div>
           <div class="row mt-3" [ngClass]="isDetails ? 'd-none' : ''">

@@ -3,7 +3,39 @@
   <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item active">Purchase orders</li>
   </ol>
-  <div class="text-end">
+<div class="row">
+
+
+  <div class="col-6 d-flex">
+    <!-- Dropdown for filtering -->
+    <div ngbDropdown class="d-inline-block me-2">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        <i class="bi bi-funnel"></i> Filter
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <ul>
+          <li ngbDropdownItem>
+            <a (click)="filterByStatus(0)">All</a>
+          </li>
+          <li ngbDropdownItem *ngFor="let stat of statuses">
+            <a (click)="filterByStatus(stat.id)">{{ stat.status }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="col-6 text-end">
     <button
       type="button"
       class="btn btn-primary"
@@ -12,8 +44,10 @@
     >
       Add new purchase order
     </button>
-
+  
   </div>
+</div>
+
   
   <div class="mb-4">
 
@@ -28,7 +62,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let po of activePOs()">
+        <tr *ngFor="let po of purchaseOrdersAux">
           <td>{{ po.orderNumber }}</td>
           <td>{{ po.emissionDate | date }}</td>
           <td>{{ po.deliveryDate | date }}</td>
@@ -47,17 +81,7 @@
                 [routerLink]="['/purchase-orders', po.id]"
               >
                 Detalles
-              </button>
-
-              
-              <!-- <button
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                value="{{ po.id }}"
-                (click)="deletePO(po.id)"
-              >
-                Borrar
-              </button> -->
+            </button>
             </div>
           </td>
         </tr>

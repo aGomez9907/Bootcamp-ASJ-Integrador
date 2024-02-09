@@ -17,6 +17,9 @@
             required
             [(ngModel)]="productCategoryInput.name"
           />
+          <div *ngIf="this.productCategoryExists" class="col-auto">
+              <span class="form-text text-danger">The category already exists</span>
+            </div>
         </div>
         <button
           type="button"
@@ -43,6 +46,9 @@
             required
             [(ngModel)]="supplierCategoryInput.name"
           />
+          <div *ngIf="this.supplierCategoryExists" class="col-auto">
+            <span class="form-text text-danger">The category already exists</span>
+          </div>
         </div>
         <button
           type="button"

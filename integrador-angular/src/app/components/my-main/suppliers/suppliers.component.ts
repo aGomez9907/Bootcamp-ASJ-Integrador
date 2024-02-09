@@ -6,9 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Iva } from '../../../../enum/iva-condition';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-// interface Provinces {
-//   [country: string]: string[];
-// }
+
 
 @Component({
   selector: 'app-suppliers',
@@ -54,51 +52,7 @@ export class SuppliersComponent implements OnInit {
   URL_IMG =
     'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
 
-  // countries = ['Argentina', 'Chile', 'Brazil'];
 
-  // provinces: Provinces = {
-  //   'Argentina': [
-  //     'Buenos Aires', 'Cordoba', 'Santa Fe', 'Mendoza', 'Tucuman',
-  //     'Entre Rios', 'Salta', 'Chaco', 'Corrientes', 'Santiago del Estero',
-  //     'Jujuy', 'La Pampa', 'Formosa', 'Misiones', 'San Juan', 'San Luis',
-  //     'Catamarca', 'La Rioja', 'Tierra del Fuego', 'Neuquen', 'Rio Negro', 'Chubut'
-  //   ],
-  //   'Chile': [
-  //     'Santiago', 'Valparaiso', 'Concepcion', 'Antofagasta', 'Araucania',
-  //     'Coquimbo', 'Magallanes', 'Los Lagos', 'Atacama', 'Tarapaca',
-  //     'Aysen', 'Los Rios', 'Maule', 'O\'Higgins'
-  //   ],
-  //   'Brazil': [
-  //     'Sao Paulo', 'Rio de Janeiro', 'Brasilia', 'Minas Gerais', 'Bahia',
-  //     'Rio Grande do Sul', 'Parana', 'Ceara', 'Pernambuco', 'Amazonas',
-  //     'Santa Catarina', 'Goias', 'Para', 'Maranhao', 'Espirito Santo',
-  //     'Paraiba', 'Rio Grande do Norte', 'Alagoas', 'Piaui', 'Acre', 'Tocantins',
-  //     'Rondonia', 'Sergipe'
-  //   ]
-  // };
-
-  // loadUpdate(s: Supplier) {
-  //   this.idInput = s.id;
-  //   this.codProvInput  = s.codProv;
-  //   this.razonSocialInput  = s.razonSocial;
-  //   this.rubroInput  = s.rubro;
-  //   this.webInput  = s.website;
-  //   this.telefonoInput  = s.telefono;
-  //   this.emailInput  = s.email;
-  //   this.direccionInput  = s.direccion;
-  //   this.cpInput  = s.cp;
-  //   this.localidadInput = s.localidad;
-  //   this.provinciaInput  = s.provincia;
-  //   this.paisInput  = s.pais;
-  //   this.cuitInput  = s.cuit;
-  //   this.ivaInput  = s.iva;
-  //   this.nombreContactoInput  = s.nombreContacto;
-  //   this.apellidContactoInput  = s.apellidoContacto;
-  //   this.telefonoContactoInput  = s.telefonoContacto;
-  //   this.emailContactoInput  = s.emailContacto;
-  //   this.rolContactoInput  = s.rolContacto;
-  //   console.log("id:"+this.idInput)
-  // }
 
   resetFields() {
     this.idInput = 0;
@@ -173,35 +127,7 @@ export class SuppliersComponent implements OnInit {
 
   }
 
-  updateSupplier(form: NgForm) {
-    // let s = {
-    //   codProv: this.codProvInput,
-    //   razonSocial: this.razonSocialInput,
-    //   rubro: this.rubroInput,
-    //   website: this.webInput,
-    //   telefono: this.telefonoInput,
-    //   email: this.emailInput,
-    //   direccion: this.direccionInput,
-    //   cp: this.cuitInput,
-    //   localidad: this.localidadInput,
-    //   provincia: this.provinciaInput,
-    //   pais: this.paisInput,
-    //   cuit: this.cuitInput,
-    //   iva: this.ivaInput,
-    //   nombreContacto: this.nombreContactoInput,
-    //   apellidoContacto: this.apellidContactoInput,
-    //   telefonoContacto: this.telefonoContactoInput,
-    //   emailContacto: this.emailContactoInput,
-    //   rolContacto: this.rolContactoInput,
-    // };
-    console.log(form.value);
-
-    this.suppliersService.updateSupplier(form.value).subscribe((res) => {
-      console.log(res);
-      this.resetFields();
-      this.getSuppliers();
-    });
-  }
+ /*------------------Auxiliar functions--------------------*/
 
   search() {
     if(this.searchInput === ''){
@@ -219,5 +145,20 @@ export class SuppliersComponent implements OnInit {
 
   filterActive(){
     this.suppliersAux = this.suppliers.filter(sup=> sup.deleted == false)
+  }
+
+  sortSuppliers(criteria: string, order: 'asc' | 'desc') {
+    // Define una función de comparación para los criterios de ordenamiento
+    const compareFn = (a: any, b: any) => {
+      // Implementa la lógica de comparación para cada criterio
+      if (order === 'asc') {
+        return a[criteria] > b[criteria] ? 1 : -1;
+      } else {
+        return a[criteria] < b[criteria] ? 1 : -1;
+      }
+    };
+
+    // Ordena el array de proveedores según la función de comparación
+    this.suppliersAux.sort(compareFn);
   }
 }

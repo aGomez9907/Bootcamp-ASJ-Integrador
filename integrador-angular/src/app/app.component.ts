@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'integrador-angular';
+  openFlag: boolean = false
+
+  changeWidth(isOpen: boolean){
+    this.openFlag = isOpen
+  }
 }

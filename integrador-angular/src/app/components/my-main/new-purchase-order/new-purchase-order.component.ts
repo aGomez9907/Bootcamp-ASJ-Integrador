@@ -27,6 +27,9 @@ export class NewPurchaseOrderComponent implements OnInit {
   @ViewChild('datepicker1') datepicker1!: NgbDatepicker;
   @ViewChild('datepicker2') datepicker2!: NgbDatepicker;
 
+  URL_IMG =
+  'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
+
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
@@ -348,12 +351,25 @@ export class NewPurchaseOrderComponent implements OnInit {
     );
   }
 
+
+
   calculateTotal() {
     let total: number = 0;
     this.details.forEach(
       (det) => (total += det.quantity * det.productId.price)
     );
+    console.log(this.purchaseOrderAux.supplierId.urlLogo);
+    
     return total;
+  }
+
+getSupplierImage(id: number | undefined){
+  let sup: Supplier | undefined= this.suppliers.find((sup)=> sup.id == id) 
+  return sup?.urlLogo
+}
+
+  imageNotFound(event: Event) {
+    (event.target as HTMLImageElement).src = this.URL_IMG;
   }
 
   clearOrderDetail() {

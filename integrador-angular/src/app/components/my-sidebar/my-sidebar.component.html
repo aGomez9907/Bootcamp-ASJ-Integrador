@@ -1,48 +1,78 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidenav">
-  <a
-    href="/"
-    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-  >
-  </a>
-  <hr />
-  <ul class="nav nav-pills flex-column mb-auto">
+
+
+<div
+  [ngClass]="{
+    'sidebar-open': isSidebarOpen,
+    'sidebar-closed': !isSidebarOpen
+  }"
+  class="sidebar"
+>
+  <button (click)="toggleSidebar()" class="btn btn-outline-light toggle-btn">
+    <i class="bi bi-list"></i>
+  </button>
+  <ul class="nav flex-column mb-auto">
+    <li class="nav-item">
+      <a
+        routerLink="/home"
+        class="nav-link"
+        [class.active]="isCurrentRoute('/home')"
+      >
+        <i class="bi bi-house"></i>
+        <span class="sidebar-text" [ngClass]="{ spanclosed: !isSidebarOpen }"
+          >HOME</span
+        >
+      </a>
+    </li>
+    <hr class="customhr">
     <li class="nav-item">
       <a
         routerLink="/suppliers"
-        class="nav-link text-white"
+        class="nav-link"
         [class.active]="isCurrentRoute('/suppliers')"
       >
-        SUPPLIERS
+        <i class="bi bi-shop"></i>
+        <span class="sidebar-text" [ngClass]="{ spanclosed: !isSidebarOpen }"
+          >SUPPLIERS</span
+        >
       </a>
     </li>
     <li class="nav-item">
       <a
         routerLink="/products"
-        class="nav-link text-white"
+        class="nav-link"
         [class.active]="isCurrentRoute('/products')"
       >
-        PRODUCTS
+        <i class="bi bi-basket"></i>
+        <span class="sidebar-text" [ngClass]="{ spanclosed: !isSidebarOpen }"
+          >PRODUCTS</span
+        >
       </a>
     </li>
     <li class="nav-item">
       <a
         routerLink="/purchase-orders"
-        class="nav-link text-white"
+        class="nav-link"
         [class.active]="isCurrentRoute('/purchase-orders')"
       >
-        PURCHASE ORDERS
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="sidebar-text" [ngClass]="{ spanclosed: !isSidebarOpen }"
+          >PURCHASE ORDERS</span
+        >
       </a>
     </li>
+    <hr class="customhr">
     <li class="nav-item">
       <a
         routerLink="/categories"
-        class="nav-link text-white"
+        class="nav-link"
         [class.active]="isCurrentRoute('/categories')"
       >
-        CATEGORIES
+        <i class="bi bi-tags"></i>
+        <span class="sidebar-text" [ngClass]="{ spanclosed: !isSidebarOpen }"
+          >CATEGORIES</span
+        >
       </a>
     </li>
   </ul>
-  <div class="mt-auto"></div>
-  <!-- Para que la sidebar llegue hasta abajo -->
+  <hr />
 </div>

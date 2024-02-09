@@ -161,7 +161,6 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(id: number) {
- 
     const modalRef = this.modalService.open(ConfirmModalComponent);
     let prod = this.products.find((prod)=> prod.id == id)
     modalRef.componentInstance.id = prod?.sku;
@@ -207,7 +206,7 @@ export class ProductsComponent implements OnInit {
   filterByCategory(catId: number){
     if(catId === 0){
       this.productsAux = this.products.filter((prod)=> prod.deleted === false)
-      this.orderList
+      this.orderList()
     }else{
       this.productsAux = this.products.filter((prod)=> prod.categoryId.id === catId && prod.deleted === false)
       this.orderList();
@@ -228,5 +227,20 @@ export class ProductsComponent implements OnInit {
     this.orderList();
     console.log("Estoy andando");
     
+  }
+
+  sortProducts(criteria: string, order: 'asc' | 'desc') {
+    // Define una función de comparación para los criterios de ordenamiento
+    const compareFn = (a: any, b: any) => {
+      // Implementa la lógica de comparación para cada criterio
+      if (order === 'asc') {
+        return a[criteria] > b[criteria] ? 1 : -1;
+      } else {
+        return a[criteria] < b[criteria] ? 1 : -1;
+      }
+    };
+
+    // Ordena el array de proveedores según la función de comparación
+    this.productsAux.sort(compareFn);
   }
 }
